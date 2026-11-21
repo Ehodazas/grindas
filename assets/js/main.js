@@ -52,9 +52,9 @@
       done = true; clearTimeout(safety);
       var W = fig.clientWidth, H = fig.clientHeight, iw = img.naturalWidth, ih = img.naturalHeight;
       if (!W || !H || !iw) { reveal(); return; }
-      // atkartojamas <img> „object-fit: cover“ ir object-position 50% 68%
+      // atkartojamas <img> „object-fit: cover“ ir object-position 50% 60%
       var sc = Math.max(W / iw, H / ih), bw = iw * sc, bh = ih * sc;
-      var ox = (W - bw) * 0.5, oy = (H - bh) * 0.68;
+      var ox = (W - bw) * 0.5, oy = (H - bh) * 0.6;
       var rows = 5, cols = W > 900 ? 5 : 3, th = H / rows, tw = W / cols, gap = 3;
       var src = img.currentSrc || img.src;
       var frag = document.createDocumentFragment(), tiles = [], maxDelay = 0;
@@ -97,14 +97,53 @@
   (function services() {
     var acc = document.getElementById("serviceAcc");
     if (!acc) return;
+    var frame = document.querySelector(".services-photo");
     var photo = document.getElementById("servicePhoto");
-    var widths = { "egle-detale": 1400, "ivaziavimas-pries": 1400, "takas-borteliai": 1600, "kiemas-aikstele": 1600, "takas-sodas": 1400, "terasa-plokstes": 1600, "klojimas-eiga": 1400 };
     var items = Array.prototype.slice.call(acc.querySelectorAll(".acc-item"));
-    // nuotraukos įkeliamos iš anksto, kad keitimas būtų sklandus
-    var preloaded = false;
-    function preload() {
-      if (preloaded) return; preloaded = true;
-      items.forEach(function (li) { var i = new Image(); i.src = IMG + li.dataset.photo + "-800.webp"; });
+    function url(name) { return IMG + name + "-800.webp"; } // lengvi 800 px failai (~100–300 KB)
+
+    // Visos paslaugų nuotraukos įkeliamos ir iškoduojamos iš anksto, kai skyrius artėja
+    var cache = {};
+    function preloadAll() {
+      items.forEach(function (li) {
+        var n = li.dataset.photo;
+        if (cache[n]) return;
+        var im = new Image();
+        im.decoding = "async";
+        im.src = url(n);
+        cache[n] = im.decode ? im.decode().then(function () { return im; }, function () { return im; }) : Promise.resolve(im);
+      });
+    }
+    if ("IntersectionObserver" in window) {
+      var pio = new IntersectionObserver(function (ents) {
+        if (ents[0].isIntersecting) { preloadAll(); pio.disconnect(); }
+      }, { rootMargin: "800px 0px" });
+      pio.observe(acc);
+    } else preloadAll();
+
+    var token = 0;
+    function show(name, alt) {
+      if (photo.dataset.current === name) return;
+      photo.dataset.current = name;
+      var my = ++token;
+      if (!cache[name]) preloadAll();
+      cache[name].then(function () {
+        if (my !== token) return; // vartotojas jau paspaudė kitą punktą
+        if (reduceMotion) { photo.src = url(name); photo.alt = alt; return; }
+        // perėjimas: nauja nuotrauka uždedama ant senos ir išryškinama, be tuščio tarpo
+        var over = new Image();
+        over.className = "services-photo-next";
+        over.alt = "";
+        over.src = url(name);
+        frame.appendChild(over);
+        requestAnimationFrame(function () {
+          over.classList.add("is-in");
+          setTimeout(function () {
+            photo.src = url(name); photo.alt = alt;
+            over.remove();
+          }, 200);
+        });
+      });
     }
     function open(li) {
       items.forEach(function (it) {
@@ -113,25 +152,13 @@
         it.querySelector(".acc-btn").setAttribute("aria-expanded", on ? "true" : "false");
         it.querySelector(".acc-panel").hidden = !on;
       });
-      var name = li.dataset.photo;
-      if (photo.dataset.current === name) return;
-      photo.dataset.current = name;
-      var swap = function () {
-        photo.srcset = IMG + name + "-800.webp 800w, " + IMG + name + ".webp " + widths[name] + "w";
-        photo.src = IMG + name + "-800.webp";
-        photo.alt = li.dataset.alt;
-        var done = function () { photo.classList.remove("is-swapping"); };
-        if (photo.complete) requestAnimationFrame(done); else photo.addEventListener("load", done, { once: true });
-      };
-      if (reduceMotion) swap();
-      else { photo.classList.add("is-swapping"); setTimeout(swap, 220); }
+      show(li.dataset.photo, li.dataset.alt);
     }
     photo.dataset.current = "egle-detale";
     items.forEach(function (li) {
       var btn = li.querySelector(".acc-btn");
       btn.addEventListener("click", function () { open(li); });
-      btn.addEventListener("pointerenter", preload, { once: true });
-      btn.addEventListener("focus", preload, { once: true });
+      btn.addEventListener("pointerenter", preloadAll, { once: true });
     });
   })();
 
