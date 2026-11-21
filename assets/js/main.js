@@ -82,7 +82,13 @@
     var io = new IntersectionObserver(function (ents) {
       if (!ents[0].isIntersecting) return;
       io.disconnect();
-      if (img.complete && img.naturalWidth) run(); else img.addEventListener("load", run, { once: true });
+      if (img.complete && img.naturalWidth) { run(); return; }
+      // lėtame ryšyje animacijos nelaukiame: nuotrauka tiesiog išryškėja, kai įsikelia
+      var t0 = Date.now();
+      img.addEventListener("load", function () {
+        if (Date.now() - t0 > 1200) { done = true; clearTimeout(safety); reveal(); } else run();
+      }, { once: true });
+      img.addEventListener("error", function () { done = true; reveal(); }, { once: true });
     }, { threshold: 0.2 });
     io.observe(fig);
   })();
