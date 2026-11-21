@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="lt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GRINDAS — trinkelių klojimas, kiemų ir įvažiavimų įrengimas</title>
+  <meta name="description" content="Trinkelių klojimas, kiemų, įvažiavimų ir takų įrengimas Kaune, Vilniuje ir aplinkiniuose rajonuose. Pagrindo paruošimas, borteliai, lietaus vandens nuvedimas. Apskaičiuokite orientacinę kainą internetu.">
+  <meta name="theme-color" content="#E8E4DA">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="lt_LT">
+  <meta property="og:title" content="GRINDAS — trinkelių klojimas nuo pagrindo iki paskutinės trinkelės">
+  <meta property="og:description" content="Kiemai, įvažiavimai, takai ir aikštelės. Kiemo planuoklis su orientacine kaina.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#turinys">Pereiti prie turinio</a>
+
+  <div class="demo-bar" role="note">
+    Tai demonstracinis projektas: GRINDAS yra išgalvota įmonė, kainos ir darbų pavyzdžiai yra iliustraciniai.
+  </div>
+
+  <header class="site-header" id="virsus">
+    <div class="wrap header-inner">
+      <a class="brand" href="#virsus" aria-label="GRINDAS — į puslapio pradžią">
+        <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="1" y="1" width="10" height="5"/><rect x="1" y="7" width="5" height="10"/>
+          <rect x="7" y="7" width="10" height="5"/><rect x="7" y="13" width="5" height="10"/>
+          <rect x="13" y="13" width="10" height="5"/><rect x="12" y="1" width="11" height="5" class="accent"/>
+        </svg>
+        <span>GRINDAS</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+        <span class="nav-toggle-text">Meniu</span>
+      </button>
+      <nav id="nav" class="nav" aria-label="Pagrindinė navigacija">
+        <ul>
+          <li><a href="#paslaugos">Paslaugos</a></li>
+          <li><a href="#planuoklis">Planuoklis</a></li>
+          <li><a href="#pagrindas">Pagrindas</a></li>
+          <li><a href="#darbai">Darbai</a></li>
+          <li><a href="#eiga">Eiga</a></li>
+          <li><a href="#duk">DUK</a></li>
+          <li><a href="#kontaktai">Kontaktai</a></li>
+        </ul>
+        <a class="btn btn-solid nav-cta" href="#planuoklis">Apskaičiuoti kainą</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="turinys">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <h1 id="hero-title" class="hero-title">
+            <span class="ht-line">Trinkelių klojimas.</span>
+            <span class="ht-line ht-sub">Nuo pagrindo iki paskutinės trinkelės.</span>
+          </h1>
+          <p class="hero-lead">Įrengiame kiemus, įvažiavimus, takus ir aikšteles. Paruošiame pagrindą, klojame trinkeles ir sutvarkome aplinką.</p>
+          <div class="hero-actions">
+            <a class="btn btn-solid" href="#planuoklis">Apskaičiuoti kainą</a>
+            <a class="btn btn-line" href="#darbai">Peržiūrėti darbus</a>
+          </div>
+          <dl class="hero-facts">
+            <div><dt>Dirbame</dt><dd>Kauno ir Vilniaus regionuose</dd></div>
+            <div><dt>Sezonas</dt><dd>Nuo balandžio iki lapkričio</dd></div>
+            <div><dt>Apžiūra</dt><dd>Atvykstame išmatuoti vietoje</dd></div>
+          </dl>
+        </div>
+        <figure class="hero-plan">
+          <svg id="heroPlan" viewBox="-1.2 -1.2 18.4 13.4" role="img" aria-labelledby="heroPlanTitle">
+            <title id="heroPlanTitle">Kiemo planas iš viršaus: įvažiavimas eglute, takas ir terasa prie namo</title>
+          </svg>
+          <figcaption>Kiemo planas, M 1:100. Įvažiavimas eglute, takas iš plokščių, terasa prie namo. Iliustracija.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- PASLAUGOS -->
+    <section class="services" id="paslaugos" aria-labelledby="services-title">
+      <div class="wrap services-grid">
+        <header class="services-head">
+          <h2 id="services-title" class="h2">Ką darome</h2>
+          <p class="lede">Dirbame visą darbą vienoje rankoje: nuo grunto kasimo iki siūlių užpildymo. Žemiau rasite, ką apima kiekvienas darbas ir kada jo reikia.</p>
+          <a class="text-link" href="#planuoklis">Apskaičiuoti savo kiemą</a>
+        </header>
+
+        <ol class="service-index" role="list">
+          <li class="service" id="s-klojimas">
+            <h3 class="service-name">Trinkelių klojimas</h3>
+            <div class="service-body">
+              <p><strong>Ką apima.</strong> Pagal apkrovą parenkame trinkelių storį, paskleidžiame ir išlyginame pastelės sluoksnį, klojame pasirinktu raštu, kraštuose trinkeles pjauname. Siūles užpildome smėliu ir dangą suvibruojame.</p>
+              <p><strong>Kada reikia.</strong> Naujam kiemui, aikštelei ar takui, kai norisi tvirtos dangos, kurią prireikus galima išardyti ir sudėti atgal.</p>
+            </div>
+          </li>
+          <li class="service" id="s-kiemas">
+            <h3 class="service-name">Kiemo ir įvažiavimo įrengimas</h3>
+            <div class="service-body">
+              <p><strong>Ką apima.</strong> Suplanuojame vietą automobiliams, posūkius ir nuolydžius nuo namo. Įvažiavimui klojame storesnes trinkeles ir darome tvirtesnį pagrindą, nes dangą spaudžia ratai.</p>
+              <p><strong>Kada reikia.</strong> Pastačius namą arba kai žvyruotame įvažiavime atsiranda provėžos, balos ir purvas.</p>
+            </div>
+          </li>
+          <li class="service" id="s-takai">
+            <h3 class="service-name">Pėsčiųjų takai</h3>
+            <div class="service-body">
+              <p><strong>Ką apima.</strong> Takai nuo vartų iki durų, aplink namą, į sodą ar ūkinį pastatą. Parenkame plotį, kad būtų patogu eiti, ir kraštą, kad veja neužaugtų ant tako.</p>
+              <p><strong>Kada reikia.</strong> Kai per veją jau išmintas takas, o rudenį ir pavasarį į namus nešamas purvas.</p>
+            </div>
+          </li>
+          <li class="service" id="s-pagrindas">
+            <h3 class="service-name">Pagrindo paruošimas</h3>
+            <div class="service-body">
+              <p><strong>Ką apima.</strong> Nukasame augalinį sluoksnį, išvežame gruntą, jei reikia, paklojame geotekstilę. Skaldą pilame ir tankiname sluoksniais.</p>
+              <p><strong>Kada reikia.</strong> Beveik visada. Šio darbo po trinkelėmis nesimato, bet būtent nuo jo priklauso, ar danga po kelių žiemų neįdubs ir neiškils.</p>
+            </div>
+          </li>
+          <li class="service" id="s-borteliai">
+            <h3 class="service-name">Bortelių montavimas</h3>
+            <div class="service-body">
+              <p><strong>Ką apima.</strong> Statome kelio, šaligatvio ir vejos bortelius ant betono pado. Bortelis laiko dangos kraštą, kad trinkelės neišsiskirstytų į šonus.</p>
+              <p><strong>Kada reikia.</strong> Visur, kur danga nesiremia į sieną, pamatą ar kitą tvirtą kraštą.</p>
+            </div>
+          </li>
+          <li class="service" id="s-vanduo">
+            <h3 class="service-name">Lietaus vandens nuvedimas</h3>
+            <div class="service-body">
+              <p><strong>Ką apima.</strong> Dangai suformuojame nuolydį nuo pastato, montuojame linijinius latakus ir lietaus vandens šulinėlius. Vandenį nuvedame į esamą sistemą arba drenažą.</p>
+              <p><strong>Kada reikia.</strong> Kai prie namo po lietaus telkšo balos, vanduo bėga į garažą ar rūsį, o žiemą įvažiavime susidaro ledas.</p>
+            </div>
+          </li>
+          <li class="service" id="s-remontas">
+            <h3 class="service-name">Trinkelių remontas ir perklojimas</h3>
+            <div class="service-body">
+              <p><strong>Ką apima.</strong> Išardome įdubusią ar iškilusią vietą, sutvarkome pagrindą ir sudedame tas pačias trinkeles atgal. Suskilusias pakeičiame naujomis, siūles užpildome iš naujo.</p>
+              <p><strong>Kada reikia.</strong> Atsiradus provėžoms, po vandentiekio ar kabelių darbų, kai trinkelės kliba arba siūlės išplautos.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- PLANUOKLIS -->
+    <section class="planner" id="planuoklis" aria-labelledby="planner-title">
+      <div class="wrap">
+        <header class="planner-head">
+          <h2 id="planner-title" class="h2">Kiemo planuoklis</h2>
+          <p class="lede">Įveskite matmenis, pasirinkite medžiagą ir raštą. Planas ir orientacinė kaina persiskaičiuos iš karto. Tikslią kainą pasakysime tik apžiūrėję vietą.</p>
+        </header>
+
+        <div class="planner-grid">
+          <form class="planner-form" id="plannerForm" novalidate aria-describedby="planner-title">
+
+            <fieldset class="pf-group">
+              <legend>Ploto forma</legend>
+              <div class="seg" role="radiogroup">
+                <label><input type="radio" name="shape" value="rect" checked><span>Stačiakampis</span></label>
+                <label><input type="radio" name="shape" value="l"><span>L formos</span></label>
+              </div>
+              <div class="dims">
+                <label class="field">
+                  <span class="field-label">Ilgis A, m</span>
+                  <input type="text" inputmode="decimal" name="a" value="12" autocomplete="off" aria-describedby="err-a">
+                  <span class="field-err" id="err-a" aria-live="polite"></span>
+                </label>
+                <label class="field">
+                  <span class="field-label">Plotis B, m</span>
+                  <input type="text" inputmode="decimal" name="b" value="7" autocomplete="off" aria-describedby="err-b">
+                  <span class="field-err" id="err-b" aria-live="polite"></span>
+                </label>
+                <label class="field l-only">
+                  <span class="field-label">Išpjovos ilgis a, m</span>
+                  <input type="text" inputmode="decimal" name="ca" value="5" autocomplete="off" aria-describedby="err-ca">
+                  <span class="field-err" id="err-ca" aria-live="polite"></span>
+                </label>
+                <label class="field l-only">
+                  <span class="field-label">Išpjovos plotis b, m</span>
+                  <input type="text" inputmode="decimal" name="cb" value="3" autocomplete="off" aria-describedby="err-cb">
+                  <span class="field-err" id="err-cb" aria-live="polite"></span>
+                </label>
+              </div>
+              <p class="hint l-only">L forma: iš viso stačiakampio A × B atimamas kampas a × b (pvz., ten, kur stovi namas).</p>
+            </fieldset>
+
+            <fieldset class="pf-group">
+              <legend>Paskirtis</legend>
+              <div class="chips" id="useChips"></div>
+            </fieldset>
+
+            <fieldset class="pf-group">
+              <legend>Medžiaga</legend>
+              <div class="chips" id="materialChips"></div>
+              <p class="hint warn" id="materialWarn" hidden></p>
+            </fieldset>
+
+            <fieldset class="pf-group">
+              <legend>Raštas</legend>
+              <div class="chips" id="patternChips"></div>
+            </fieldset>
+
+            <fieldset class="pf-group">
+              <legend>Spalva</legend>
+              <div class="swatches" id="colorChips"></div>
+            </fieldset>
+
+            <fieldset class="pf-group">
+              <legend>Pagrindas</legend>
+              <div class="seg seg-stack">
+                <label><input type="radio" name="prep" value="yes" checked><span>Reikia paruošti pagrindą</span></label>
+                <label><input type="radio" name="prep" value="no"><span>Tinkamas pagrindas jau yra</span></label>
+              </div>
+              <label class="check">
+                <input type="checkbox" name="curbs" checked>
+                <span>Borteliai aplink plotą</span>
+              </label>
+            </fieldset>
+
+            <fieldset class="pf-group">
+              <legend>Atsarga pjovimui ir nuostoliams</legend>
+              <div class="range-row">
+                <input type="range" name="waste" min="3" max="15" step="1" value="10" aria-describedby="wasteHint">
+                <output name="wasteOut" for="waste">10 %</output>
+              </div>
+              <p class="hint" id="wasteHint">Šiam raštui įprastai skaičiuojama <span id="wasteSuggest">10</span> %. <button type="button" class="link-btn" id="wasteReset">Grąžinti</button></p>
+            </fieldset>
+          </form>
+
+          <div class="planner-view">
+            <figure class="pv-figure">
+              <svg id="plannerSvg" role="img" aria-labelledby="plannerSvgDesc" preserveAspectRatio="xMidYMid meet"></svg>
+              <div class="pv-foot">
+                <figcaption id="plannerSvgDesc" class="pv-caption" aria-live="polite"></figcaption>
+                <div class="pv-detail" aria-hidden="true">
+                  <svg viewBox="0 0 1.2 1.2"><rect id="pvDetailRect" width="1.2" height="1.2"/></svg>
+                  <span>Detalė<br>1,2 × 1,2 m</span>
+                </div>
+              </div>
+            </figure>
+
+            <div class="pv-results" aria-live="polite">
+              <div class="pv-key">
+                <div class="pv-metric"><span class="pvm-label">Plotas</span><span class="pvm-value" id="rArea">—</span></div>
+                <div class="pv-metric"><span class="pvm-label">Perimetras</span><span class="pvm-value" id="rPerim">—</span></div>
+                <div class="pv-metric"><span class="pvm-label">Medžiagos su atsarga</span><span class="pvm-value" id="rQty">—</span><span class="pvm-sub" id="rQtySub"></span></div>
+              </div>
+
+              <table class="estimate" id="estimateTable">
+                <caption>Orientacinė kaina, EUR su PVM</caption>
+                <thead><tr><th scope="col">Darbai ir medžiagos</th><th scope="col">Nuo</th><th scope="col">Iki</th></tr></thead>
+                <tbody id="estimateBody"></tbody>
+                <tfoot><tr><th scope="row">Iš viso</th><td id="tLow">—</td><td id="tHigh">—</td></tr></tfoot>
+              </table>
+              <p class="pv-error" id="plannerError" role="alert" hidden></p>
+              <p class="hint" id="minOrderNote" hidden></p>
+
+              <button type="button" class="btn btn-solid btn-wide" id="toQuote">Prašyti pasiūlymo su šiais duomenimis</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="assumptions">
+          <div>
+            <h3 class="h4">Į skaičiavimą įeina</h3>
+            <ul>
+              <li>Pasirinktos medžiagos su nurodyta atsarga.</li>
+              <li>Klojimo darbai su pastelės sluoksniu, pjovimu ir siūlių užpildymu.</li>
+              <li>Pagrindo paruošimas, jei jis pasirinktas: kasimas, grunto išvežimas, skalda ir tankinimas.</li>
+              <li>Borteliai visam perimetrui, jei jie pasirinkti.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="h4">Neįeina</h3>
+            <ul>
+              <li>Lietaus vandens latakai, šulinėliai ir drenažas.</li>
+              <li>Senos dangos ardymas ir išvežimas.</li>
+              <li>Didelis aukščių skirtumas, atraminės sienelės, laiptai.</li>
+              <li>Vejos atkūrimas ir apželdinimas.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="h4">Svarbu žinoti</h3>
+            <p>Tai orientacinis skaičiavimas, ne pasiūlymas. Galutinė kaina priklauso nuo grunto, aukščių, privažiavimo technikai ir medžiagų gamintojo. Pagrindo sluoksnių storį nustatome tik apžiūrėję vietą. Skaičiuoklė neįvertina, ar danga techniškai tinka jūsų sąlygoms.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGRINDAS / PJŪVIS -->
+    <section class="section-base" id="pagrindas" aria-labelledby="base-title">
+      <div class="wrap base-grid">
+        <header class="base-head">
+          <h2 id="base-title" class="h2">Kas po trinkelėmis</h2>
+          <p class="lede">Danga laiko tiek, kiek laiko jos pagrindas. Paspauskite sluoksnį ir pamatysite, kam jis reikalingas.</p>
+        </header>
+
+        <div class="xsec">
+          <div class="xsec-figure">
+            <svg id="xsecSvg" viewBox="0 52 640 300" role="group" aria-label="Dangos pjūvis: keturi sluoksniai">
+              <defs>
+                <pattern id="xs-agg" width="18" height="14" patternUnits="userSpaceOnUse">
+                  <rect width="18" height="14" fill="#9d9a92"/>
+                  <path d="M2 4l4-2 3 3-3 3-4-1zM11 2l5 1 1 4-4 2-3-3zM8 10l3-1 3 3-2 2-4-1z" fill="#85827a"/>
+                  <circle cx="15" cy="11" r="1.4" fill="#b3b0a8"/>
+                </pattern>
+                <pattern id="xs-sand" width="10" height="8" patternUnits="userSpaceOnUse">
+                  <rect width="10" height="8" fill="#d2c4a2"/>
+                  <circle cx="2" cy="2" r=".7" fill="#b9aa86"/><circle cx="7" cy="5" r=".6" fill="#b9aa86"/><circle cx="4" cy="6.5" r=".5" fill="#e0d4b8"/>
+                </pattern>
+                <pattern id="xs-soil" width="24" height="16" patternUnits="userSpaceOnUse">
+                  <rect width="24" height="16" fill="#7a6552"/>
+                  <path d="M0 12l6-3M10 5l6-3M14 14l6-3" stroke="#6a5645" stroke-width="1.2"/>
+                </pattern>
+              </defs>
+              <g class="xs-layer" data-layer="soil" tabindex="-1">
+                <rect x="40" y="250" width="560" height="90" fill="url(#xs-soil)"/>
+                <path d="M40 250h560" class="xs-edge"/>
+              </g>
+              <g class="xs-layer" data-layer="aggregate" tabindex="-1">
+                <rect x="40" y="160" width="560" height="90" fill="url(#xs-agg)"/>
+                <path d="M40 160h560" class="xs-edge"/>
+              </g>
+              <g class="xs-layer" data-layer="bedding" tabindex="-1">
+                <rect x="40" y="132" width="560" height="28" fill="url(#xs-sand)"/>
+                <path d="M40 132h560" class="xs-edge"/>
+              </g>
+              <g class="xs-layer" data-layer="pavers" tabindex="-1">
+                <g id="xsPavers"></g>
+              </g>
+              <g class="xs-curb" aria-hidden="true">
+                <rect x="600" y="80" width="22" height="130" fill="#b4b2ab" stroke="#5c5f5d" stroke-width="1"/>
+                <path d="M590 210h44v40h-44z" fill="#a9a59b" stroke="#5c5f5d" stroke-width="1"/>
+                <text x="611" y="70" text-anchor="middle" class="xs-note">bortelis</text>
+              </g>
+              <g class="xs-labels" aria-hidden="true">
+                <line x1="20" y1="80" x2="20" y2="340" class="xs-axis"/>
+                <text x="16" y="96" text-anchor="end" class="xs-note" transform="rotate(-90 16 96)">paviršius</text>
+              </g>
+            </svg>
+            <button type="button" class="link-btn xsec-replay" id="xsecReplay">Parodyti, kaip sluoksniai klojami</button>
+          </div>
+
+          <div class="xsec-panel">
+            <div class="xsec-tabs" role="tablist" aria-label="Dangos sluoksniai">
+              <button role="tab" id="tab-pavers" aria-controls="xsecInfo" aria-selected="true" data-layer="pavers">Trinkelės</button>
+              <button role="tab" id="tab-bedding" aria-controls="xsecInfo" aria-selected="false" data-layer="bedding" tabindex="-1">Pastelės sluoksnis</button>
+              <button role="tab" id="tab-aggregate" aria-controls="xsecInfo" aria-selected="false" data-layer="aggregate" tabindex="-1">Skaldos pagrindas</button>
+              <button role="tab" id="tab-soil" aria-controls="xsecInfo" aria-selected="false" data-layer="soil" tabindex="-1">Paruoštas gruntas</button>
+            </div>
+            <div class="xsec-info" id="xsecInfo" role="tabpanel" aria-labelledby="tab-pavers" tabindex="0"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DARBAI -->
+    <section class="works" id="darbai" aria-labelledby="works-title">
+      <div class="wrap">
+        <header class="works-head">
+          <h2 id="works-title" class="h2">Darbų pavyzdžiai</h2>
+          <p class="lede">Visi keturi objektai yra demonstraciniai pavyzdžiai. Jie parodo, kokius darbus atliekame ir kaip juos aprašome sąmatoje. Planai nubraižyti tuo pačiu masteliu kaip planuoklyje.</p>
+        </header>
+
+        <div class="ba">
+          <div class="ba-stage" id="baStage">
+            <svg class="ba-img ba-before" id="baBefore" viewBox="0 0 16 10" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Prieš: žvyruotas įvažiavimas su provėžomis ir balomis"></svg>
+            <div class="ba-clip" id="baClip">
+              <svg class="ba-img ba-after" id="baAfter" viewBox="0 0 16 10" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Po: įvažiavimas iš trinkelių eglute, su borteliais ir lataku"></svg>
+            </div>
+            <div class="ba-handle" id="baHandle" aria-hidden="true"><span></span></div>
+            <span class="ba-tag ba-tag-before">Prieš</span>
+            <span class="ba-tag ba-tag-after">Po</span>
+            <label class="sr-only" for="baRange">Palyginimo slankiklis: kiek rodyti vaizdo „po“</label>
+            <input type="range" id="baRange" class="ba-range" min="0" max="100" value="50" step="1">
+          </div>
+          <div class="ba-text">
+            <h3 class="h3">Žvyruotas įvažiavimas → trinkelės</h3>
+            <p>Iliustracinis palyginimas, ne tikro objekto nuotrauka. Tas pats sklypas, tas pats kampas: kairėje žvyras su provėžomis ir vanduo, telkšantis prie garažo, dešinėje ta pati vieta įrengus dangą.</p>
+            <ul class="ba-list">
+              <li>Žvyras ir gruntas iškasti, pagrindas įrengtas iš naujo.</li>
+              <li>Prie garažo vartų įrengtas linijinis latakas.</li>
+              <li>Danga kraštuose atremta į bortelius, takas atskirtas nuo vejos.</li>
+            </ul>
+            <p class="hint">Vilkite slankiklį arba naudokite rodyklių klavišus.</p>
+          </div>
+        </div>
+
+        <ol class="projects" id="projects" role="list"></ol>
+      </div>
+    </section>
+
+    <!-- EIGA -->
+    <section class="process" id="eiga" aria-labelledby="process-title">
+      <div class="wrap">
+        <header class="process-head">
+          <h2 id="process-title" class="h2">Kaip vyksta darbai</h2>
+          <p class="lede">Nuo pirmo skambučio iki sušluoto kiemo. Dažniausiai įprasto dydžio kiemo darbai vietoje trunka nuo kelių dienų iki poros savaičių, priklausomai nuo žemės darbų ir oro.</p>
+        </header>
+        <ol class="steps">
+          <li class="step">
+            <span class="step-n" aria-hidden="true">1</span>
+            <h3 class="h4">Užklausa</h3>
+            <p>Paskambinate arba parašote: vieta, apytikslis plotas, ko norite. Planuoklio skaičiavimas padeda greičiau susikalbėti.</p>
+          </li>
+          <li class="step">
+            <span class="step-n" aria-hidden="true">2</span>
+            <h3 class="h4">Apžiūra vietoje</h3>
+            <p>Atvažiuojame, išmatuojame, įvertiname gruntą, aukščius, kur nubėga vanduo ir ar privažiuos technika.</p>
+          </li>
+          <li class="step">
+            <span class="step-n" aria-hidden="true">3</span>
+            <h3 class="h4">Sąmata ir terminas</h3>
+            <p>Pateikiame išskaidytą sąmatą: darbai, medžiagos, grunto išvežimas. Suderiname pradžios datą.</p>
+          </li>
+          <li class="step">
+            <span class="step-n" aria-hidden="true">4</span>
+            <h3 class="h4">Žemės darbai ir pagrindas</h3>
+            <p>Kasame, išvežame gruntą, statome bortelius, pilame ir tankiname skaldą. Tai ilgiausia darbų dalis.</p>
+          </li>
+          <li class="step">
+            <span class="step-n" aria-hidden="true">5</span>
+            <h3 class="h4">Klojimas</h3>
+            <p>Pastelės sluoksnis, trinkelės, pjovimas kraštuose, siūlių užpildymas ir vibravimas.</p>
+          </li>
+          <li class="step">
+            <span class="step-n" aria-hidden="true">6</span>
+            <h3 class="h4">Sutvarkymas</h3>
+            <p>Išvežame atliekas, sulyginame kraštus prie vejos ir kartu apžiūrime atliktą darbą.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ZONA + APIE -->
+    <section class="about" aria-labelledby="about-title">
+      <div class="wrap about-grid">
+        <div class="about-text">
+          <h2 id="about-title" class="h2">Apie įmonę</h2>
+          <p>GRINDAS yra demonstracinė įmonė, sukurta šiam svetainės pavyzdžiui. Tikra įmonė čia aprašytų savo komandą, techniką, kiek metų dirba ir kokias garantijas suteikia. Šios informacijos sąmoningai neišgalvojame.</p>
+          <p>Tai, kaip dirbame, galioja bet kuriai sąžiningai trinkelių klojimo įmonei: pirmiausia apžiūra, tada sąmata raštu, o mokama už atliktus darbų etapus.</p>
+        </div>
+        <div class="areas">
+          <h3 class="h4">Kur dirbame</h3>
+          <ul class="area-list" id="areaList"></ul>
+          <p class="hint">Kitur, jei objektas didesnis, susitarus.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DUK -->
+    <section class="faq" id="duk" aria-labelledby="faq-title">
+      <div class="wrap faq-grid">
+        <h2 id="faq-title" class="h2">Dažni klausimai</h2>
+        <div class="faq-list">
+          <details>
+            <summary>Kodėl planuoklis rodo kainą intervalu, o ne vieną skaičių?</summary>
+            <p>Nes kaina priklauso nuo to, ko internetu nepamatysi: kiek grunto reikės išvežti, ar sklypas lygus, ar privažiuos sunkvežimis, kokio gamintojo trinkelės. Intervalas parodo realų mastą, o tikslią sumą pateikiame po apžiūros.</p>
+          </details>
+          <details>
+            <summary>Kada geriausia kloti trinkeles?</summary>
+            <p>Kai gruntas neįšalęs, dažniausiai nuo balandžio iki lapkričio. Ilgai lyjant žemės darbus tenka stabdyti, nes šlapio grunto gerai sutankinti nepavyksta. Pavasarį ir vasaros pradžioje kalendorius užsipildo greičiausiai.</p>
+          </details>
+          <details>
+            <summary>Ar galima kloti naujas trinkeles ant seno pagrindo?</summary>
+            <p>Kartais galima, jei senas pagrindas tvirtas, nesuslūgęs ir tinkamo storio. Tai įvertiname apžiūros metu, kartais atkasame nedidelę vietą. Jei pagrindas netinka, jį teks įrengti iš naujo, kitaip problemos greitai pasikartos.</p>
+          </details>
+          <details>
+            <summary>Ar galite kloti mano jau nupirktas trinkeles?</summary>
+            <p>Taip. Tik prieš pirkdami pasitarkite su mumis dėl kiekio ir storio: įvažiavimui reikia storesnių trinkelių nei takui, o eglutei atsargos reikia daugiau nei tiesioms eilėms.</p>
+          </details>
+          <details>
+            <summary>Ar reikia leidimo įvažiavimui įrengti?</summary>
+            <p>Darbams savo sklype paprastai leidimo nereikia. Jei įvažiavimas jungiasi prie gatvės, šaligatvio ar griovio, tą dalį gali tekti suderinti su savivaldybe ar kelio valdytoju. Tai patikslinkite savo savivaldybėje.</p>
+          </details>
+          <details>
+            <summary>Kaip prižiūrėti trinkelių dangą?</summary>
+            <p>Pavasarį nušluokite, o išplautas siūles papildykite smėliu. Žolę iš siūlių geriau rauti, kol ji maža. Žiemą sniegą valykite plastikiniu kastuvu, ypač ant plokščių ir spalvotų trinkelių.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- UŽKLAUSA + KONTAKTAI -->
+    <section class="quote" id="kontaktai" aria-labelledby="quote-title">
+      <div class="wrap quote-grid">
+        <div class="quote-side">
+          <h2 id="quote-title" class="h2">Užklausa ir kontaktai</h2>
+          <p class="lede">Užpildykite formą ir susisieksime dėl apžiūros. Jei naudojotės planuokliu, jūsų pasirinkimai jau įkelti.</p>
+          <dl class="contacts">
+            <div><dt>Telefonas</dt><dd><a href="#" data-biz="phone">—</a></dd></div>
+            <div><dt>El. paštas</dt><dd><a href="#" data-biz="email">—</a></dd></div>
+            <div><dt>Darbo laikas</dt><dd data-biz="hours">—</dd></div>
+            <div><dt>Bazė</dt><dd data-biz="city">—</dd></div>
+          </dl>
+          <p class="hint">Kontaktai yra pavyzdiniai ir neveikia.</p>
+        </div>
+
+        <form class="quote-form" id="quoteForm" novalidate>
+          <p class="demo-note" id="formMode" role="status"></p>
+
+          <div class="planner-summary" id="plannerSummary" hidden>
+            <div class="ps-head">
+              <h3 class="h4">Duomenys iš planuoklio</h3>
+              <button type="button" class="link-btn" id="clearPlanner">Pašalinti</button>
+            </div>
+            <dl id="plannerSummaryList"></dl>
+          </div>
+
+          <div class="qf-grid">
+            <label class="field">
+              <span class="field-label">Vardas</span>
+              <input type="text" name="name" autocomplete="name" required aria-describedby="qerr-name">
+              <span class="field-err" id="qerr-name"></span>
+            </label>
+            <label class="field">
+              <span class="field-label">Telefonas arba el. paštas</span>
+              <input type="text" name="contact" autocomplete="email" required aria-describedby="qerr-contact">
+              <span class="field-err" id="qerr-contact"></span>
+            </label>
+            <label class="field">
+              <span class="field-label">Miestas ar savivaldybė</span>
+              <input type="text" name="city" autocomplete="address-level2" required aria-describedby="qerr-city">
+              <span class="field-err" id="qerr-city"></span>
+            </label>
+            <label class="field">
+              <span class="field-label">Darbų tipas</span>
+              <select name="type" required aria-describedby="qerr-type">
+                <option value="">Pasirinkite</option>
+                <option value="kiemas">Kiemas</option>
+                <option value="ivaziavimas">Įvažiavimas</option>
+                <option value="takas">Pėsčiųjų takas</option>
+                <option value="terasa">Terasa</option>
+                <option value="remontas">Remontas ar perklojimas</option>
+                <option value="kita">Kita</option>
+              </select>
+              <span class="field-err" id="qerr-type"></span>
+            </label>
+            <label class="field">
+              <span class="field-label">Apytikslis plotas, m²</span>
+              <input type="text" inputmode="decimal" name="area" aria-describedby="qerr-area">
+              <span class="field-err" id="qerr-area"></span>
+            </label>
+            <label class="field">
+              <span class="field-label">Pageidaujamas laikas</span>
+              <select name="timing">
+                <option value="">Nesvarbu</option>
+                <option value="kuo greiciau">Kuo greičiau</option>
+                <option value="per 1-2 men">Per 1–2 mėnesius</option>
+                <option value="si sezona">Šį sezoną</option>
+                <option value="kita sezona">Kitą sezoną</option>
+              </select>
+            </label>
+            <label class="field field-full">
+              <span class="field-label">Žinutė <span class="opt">(nebūtina)</span></span>
+              <textarea name="message" rows="4" placeholder="Pvz., dabar žvyras, vanduo bėga link garažo, reikia vietos dviem automobiliams."></textarea>
+            </label>
+          </div>
+
+          <label class="check consent">
+            <input type="checkbox" name="consent" required aria-describedby="qerr-consent">
+            <span>Sutinku, kad mano duomenys būtų naudojami tik atsakyti į šią užklausą. <a href="privatumas.html">Privatumo informacija</a></span>
+          </label>
+          <span class="field-err" id="qerr-consent"></span>
+
+          <button type="submit" class="btn btn-solid">Siųsti užklausą</button>
+          <div class="form-result" id="formResult" tabindex="-1" hidden></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div>
+        <span class="brand brand-foot">GRINDAS</span>
+        <p>Trinkelių klojimas, kiemai, įvažiavimai, takai.</p>
+      </div>
+      <p class="foot-note">Demonstracinis portfolio projektas. Įmonė, kontaktai, kainos ir darbų pavyzdžiai išgalvoti. Įmonės kodas: <span data-biz="companyCode">—</span>.</p>
+      <a class="text-link" href="#virsus">Į viršų</a>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/paving.js"></script>
+  <script src="assets/js/planner.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
