@@ -64,7 +64,9 @@ Unsplash licencija (nemokamai, galima komerciškai, nuoroda neprivaloma):
 | klojimas-eiga | sq lim | https://unsplash.com/photos/8WU8XGleveo |
 | ivaziavimas-pries | J. Rafi | https://unsplash.com/photos/gvhAbLY2XnU |
 | trinkeles-paletes | Sergej (skstrannik) | https://unsplash.com/photos/DpYmK7HAP8Q |
-
+| hero-takas-vakaras | RETRATO INMOBILIARIO | https://unsplash.com/photos/eLG6MsOeupk |
+| namas-medinis-takas | Yudiono Putranto | https://unsplash.com/photos/BWwOd21Y6mk |
+| takas-borteliai | Sergej (skstrannik) | https://unsplash.com/photos/i_fpJG0GU5A |
 `kiemas-zalios-siules` ir `vidinis-kiemas-skalda` pateikė projekto autorius. Prieš naudojant viešai
 reikia įsitikinti, kad turite teisę jas naudoti (šaltinis ir licencija).
 

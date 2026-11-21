@@ -282,6 +282,8 @@
     });
     document.getElementById("tLow").textContent = fmtEur(est.low);
     document.getElementById("tHigh").textContent = fmtEur(est.high);
+    var big = document.getElementById("priceBig");
+    if (big) big.textContent = fmtNum(est.low, 0) + " – " + fmtEur(est.high);
 
     var mn = document.getElementById("minOrderNote");
     mn.hidden = !est.belowMinimum;

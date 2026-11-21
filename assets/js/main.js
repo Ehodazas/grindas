@@ -4,8 +4,9 @@
   var P = window.Paving;
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduceMotion) document.documentElement.classList.add("reduce-motion");
+  var IMG = "assets/img/photos/";
 
-  /* ---------- Verslo duomenys iš konfigūracijos ---------- */
+  /* ---------- Verslo duomenys ---------- */
   var biz = cfg.business;
   document.querySelectorAll("[data-biz]").forEach(function (n) {
     var k = n.getAttribute("data-biz");
@@ -13,12 +14,17 @@
     else if (k === "email") { n.textContent = biz.email; n.setAttribute("href", "mailto:" + biz.email); }
     else n.textContent = biz[k];
   });
-  var areaList = document.getElementById("areaList");
-  if (areaList) biz.serviceAreas.forEach(function (a) {
-    var li = document.createElement("li"); li.textContent = a; areaList.appendChild(li);
-  });
+  var areaInline = document.getElementById("areaInline");
+  if (areaInline) areaInline.textContent = biz.serviceAreas.join(", ") + ".";
 
-  /* ---------- Navigacija ---------- */
+  /* ---------- Antraštė ir navigacija ---------- */
+  var header = document.querySelector(".site-header");
+  var hero = document.querySelector(".hero");
+  function updateHeader() { header.classList.toggle("is-solid", window.scrollY > (hero ? hero.offsetHeight - 90 : 10)); }
+  window.addEventListener("scroll", updateHeader, { passive: true });
+  window.addEventListener("resize", updateHeader);
+  updateHeader();
+
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("nav");
   function setNav(open) {
@@ -34,41 +40,33 @@
   /* ---------- HERO: nuotrauka susiklosto iš plokščių (vieną kartą) ---------- */
   (function heroAssemble() {
     var fig = document.getElementById("heroPhoto");
-    if (!fig || reduceMotion || !("IntersectionObserver" in window)) return;
+    if (!fig) return;
     var img = fig.querySelector("img");
-    var done = false;
     function reveal() { fig.classList.add("is-done"); }
-    // jei nuotrauka nespėja įsikelti — rodome be animacijos
+    if (reduceMotion || !("IntersectionObserver" in window)) { reveal(); return; }
+    var done = false;
     var safety = setTimeout(function () { if (!done) { done = true; reveal(); } }, 4000);
 
     function run() {
       if (done) return;
-      done = true;
-      clearTimeout(safety);
-      var W = fig.clientWidth, H = fig.clientHeight;
-      var iw = img.naturalWidth, ih = img.naturalHeight;
+      done = true; clearTimeout(safety);
+      var W = fig.clientWidth, H = fig.clientHeight, iw = img.naturalWidth, ih = img.naturalHeight;
       if (!W || !H || !iw) { reveal(); return; }
-      // tas pats „object-fit: cover“ išdėstymas kaip <img>
+      // atkartojamas <img> „object-fit: cover“ ir object-position 50% 68%
       var sc = Math.max(W / iw, H / ih), bw = iw * sc, bh = ih * sc;
-      var ox = (W - bw) / 2, oy = (H - bh) / 2;
-      var rows = 5, cols = 3, th = H / rows, tw = W / cols, gap = 3;
+      var ox = (W - bw) * 0.5, oy = (H - bh) * 0.68;
+      var rows = 5, cols = W > 900 ? 5 : 3, th = H / rows, tw = W / cols, gap = 3;
       var src = img.currentSrc || img.src;
       var frag = document.createDocumentFragment(), tiles = [], maxDelay = 0;
       for (var r = 0; r < rows; r++) {
-        var start = (r % 2) ? -tw / 2 : 0; // eilės su perrišimu, kaip klojamos plokštės
+        var start = (r % 2) ? -tw / 2 : 0; // eilės su perrišimu
         for (var x = start; x < W - 1; x += tw) {
           var left = Math.max(0, x), right = Math.min(W, x + tw), top = r * th;
           var t = document.createElement("span");
           t.className = "hero-tile";
-          t.style.left = (left + gap / 2) + "px";
-          t.style.top = (top + gap / 2) + "px";
-          t.style.width = (right - left - gap) + "px";
-          t.style.height = (th - gap) + "px";
-          t.style.backgroundImage = "url(\"" + src + "\")";
-          t.style.backgroundSize = bw + "px " + bh + "px";
-          t.style.backgroundPosition = (ox - left - gap / 2) + "px " + (oy - top - gap / 2) + "px";
-          // klojama nuo apačios (vartų) į viršų, iš kairės į dešinę
-          var d = (rows - 1 - r) * 0.11 + (left / W) * 0.22;
+          t.style.cssText = "left:" + (left + gap / 2) + "px;top:" + (top + gap / 2) + "px;width:" + (right - left - gap) + "px;height:" + (th - gap) + "px;" +
+            "background-image:url(\"" + src + "\");background-size:" + bw + "px " + bh + "px;background-position:" + (ox - left - gap / 2) + "px " + (oy - top - gap / 2) + "px";
+          var d = (rows - 1 - r) * 0.1 + (left / W) * 0.25; // nuo apačios į viršų
           maxDelay = Math.max(maxDelay, d);
           t.style.setProperty("--d", d.toFixed(3) + "s");
           frag.appendChild(t); tiles.push(t);
@@ -76,129 +74,162 @@
       }
       fig.classList.add("is-assembling");
       fig.appendChild(frag);
-      // pabaigoje siūlės „užpildomos“: rodoma vientisa nuotrauka
       setTimeout(function () {
-        reveal();
-        fig.classList.remove("is-assembling");
-        setTimeout(function () { tiles.forEach(function (n) { n.remove(); }); }, 260);
-      }, (maxDelay + 0.5) * 1000);
+        reveal(); fig.classList.remove("is-assembling");
+        setTimeout(function () { tiles.forEach(function (n) { n.remove(); }); }, 320);
+      }, (maxDelay + 0.52) * 1000);
     }
-
     var io = new IntersectionObserver(function (ents) {
       if (!ents[0].isIntersecting) return;
       io.disconnect();
-      if (img.complete && img.naturalWidth) run();
-      else img.addEventListener("load", run, { once: true });
-    }, { threshold: 0.3 });
+      if (img.complete && img.naturalWidth) run(); else img.addEventListener("load", run, { once: true });
+    }, { threshold: 0.2 });
     io.observe(fig);
   })();
 
-  /* ---------- Pjūvis ---------- */
-  var layers = {
-    pavers: {
-      title: "Trinkelės", y: [92, 132],
-      text: [
-        ["Kam reikalingos", "Priima apkrovą nuo žingsnių ar ratų ir paskirsto ją į apačią. Smėliu užpildytos siūlės leidžia trinkelėms dirbti kartu."],
-        ["Į ką atsižvelgiame", "Storį renkamės pagal apkrovą: takui užtenka plonesnių, įvažiavimui reikia storesnių. Eglutė geriau atlaiko sukančius ratus."],
-        ["Kodėl tai svarbu", "Net brangiausios trinkelės neišlaikys, jei apačioje silpnas pagrindas."]
-      ]
-    },
-    bedding: {
-      title: "Pastelės sluoksnis", y: [132, 160],
-      text: [
-        ["Kam reikalingas", "Plonas atsijų ar smėlio sluoksnis, ant kurio trinkelės išlyginamos į vieną aukštį."],
-        ["Į ką atsižvelgiame", "Sluoksnis turi būti vienodo storio. Juo nelyginamos duobės: nelygumai taisomi pagrinde."],
-        ["Kodėl tai svarbu", "Kur pastelė per stora, danga ilgainiui įdumba, o kieme atsiranda balos."]
-      ]
-    },
-    aggregate: {
-      title: "Skaldos pagrindas", y: [160, 250],
-      text: [
-        ["Kam reikalingas", "Pagrindinė laikanti dalis. Skalda pilama sluoksniais, kiekvienas tankinamas vibroplokšte."],
-        ["Į ką atsižvelgiame", "Storį lemia apkrova ir gruntas: įvažiavimui jis gerokai storesnis nei takui. Čia formuojamas nuolydis vandeniui."],
-        ["Kodėl tai svarbu", "Prastai sutankinta skalda slūgsta po pirmų žiemų, trinkelės pradeda klibėti."]
-      ]
-    },
-    soil: {
-      title: "Paruoštas gruntas", y: [250, 340],
-      text: [
-        ["Kam reikalingas", "Nukasus augalinį sluoksnį, gruntas išlyginamas ir sutankinamas. Ant jo remiasi visa konstrukcija."],
-        ["Į ką atsižvelgiame", "Molis prastai praleidžia vandenį ir kilnojasi nuo šalčio, todėl gali reikėti geotekstilės ar drenažo."],
-        ["Kodėl tai svarbu", "Grunto iš nuotraukos neįvertinsi, todėl pagrindo storį nustatome tik apžiūrėję vietą."]
-      ]
+  /* ---------- Paslaugos: vienas atviras punktas, nuotrauka keičiasi ---------- */
+  (function services() {
+    var acc = document.getElementById("serviceAcc");
+    if (!acc) return;
+    var photo = document.getElementById("servicePhoto");
+    var widths = { "egle-detale": 1400, "ivaziavimas-pries": 1400, "takas-borteliai": 1600, "kiemas-aikstele": 1600, "takas-sodas": 1400, "terasa-plokstes": 1600, "klojimas-eiga": 1400 };
+    var items = Array.prototype.slice.call(acc.querySelectorAll(".acc-item"));
+    // nuotraukos įkeliamos iš anksto, kad keitimas būtų sklandus
+    var preloaded = false;
+    function preload() {
+      if (preloaded) return; preloaded = true;
+      items.forEach(function (li) { var i = new Image(); i.src = IMG + li.dataset.photo + "-800.webp"; });
     }
-  };
-
-  (function drawXsecPavers() {
-    var g = document.getElementById("xsPavers");
-    if (!g) return;
-    var x = 40, i = 0, cols = ["#55585a", "#4c4f51", "#5d6062"];
-    while (x < 600) {
-      var w = Math.min(54, 600 - x);
-      P.el("rect", { x: x + 1.5, y: 92, width: w - 3, height: 40, rx: 1.5, fill: cols[i % 3] }, g);
-      P.el("rect", { x: x + w - 1.5, y: 96, width: 3, height: 36, fill: "#c9bb98" }, g);
-      x += w; i++;
+    function open(li) {
+      items.forEach(function (it) {
+        var on = it === li;
+        it.classList.toggle("is-open", on);
+        it.querySelector(".acc-btn").setAttribute("aria-expanded", on ? "true" : "false");
+        it.querySelector(".acc-panel").hidden = !on;
+      });
+      var name = li.dataset.photo;
+      if (photo.dataset.current === name) return;
+      photo.dataset.current = name;
+      var swap = function () {
+        photo.srcset = IMG + name + "-800.webp 800w, " + IMG + name + ".webp " + widths[name] + "w";
+        photo.src = IMG + name + "-800.webp";
+        photo.alt = li.dataset.alt;
+        var done = function () { photo.classList.remove("is-swapping"); };
+        if (photo.complete) requestAnimationFrame(done); else photo.addEventListener("load", done, { once: true });
+      };
+      if (reduceMotion) swap();
+      else { photo.classList.add("is-swapping"); setTimeout(swap, 220); }
     }
+    photo.dataset.current = "egle-detale";
+    items.forEach(function (li) {
+      var btn = li.querySelector(".acc-btn");
+      btn.addEventListener("click", function () { open(li); });
+      btn.addEventListener("pointerenter", preload, { once: true });
+      btn.addEventListener("focus", preload, { once: true });
+    });
   })();
 
-  var xsSvg = document.getElementById("xsecSvg");
-  if (xsSvg) {
-    var tabs = Array.prototype.slice.call(document.querySelectorAll(".xsec-tabs [role=tab]"));
+  /* ---------- Sluoksnių pjūvis (izometrinis) ---------- */
+  (function layersDiagram() {
+    var svg = document.getElementById("xsecSvg");
+    if (!svg) return;
+    var W = 220, D = 220, OX = 205, OY = 235, C = 0.866, S = 0.5;
+    function iso(x, y, z) { return [OX + (x - y) * C, OY + (x + y) * S - z]; }
+    function pts(arr) { return arr.map(function (p) { var q = iso(p[0], p[1], p[2]); return q[0].toFixed(1) + "," + q[1].toFixed(1); }).join(" "); }
+    function line(g, a, b, cls) { var p = iso.apply(null, a), q = iso.apply(null, b); P.el("line", { x1: p[0], y1: p[1], x2: q[0], y2: q[1], "class": cls }, g); }
+
+    var defs = P.el("defs", {}, svg);
+    defs.innerHTML =
+      '<pattern id="xs-agg" width="16" height="13" patternUnits="userSpaceOnUse"><rect width="16" height="13" fill="#a3a097"/><path d="M1 4l4-2 3 3-3 3-4-1zM10 1l5 1 1 4-4 2-3-3zM7 9l3-1 3 3-2 2-4-1z" fill="#878479"/><circle cx="14" cy="10" r="1.3" fill="#c0bdb4"/></pattern>' +
+      '<pattern id="xs-sand" width="9" height="7" patternUnits="userSpaceOnUse"><rect width="9" height="7" fill="#d8c8a2"/><circle cx="2" cy="2" r=".7" fill="#bfae85"/><circle cx="6" cy="5" r=".6" fill="#bfae85"/></pattern>' +
+      '<pattern id="xs-soil" width="22" height="14" patternUnits="userSpaceOnUse"><rect width="22" height="14" fill="#6e5a48"/><path d="M0 11l6-3M9 4l6-3M13 13l6-3" stroke="#5d4b3b" stroke-width="1.2"/></pattern>';
+
+    var layerDefs = [
+      { key: "soil", z: [0, 70], fill: "url(#xs-soil)", ly: 352, title: "Paruoštas gruntas", sub: "nukastas ir sutankintas",
+        info: ["Nukasus augalinį sluoksnį, gruntas išlyginamas ir sutankinamas. Ant jo remiasi visa konstrukcija.",
+               "Molis prastai praleidžia vandenį ir kilnojasi nuo šalčio, todėl kartais reikia geotekstilės ar drenažo."],
+        why: "Grunto iš nuotraukos neįvertinsi, todėl pagrindo storį nustatome apžiūrėję vietą." },
+      { key: "aggregate", z: [70, 150], fill: "url(#xs-agg)", ly: 282, title: "Skaldos pagrindas", sub: "skalda 0–32 mm, 15–30 cm",
+        info: ["Pagrindinė laikanti dalis. Skalda pilama sluoksniais, kiekvienas tankinamas vibroplokšte.",
+               "Įvažiavimui pagrindas gerokai storesnis nei takui. Čia formuojamas ir nuolydis vandeniui."],
+        why: "Prastai sutankinta skalda slūgsta po pirmų žiemų, o trinkelės pradeda klibėti." },
+      { key: "bedding", z: [150, 176], fill: "url(#xs-sand)", ly: 214, title: "Pastelės sluoksnis", sub: "atsijos ar smėlis, apie 3–5 cm",
+        info: ["Plonas sluoksnis, ant kurio trinkelės išlyginamos į vieną aukštį.",
+               "Jis turi būti vienodo storio. Juo nelyginamos duobės: nelygumai taisomi pagrinde."],
+        why: "Kur pastelė per stora, danga ilgainiui įdumba ir kieme atsiranda balos." },
+      { key: "pavers", z: [176, 206], fill: "#6d7072", ly: 160, title: "Trinkelės", sub: "6 cm takui, 8 cm įvažiavimui",
+        info: ["Priima apkrovą nuo žingsnių ar ratų ir paskirsto ją į apačią. Smėliu užpildytos siūlės leidžia trinkelėms dirbti kartu.",
+               "Eglutės raštas geriau atlaiko sukančius automobilio ratus nei tiesios eilės."],
+        why: "Net geriausios trinkelės neišlaikys, jei apačioje silpnas pagrindas." }
+    ];
+
+    var groups = {};
+    layerDefs.forEach(function (L) {
+      var g = P.el("g", { "class": "xs-layer", "data-layer": L.key, tabindex: "0", role: "button", "aria-pressed": "false", "aria-label": L.title + ": " + L.sub }, svg);
+      var body = P.el("g", { "class": "xs-body xs-" + L.key }, g);
+      var z0 = L.z[0], z1 = L.z[1];
+      P.el("polygon", { points: pts([[0, D, z0], [W, D, z0], [W, D, z1], [0, D, z1]]), fill: L.fill, stroke: "#2b2e2c", "stroke-width": 0.8 }, body);
+      P.el("polygon", { points: pts([[W, D, z0], [W, 0, z0], [W, 0, z1], [W, D, z1]]), fill: L.fill, stroke: "#2b2e2c", "stroke-width": 0.8 }, body);
+      P.el("polygon", { points: pts([[W, D, z0], [W, 0, z0], [W, 0, z1], [W, D, z1]]), fill: "rgba(0,0,0,.16)" }, body);
+      if (L.key === "pavers") {
+        var top = P.el("g", {}, body);
+        P.el("polygon", { points: pts([[0, 0, z1], [W, 0, z1], [W, D, z1], [0, D, z1]]), fill: "#8b8e8f", stroke: "#2b2e2c", "stroke-width": 0.8 }, top);
+        for (var k = 1; k < 10; k++) line(top, [0, k * 22, z1], [W, k * 22, z1], "xs-joint");
+        for (var r = 0; r < 10; r++) for (var x = (r % 2) * 22; x < W; x += 44) if (x > 0) line(top, [x, r * 22, z1], [x, (r + 1) * 22, z1], "xs-joint");
+        for (var x2 = 22; x2 < W; x2 += 44) line(body, [x2, D, z0], [x2, D, z1], "xs-joint");
+        for (var y2 = 22; y2 < D; y2 += 22) line(body, [W, y2, z0], [W, y2, z1], "xs-joint");
+      }
+      // atraminė linija iki užrašo
+      var zm = (z0 + z1) / 2, s = iso(W, D * 0.35, zm);
+      P.el("circle", { cx: s[0], cy: s[1], r: 3, "class": "xs-dot" }, g);
+      P.el("polyline", { points: [s[0], s[1], 405, s[1], 428, L.ly, 444, L.ly].join(" "), fill: "none", "class": "xs-leader" }, g);
+      var t1 = P.el("text", { x: 452, y: L.ly - 3, "class": "xs-label-title" }, g); t1.textContent = L.title;
+      var t2 = P.el("text", { x: 452, y: L.ly + 15, "class": "xs-label-sub" }, g); t2.textContent = L.sub;
+      P.el("rect", { x: 440, y: L.ly - 20, width: 236, height: 42, "class": "xs-hit" }, g);
+      groups[L.key] = { g: g, def: L };
+    });
+    var jointStyle = document.createElementNS(P.NS, "style");
+    jointStyle.textContent = ".xs-joint{stroke:#3f4244;stroke-width:1}";
+    svg.appendChild(jointStyle);
+
+    var fig = svg.closest(".xsec-figure");
     var info = document.getElementById("xsecInfo");
-    var bracket = P.el("g", { "class": "xs-bracket" }, xsSvg);
-    P.el("path", { d: "", "class": "xs-bracket-line" }, bracket);
-
-    var selectLayer = function (key, focus) {
-      var L = layers[key];
-      tabs.forEach(function (t) {
-        var on = t.getAttribute("data-layer") === key;
-        t.setAttribute("aria-selected", on ? "true" : "false");
-        t.tabIndex = on ? 0 : -1;
-        if (on) { info.setAttribute("aria-labelledby", t.id); if (focus) t.focus(); }
+    function select(key) {
+      Object.keys(groups).forEach(function (k) {
+        var on = k === key;
+        groups[k].g.classList.toggle("is-active", on);
+        groups[k].g.setAttribute("aria-pressed", on ? "true" : "false");
       });
-      xsSvg.querySelectorAll(".xs-layer").forEach(function (g) {
-        g.classList.toggle("is-active", g.getAttribute("data-layer") === key);
-      });
-      xsSvg.classList.add("has-selection");
-      bracket.firstChild.setAttribute("d", "M34 " + (L.y[0] + 2) + "h-6v" + (L.y[1] - L.y[0] - 4) + "h6");
-      var html = '<h3 class="h3">' + L.title + "</h3><dl>";
-      L.text.forEach(function (r) { html += "<dt>" + r[0] + "</dt><dd>" + r[1] + "</dd>"; });
-      info.innerHTML = html + "</dl>";
+      fig.classList.add("has-selection");
+      var L = groups[key].def;
+      info.innerHTML = "<h3></h3><p></p><p></p><p class=\"why\"></p>";
+      info.querySelector("h3").textContent = L.title;
+      var ps = info.querySelectorAll("p");
+      ps[0].textContent = L.info[0]; ps[1].textContent = L.info[1]; ps[2].textContent = L.why;
       info.classList.remove("swap"); void info.offsetWidth; info.classList.add("swap");
-    };
-
-    tabs.forEach(function (t, i) {
-      t.addEventListener("click", function () { selectLayer(t.getAttribute("data-layer")); });
-      t.addEventListener("keydown", function (e) {
-        var n = null;
-        if (e.key === "ArrowDown" || e.key === "ArrowRight") n = (i + 1) % tabs.length;
-        if (e.key === "ArrowUp" || e.key === "ArrowLeft") n = (i - 1 + tabs.length) % tabs.length;
-        if (e.key === "Home") n = 0;
-        if (e.key === "End") n = tabs.length - 1;
-        if (n !== null) { e.preventDefault(); selectLayer(tabs[n].getAttribute("data-layer"), true); }
-      });
+    }
+    Object.keys(groups).forEach(function (k) {
+      var g = groups[k].g;
+      g.addEventListener("click", function () { select(k); });
+      g.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(k); } });
     });
-    xsSvg.querySelectorAll(".xs-layer").forEach(function (g) {
-      g.addEventListener("click", function () { selectLayer(g.getAttribute("data-layer")); });
-    });
-    selectLayer("pavers");
+    select("pavers");
 
-    var xsFig = xsSvg.closest(".xsec-figure");
-    var playXsec = function () {
+    function play() {
       if (reduceMotion) return;
-      xsFig.classList.remove("is-building"); void xsFig.offsetWidth; xsFig.classList.add("is-building");
-    };
+      fig.classList.remove("is-building"); void fig.getBoundingClientRect(); fig.classList.add("is-building");
+    }
     var replay = document.getElementById("xsecReplay");
-    replay.addEventListener("click", playXsec);
+    replay.addEventListener("click", play);
     if (reduceMotion) replay.hidden = true;
     else if ("IntersectionObserver" in window) {
-      xsFig.classList.add("pre-build");
-      var xio = new IntersectionObserver(function (ents) {
-        if (ents[0].isIntersecting) { xsFig.classList.remove("pre-build"); playXsec(); xio.disconnect(); }
-      }, { threshold: 0.45 });
-      xio.observe(xsFig);
+      fig.classList.add("pre-build");
+      var io = new IntersectionObserver(function (ents) {
+        if (ents[0].isIntersecting) { fig.classList.remove("pre-build"); play(); io.disconnect(); }
+      }, { threshold: 0.4 });
+      io.observe(fig);
     }
-  }
+  })();
 
   /* ---------- Prieš / po schema ---------- */
   (function drawBeforeAfter() {
@@ -212,7 +243,7 @@
       return defs;
     }
     function house(svg, prefix) {
-      P.el("rect", { x: -0.5, y: -0.5, width: 17, height: 3.4, fill: "#d9d4c8" }, svg);
+      P.el("rect", { x: -0.5, y: -0.5, width: 17, height: 3.4, fill: "#e3ded4" }, svg);
       P.el("rect", { x: -0.5, y: -0.5, width: 17, height: 3.4, fill: "url(#" + prefix + "-hatch)", "class": "bld" }, svg);
       P.el("rect", { x: 5.6, y: 2.7, width: 4.8, height: 0.2, "class": "garage-door" }, svg);
       var t = P.el("text", { x: 8, y: 1.6, "class": "plan-label", "text-anchor": "middle" }, svg); t.textContent = "Garažas";
@@ -259,9 +290,7 @@
   (function slider() {
     var stage = document.getElementById("baStage");
     if (!stage) return;
-    var range = document.getElementById("baRange");
-    var clip = document.getElementById("baClip");
-    var handle = document.getElementById("baHandle");
+    var range = document.getElementById("baRange"), clip = document.getElementById("baClip"), handle = document.getElementById("baHandle");
     function set(v) {
       v = Math.max(0, Math.min(100, v));
       clip.style.clipPath = "inset(0 0 0 " + v + "%)";
@@ -272,74 +301,33 @@
     range.addEventListener("input", function () { set(parseFloat(range.value)); });
     var dragging = false;
     function fromEvent(e) { var r = stage.getBoundingClientRect(); return ((e.clientX - r.left) / r.width) * 100; }
-    stage.addEventListener("pointerdown", function (e) {
-      if (e.button !== 0) return;
-      dragging = true; stage.setPointerCapture(e.pointerId); set(fromEvent(e));
-    });
+    stage.addEventListener("pointerdown", function (e) { if (e.button !== 0) return; dragging = true; stage.setPointerCapture(e.pointerId); set(fromEvent(e)); });
     stage.addEventListener("pointermove", function (e) { if (dragging) set(fromEvent(e)); });
-    function end() { dragging = false; }
-    stage.addEventListener("pointerup", end);
-    stage.addEventListener("pointercancel", end);
+    stage.addEventListener("pointerup", function () { dragging = false; });
+    stage.addEventListener("pointercancel", function () { dragging = false; });
     set(50);
   })();
 
   /* ---------- Projektai (pavyzdiniai) ---------- */
-  var IMG = "assets/img/photos/";
   var projects = [
-    {
-      img: "vidinis-kiemas-skalda", w: 990, h: 660, single: true,
-      alt: "Vidinis kiemas iš didelių betoninių plokščių su skaldos siūlėmis prie tamsaus namo",
-      title: "Vidinis kiemas su skaldos siūlėmis",
-      place: "Kauno r.", area: "apie 70 m²", materials: "Didelio formato plokštės, smulki skalda siūlėms",
-      text: "Plokštės paklotos su plačiomis siūlėmis, užpildytomis skalda. Vanduo susigeria, o kiemas neatrodo kaip ištisinis betonas."
-    },
-    {
-      img: "takas-sodas", w: 1400, h: 2487,
-      alt: "Trinkelių takas tarp medžių ir gėlynų",
-      title: "Takas per sodą",
-      place: "Trakai", area: "apie 45 m²", materials: "Betoninės trinkelės 20 × 10 cm, ruda, su perrišimu",
-      text: "Platus takas nuo vartų iki namo. Kraštai atremti į vejos bortelius, kad žolė neužaugtų ant dangos."
-    },
-    {
-      img: "kiemas-aikstele", w: 1600, h: 1067,
-      alt: "Trinkelėmis išklota poilsio aikštelė su akmenine sėdima sienele",
-      title: "Poilsio aikštelė kieme",
-      place: "Vilniaus r.", area: "apie 40 m²", materials: "Trinkelių mišinys, smėlio ir pilki atspalviai",
-      text: "Aikštelė prie esamos akmeninės sienelės. Danga pakelta virš vejos, kad po lietaus neliktų balų."
-    },
-    {
-      img: "terasa-plokstes", w: 1600, h: 2192,
-      alt: "Naujai išklota plokščių terasa palei namo sieną",
-      title: "Terasa palei namą",
-      place: "Kaunas", area: "apie 30 m²", materials: "Betoninės plokštės, tiesios eilės",
-      text: "Plokštės paklotos su nuolydžiu nuo sienos, kad vanduo nebėgtų prie pamatų."
-    },
-    {
-      img: "terasa-moderni", w: 1600, h: 1067,
-      alt: "Šviesių plokščių terasa su pavėsine ir veja",
-      title: "Terasa su pavėsine",
-      place: "Kauno r.", area: "apie 35 m²", materials: "Šviesios plokštės 60 × 40 cm, vejos borteliai",
-      text: "Pagrindas įrengtas po visa terasa. Plokštės paklotos iki vejos krašto ir atremtos į bortelį."
-    }
+    { img: "vidinis-kiemas-skalda", w: 990, h: 660, single: true, title: "Vidinis kiemas su skaldos siūlėmis", meta: "Kauno r., apie 70 m²",
+      alt: "Vidinis kiemas iš didelių betoninių plokščių su skaldos siūlėmis prie tamsaus namo" },
+    { img: "namas-medinis-takas", w: 1600, h: 1067, title: "Takas iš plokščių prie namo", meta: "Vilniaus r., apie 45 m²",
+      alt: "Takas iš didelių plokščių su akmenukų siūlėmis prie medinio namo" },
+    { img: "terasa-moderni", w: 1600, h: 1067, title: "Terasa su pavėsine", meta: "Kaunas, apie 35 m²",
+      alt: "Šviesių plokščių terasa su pavėsine ir veja" }
   ];
-
   var list = document.getElementById("projects");
   if (list) projects.forEach(function (pr, i) {
     var li = document.createElement("li");
     li.className = "project project-" + (i + 1);
-    var srcset = pr.single ? "" : ' srcset="' + IMG + pr.img + '-800.webp 800w, ' + IMG + pr.img + '.webp ' + pr.w + 'w"';
-    var sizes = i === 0 ? "(max-width: 980px) 100vw, 60vw" : (i === 4 ? "(max-width: 980px) 100vw, 64vw" : "(max-width: 980px) 100vw, 32vw");
-    li.innerHTML =
-      '<figure class="project-photo"><img src="' + IMG + pr.img + (pr.single ? "" : "-800") + '.webp"' + srcset +
-      ' sizes="' + sizes + '" width="' + pr.w + '" height="' + pr.h + '" loading="lazy" decoding="async" alt=""></figure>' +
-      '<div class="project-text"><p class="project-flag">Pavyzdinis projektas</p><h3 class="h3"></h3>' +
-      '<dl class="project-meta"><div><dt>Vieta</dt><dd></dd></div><div><dt>Plotas</dt><dd></dd></div><div><dt>Medžiagos</dt><dd></dd></div></dl>' +
-      '<p class="project-desc"></p></div>';
+    var srcset = pr.single ? "" : ' srcset="' + IMG + pr.img + "-800.webp 800w, " + IMG + pr.img + ".webp " + pr.w + 'w"';
+    li.innerHTML = '<figure class="project-photo"><img src="' + IMG + pr.img + (pr.single ? "" : "-800") + '.webp"' + srcset +
+      ' sizes="(max-width: 860px) 100vw, ' + (i === 0 ? "58vw" : "42vw") + '" width="' + pr.w + '" height="' + pr.h + '" loading="lazy" decoding="async" alt=""></figure>' +
+      '<div class="project-cap"><h3></h3><p></p></div>';
     li.querySelector("img").alt = pr.alt;
-    li.querySelector(".h3").textContent = pr.title;
-    var dds = li.querySelectorAll("dd");
-    dds[0].textContent = pr.place; dds[1].textContent = pr.area; dds[2].textContent = pr.materials;
-    li.querySelector(".project-desc").textContent = pr.text;
+    li.querySelector("h3").textContent = pr.title;
+    li.querySelector("p").textContent = pr.meta;
     list.appendChild(li);
   });
 
@@ -348,36 +336,28 @@
   var plannerData = null;
   var mode = cfg.form.mode || (cfg.form.endpoint ? "endpoint" : "demo");
   if (mode === "endpoint" && !cfg.form.endpoint) mode = "demo";
-  var modeEl = document.getElementById("formMode");
-  modeEl.textContent = mode === "demo" ? "Demo režimas: užklausa nesiunčiama, parodoma, kas būtų perduota."
-    : mode === "mailto" ? "Paspaudus atsidarys jūsų el. pašto programa su paruoštu laišku." : "";
+  document.getElementById("formMode").textContent = mode === "demo" ? "Demo režimas: užklausa nesiunčiama, parodoma, kas būtų perduota."
+    : mode === "mailto" ? "Atsidarys jūsų el. pašto programa su paruoštu laišku." : "";
 
   var useToType = { takas: "takas", kiemas: "kiemas", terasa: "terasa", ivaziavimas: "ivaziavimas" };
-
   document.addEventListener("grindas:quote", function (e) {
     plannerData = e.detail;
-    var box = document.getElementById("plannerSummary");
-    var dl = document.getElementById("plannerSummaryList");
+    var box = document.getElementById("plannerSummary"), dl = document.getElementById("plannerSummaryList");
     dl.innerHTML = "";
     plannerData.rows.forEach(function (r) {
-      var div = document.createElement("div");
-      var dt = document.createElement("dt"); dt.textContent = r[0];
-      var dd = document.createElement("dd"); dd.textContent = r[1];
-      div.appendChild(dt); div.appendChild(dd); dl.appendChild(div);
+      var div = document.createElement("div"), dt = document.createElement("dt"), dd = document.createElement("dd");
+      dt.textContent = r[0]; dd.textContent = r[1]; div.appendChild(dt); div.appendChild(dd); dl.appendChild(div);
     });
     box.hidden = false;
     qf.elements.type.value = useToType[plannerData.use] || "";
     qf.elements.area.value = String(plannerData.area).replace(".", ",");
     setErr("type", ""); setErr("area", "");
-    document.getElementById("kontaktai").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    document.querySelector(".quote").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
     setTimeout(function () { qf.elements.name.focus({ preventScroll: true }); }, reduceMotion ? 0 : 500);
     box.classList.remove("flash"); void box.offsetWidth; box.classList.add("flash");
   });
-
   document.getElementById("clearPlanner").addEventListener("click", function () {
-    plannerData = null;
-    document.getElementById("plannerSummary").hidden = true;
-    qf.elements.name.focus();
+    plannerData = null; document.getElementById("plannerSummary").hidden = true; qf.elements.name.focus();
   });
 
   function setErr(name, msg) {
@@ -386,23 +366,17 @@
     var input = qf.elements[name];
     if (input) input.setAttribute("aria-invalid", msg ? "true" : "false");
   }
-
   function validateQuote() {
     var f = qf.elements, ok = true, first = null;
-    function check(name, cond, msg) {
-      if (!cond) { setErr(name, msg); ok = false; if (!first) first = f[name]; }
-      else setErr(name, "");
-    }
+    function check(name, cond, msg) { if (!cond) { setErr(name, msg); ok = false; if (!first) first = f[name]; } else setErr(name, ""); }
     check("name", f.name.value.trim().length >= 2, "Įrašykite vardą.");
     var c = f.contact.value.trim();
     var isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(c);
-    var digits = c.replace(/[\s()-]/g, "");
-    var isPhone = /^(\+370|8|\+\d{2,3})\d{7,10}$/.test(digits);
+    var isPhone = /^(\+370|8|\+\d{2,3})\d{7,10}$/.test(c.replace(/[\s()-]/g, ""));
     check("contact", isEmail || isPhone, c ? "Įrašykite telefoną (pvz. +370 612 34567) arba el. pašto adresą." : "Nurodykite, kaip su jumis susisiekti.");
     check("city", f.city.value.trim().length >= 2, "Įrašykite miestą ar savivaldybę.");
     check("type", !!f.type.value, "Pasirinkite darbų tipą.");
-    var areaRaw = f.area.value.trim();
-    var areaNum = window.GrindasCalc.parseNum(areaRaw);
+    var areaRaw = f.area.value.trim(), areaNum = window.GrindasCalc.parseNum(areaRaw);
     check("area", !areaRaw || (areaNum > 0 && areaNum <= 100000), "Įrašykite plotą skaičiumi, pvz. 60 arba 62,5.");
     check("consent", f.consent.checked, "Be sutikimo negalėsime atsakyti į užklausą.");
     return { ok: ok, first: first };
@@ -414,13 +388,9 @@
   function payload() {
     var f = qf.elements;
     return {
-      vardas: f.name.value.trim(),
-      kontaktas: f.contact.value.trim(),
-      miestas: f.city.value.trim(),
-      darbu_tipas: f.type.options[f.type.selectedIndex].text,
-      plotas_m2: f.area.value.trim(),
-      laikas: f.timing.options[f.timing.selectedIndex].text,
-      zinute: f.message.value.trim(),
+      vardas: f.name.value.trim(), kontaktas: f.contact.value.trim(), miestas: f.city.value.trim(),
+      darbu_tipas: f.type.options[f.type.selectedIndex].text, plotas_m2: f.area.value.trim(),
+      laikas: f.timing.options[f.timing.selectedIndex].text, zinute: f.message.value.trim(),
       planuoklis: plannerData ? plannerData.rows.map(function (r) { return r[0] + ": " + r[1]; }) : null
     };
   }
@@ -429,60 +399,40 @@
       return labels[k] + ": " + (Array.isArray(data[k]) ? "\n  " + data[k].join("\n  ") : data[k]);
     }).join("\n");
   }
-
   var result = document.getElementById("formResult");
-  function showResult(kind, html) {
-    result.hidden = false;
-    result.className = "form-result is-" + kind;
-    result.innerHTML = html;
-    result.focus();
-  }
+  function showResult(kind, html) { result.hidden = false; result.className = "form-result is-" + kind; result.innerHTML = html; result.focus(); }
 
   qf.addEventListener("submit", function (e) {
     e.preventDefault();
     var v = validateQuote();
     if (!v.ok) { v.first.focus(); return; }
-    if (qf.elements._honey.value) return; // botas
-    var data = payload();
-    var text = asText(data);
-    var btn = qf.querySelector("button[type=submit]");
-
+    if (qf.elements._honey.value) return;
+    var data = payload(), text = asText(data), btn = qf.querySelector("button[type=submit]");
     if (mode === "demo") {
-      showResult("demo", '<h3 class="h4">Užklausa neišsiųsta: demo režimas</h3><p>Duomenys užpildyti teisingai. Tikroje svetainėje įmonė gautų štai tokį laišką:</p><pre class="payload"></pre>');
+      showResult("demo", '<h3 class="h4">Užklausa neišsiųsta: demo režimas</h3><p>Duomenys užpildyti teisingai. Įmonė gautų štai tokį laišką:</p><pre class="payload"></pre>');
       result.querySelector(".payload").textContent = text;
       return;
     }
-
     if (mode === "mailto") {
-      var href = "mailto:" + biz.email + "?subject=" + encodeURIComponent(cfg.form.subject || "Užklausa") + "&body=" + encodeURIComponent(text);
-      window.location.href = href;
-      showResult("ok", '<h3 class="h4">Atidarytas el. pašto langas</h3><p>Patikrinkite laišką ir paspauskite „Siųsti“. Jei langas neatsidarė, parašykite adresu <a href="mailto:' + biz.email + '">' + biz.email + "</a>.</p>");
+      window.location.href = "mailto:" + biz.email + "?subject=" + encodeURIComponent(cfg.form.subject || "Užklausa") + "&body=" + encodeURIComponent(text);
+      showResult("ok", '<h3 class="h4">Atidarytas el. pašto langas</h3><p>Patikrinkite laišką ir paspauskite „Siųsti“. Jei langas neatsidarė, rašykite adresu <a href="mailto:' + biz.email + '">' + biz.email + "</a>.</p>");
       return;
     }
-
     btn.disabled = true;
+    var label = btn.innerHTML;
     btn.textContent = "Siunčiama…";
     var body = Object.assign({}, data, {
       planuoklis: data.planuoklis ? data.planuoklis.join("\n") : "",
       _subject: (cfg.form.subject || "Užklausa") + ": " + data.darbu_tipas + ", " + data.miestas,
-      _template: "table",
-      _captcha: "false"
+      _template: "table", _captcha: "false"
     });
-    fetch(cfg.form.endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(body)
-    }).then(function (res) {
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      showResult("ok", '<h3 class="h4">Užklausa išsiųsta</h3><p>Gavome jūsų užklausą ir susisieksime per vieną–dvi darbo dienas.</p>');
-      qf.reset();
-      plannerData = null;
-      document.getElementById("plannerSummary").hidden = true;
-    }).catch(function () {
-      showResult("error", '<h3 class="h4">Užklausos išsiųsti nepavyko</h3><p>Patikrinkite interneto ryšį ir bandykite dar kartą arba paskambinkite ' + biz.phone + ".</p>");
-    }).then(function () {
-      btn.disabled = false;
-      btn.textContent = "Siųsti užklausą";
-    });
+    fetch(cfg.form.endpoint, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(body) })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        showResult("ok", '<h3 class="h4">Užklausa išsiųsta</h3><p>Gavome jūsų užklausą ir susisieksime per vieną–dvi darbo dienas.</p>');
+        qf.reset(); plannerData = null; document.getElementById("plannerSummary").hidden = true;
+      })
+      .catch(function () { showResult("error", '<h3 class="h4">Užklausos išsiųsti nepavyko</h3><p>Patikrinkite ryšį ir bandykite dar kartą arba paskambinkite ' + biz.phone + ".</p>"); })
+      .then(function () { btn.disabled = false; btn.innerHTML = label; });
   });
 })();
