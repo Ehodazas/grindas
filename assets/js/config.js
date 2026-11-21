@@ -25,11 +25,17 @@ window.GRINDAS_CONFIG = {
     ]
   },
 
-  /* Užklausos forma. Jei endpoint tuščias — forma veikia demo režimu ir nieko nesiunčia.
-     Tinka bet kuri JSON POST paslauga (pvz. Formspree, savas API). */
+  /* Užklausos forma. mode:
+       "demo"     — nieko nesiunčia, parodo, kas būtų perduota (šis demo projektas);
+       "endpoint" — siunčia JSON POST. Greičiausias variantas be serverio — FormSubmit:
+                    endpoint: "https://formsubmit.co/ajax/JUSU@ELPASTAS.LT"
+                    (pirmą kartą FormSubmit atsiųs patvirtinimo laišką — jį reikia patvirtinti).
+                    Tinka ir Formspree ar savas API;
+       "mailto"   — atidaro lankytojo el. pašto programą su paruoštu laišku adresu business.email. */
   form: {
+    mode: "demo",
     endpoint: "",
-    method: "POST"
+    subject: "Nauja užklausa iš svetainės"
   },
 
   currency: "EUR",

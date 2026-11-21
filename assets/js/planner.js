@@ -1,6 +1,6 @@
 /*
  * Kiemo planuoklis: geometrija, kiekiai, orientacinė kaina ir SVG planas.
- * Grynosios skaičiavimo funkcijos (GrindasCalc) atskirtos nuo DOM, kad būtų lengva testuoti.
+ * Skaičiavimai atskirti į calc.js.
  */
 (function () {
   "use strict";
@@ -8,116 +8,10 @@
   var P = window.Paving;
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---------- Grynieji skaičiavimai ---------- */
-
-  function parseNum(v) {
-    if (typeof v === "number") return v;
-    var s = String(v == null ? "" : v).trim().replace(/\s/g, "").replace(",", ".");
-    if (!/^\d+(\.\d+)?$/.test(s)) return NaN;
-    return parseFloat(s);
-  }
-
-  function geometry(shape, a, b, ca, cb) {
-    var area = shape === "l" ? a * b - ca * cb : a * b;
-    // L formos (stačiakampio be kampo) perimetras lygus apgaubiančio stačiakampio perimetrui
-    var perimeter = 2 * (a + b);
-    return { area: area, perimeter: perimeter };
-  }
-
-  /* Grąžina { errors: {laukas: tekstas}, form: "..."} */
-  function validate(s) {
-    var L = cfg.limits, e = {};
-    function side(key, label) {
-      var v = s[key];
-      if (isNaN(v)) e[key] = "Įveskite skaičių, pvz. 7,5";
-      else if (v < L.minSide) e[key] = label + " turi būti bent " + L.minSide + " m";
-      else if (v > L.maxSide) e[key] = label + " negali viršyti " + L.maxSide + " m";
-    }
-    side("a", "Ilgis");
-    side("b", "Plotis");
-    if (s.shape === "l") {
-      ["ca", "cb"].forEach(function (k) {
-        var v = s[k];
-        if (isNaN(v)) e[k] = "Įveskite skaičių, pvz. 3";
-        else if (v < 0.5) e[k] = "Išpjova turi būti bent 0,5 m";
-      });
-      if (!e.ca && !e.a && s.ca >= s.a - 0.5) e.ca = "Turi būti bent 0,5 m mažesnė už ilgį A";
-      if (!e.cb && !e.b && s.cb >= s.b - 0.5) e.cb = "Turi būti bent 0,5 m mažesnė už plotį B";
-    }
-    var form = "";
-    if (!Object.keys(e).length) {
-      var g = geometry(s.shape, s.a, s.b, s.ca, s.cb);
-      if (g.area < L.minArea) form = "Plotas per mažas skaičiavimui (mažiau nei " + L.minArea + " m²). Tokius darbus įvertiname individualiai.";
-      else if (g.area > L.maxArea) form = "Daugiau nei " + L.maxArea + " m² plotą skaičiuojame tik individualiai. Parašykite mums.";
-    }
-    return { errors: e, form: form };
-  }
-
-  function roundTo(v) { var r = cfg.roundTo || 1; return Math.round(v / r) * r; }
-
-  function estimate(s) {
-    var use = cfg.uses[s.use];
-    var mat = cfg.materials[s.material];
-    var pat = cfg.patterns[s.pattern];
-    var col = mat.colors[s.color];
-    var g = geometry(s.shape, s.a, s.b, s.ca, s.cb);
-    var waste = Math.min(cfg.limits.maxWaste, Math.max(cfg.limits.minWaste, s.waste));
-    var qtyM2 = g.area * (1 + waste / 100);
-    var unitArea = mat.unit.l * mat.unit.w;
-    var pieces = Math.ceil(qtyM2 / unitArea);
-
-    var items = [];
-    var mf = use.materialFactor * col.factor;
-    items.push({
-      key: "material",
-      label: mat.label + ", " + col.label.toLowerCase() + " (" + fmtNum(qtyM2, 1) + " m²)",
-      low: roundTo(mat.price[0] * mf * qtyM2),
-      high: roundTo(mat.price[1] * mf * qtyM2)
-    });
-    var lf = mat.laborFactor * pat.laborFactor;
-    items.push({
-      key: "labor",
-      label: "Klojimas: " + pat.label.toLowerCase() + ", pjovimas, siūlės",
-      low: roundTo(use.labor[0] * lf * g.area),
-      high: roundTo(use.labor[1] * lf * g.area)
-    });
-    if (s.prep) {
-      items.push({
-        key: "prep",
-        label: "Pagrindo paruošimas: kasimas, išvežimas, skalda",
-        low: roundTo(use.groundPrep[0] * g.area),
-        high: roundTo(use.groundPrep[1] * g.area)
-      });
-    }
-    if (s.curbs) {
-      items.push({
-        key: "curbs",
-        label: cfg.curbs.label + " (" + fmtNum(g.perimeter, 1) + " m)",
-        low: roundTo(cfg.curbs.price[0] * g.perimeter),
-        high: roundTo(cfg.curbs.price[1] * g.perimeter)
-      });
-    }
-    items.push({
-      key: "mob",
-      label: cfg.mobilization.label,
-      low: cfg.mobilization.price[0],
-      high: cfg.mobilization.price[1]
-    });
-    var low = 0, high = 0;
-    items.forEach(function (it) { low += it.low; high += it.high; });
-    return {
-      area: g.area, perimeter: g.perimeter, waste: waste,
-      qtyM2: qtyM2, pieces: pieces, items: items, low: low, high: high,
-      belowMinimum: high < cfg.minimumOrder
-    };
-  }
-
-  function fmtNum(v, d) {
-    return v.toLocaleString("lt-LT", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 });
-  }
+  /* Skaičiavimai — assets/js/calc.js (testuojami tests/calc.test.js) */
+  var Calc = window.GrindasCalc;
+  var parseNum = Calc.parseNum, validate = Calc.validate, estimate = Calc.estimate, fmtNum = Calc.fmtNum;
   function fmtEur(v) { return fmtNum(v, 0) + " €"; }
-
-  window.GrindasCalc = { parseNum: parseNum, geometry: geometry, validate: validate, estimate: estimate };
 
   /* ---------- UI ---------- */
 
@@ -450,6 +344,18 @@
     var s = summary();
     if (!s) return;
     document.dispatchEvent(new CustomEvent("grindas:quote", { detail: s }));
+  });
+
+  /* Vaizdas: iš viršaus arba perspektyva */
+  var pvFigure = document.querySelector(".pv-figure");
+  document.querySelectorAll(".pv-view").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var iso = btn.getAttribute("data-view") === "iso";
+      pvFigure.classList.toggle("is-iso", iso);
+      document.querySelectorAll(".pv-view").forEach(function (b) {
+        b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+      });
+    });
   });
 
   buildUse(); buildMaterials(); buildPatterns(); buildColors();
