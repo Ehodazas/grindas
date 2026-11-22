@@ -17,8 +17,10 @@
   });
   // visi „Skambinti“ mygtukai veda tiesiai į telefoną
   document.querySelectorAll("[data-tel]").forEach(function (n) { n.setAttribute("href", biz.phoneHref); });
-  var areaCall = document.getElementById("areaCall");
-  if (areaCall) areaCall.textContent = biz.serviceAreas.join(", ") + ".";
+  ["areaCall", "areaFoot"].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = biz.serviceAreas.join(", ") + ".";
+  });
   var areaInline = document.getElementById("areaInline");
   if (areaInline) areaInline.textContent = biz.serviceAreas.join(", ") + ".";
 

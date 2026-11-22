@@ -433,7 +433,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .footer-mark { display: block; font-weight: 800; letter-spacing: -.045em; line-height: .78; color: rgba(255,255,255,.94); font-size: clamp(3.6rem, 17vw, 15rem); margin: 8px 0 32px; white-space: nowrap; overflow: hidden; }
 .footer-mark span { color: var(--tape); }
 
-@media (max-width: 600px) { .demo-tag { top: 92px; bottom: auto; } }
+@media (max-width: 600px) { .demo-tag { top: 132px; bottom: auto; } }
 
 /* ---------- Skambinimas vietoj užklausos formos ---------- */
 .call-card { position: relative; overflow: hidden; background: var(--paper); border-radius: 4px; padding: clamp(34px, 4vw, 48px) clamp(22px, 3vw, 40px) clamp(22px, 3vw, 36px); box-shadow: 0 0 0 1px var(--line); }
@@ -459,3 +459,28 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .site-footer { padding-bottom: 92px; }
 }
 .reduce-motion .call-bar { transition: none; }
+
+/* ---------- Kontaktų juosta hero viršuje ---------- */
+.topbar { max-height: 40px; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,.22); font-size: .86rem; transition: max-height .25s var(--ease), border-color .25s; }
+.topbar-inner { display: flex; align-items: center; justify-content: flex-end; gap: 0; min-height: 38px; }
+.tb-item { display: inline-flex; gap: 6px; align-items: center; padding: 0 0 0 18px; margin-left: 18px; border-left: 1px solid rgba(255,255,255,.28); white-space: nowrap; }
+.tb-item:first-child { border-left: 0; margin-left: 0; padding-left: 0; }
+.tb-label { opacity: .7; }
+.topbar a { text-decoration: none; font-weight: 600; }
+.topbar a:hover { text-decoration: underline; }
+.site-header.is-solid .topbar { max-height: 0; border-color: transparent; }
+.hero-inner { padding-top: 160px; }
+@media (max-width: 760px) {
+  .tb-email, .tb-hours { display: none; }
+  .topbar-inner { justify-content: center; }
+}
+.nav-open .topbar { max-height: 0; border-color: transparent; }
+
+/* ---------- Kontaktai poraštėje ---------- */
+.footer-contacts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px 32px; margin: 0 0 32px; padding: 24px 0; border-top: 1px solid rgba(255,255,255,.16); border-bottom: 1px solid rgba(255,255,255,.16); }
+.footer-contacts dt { font-size: .8rem; color: rgba(255,255,255,.55); margin-bottom: 4px; }
+.footer-contacts dd { margin: 0; color: #fff; font-weight: 600; font-size: .95rem; }
+.footer-contacts a { color: #fff; text-decoration: none; }
+.footer-contacts a:hover { text-decoration: underline; }
+@media (max-width: 860px) { .footer-contacts { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .footer-contacts { grid-template-columns: 1fr; } }
