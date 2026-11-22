@@ -13,6 +13,7 @@
     if (k === "phone") { n.textContent = biz.phone; n.setAttribute("href", biz.phoneHref); }
     else if (k === "email") { n.textContent = biz.email; n.setAttribute("href", "mailto:" + biz.email); }
     else if (k === "phoneText") { n.textContent = biz.phone; }
+    else if (k === "managerInitials") { n.textContent = (biz.manager || "").split(/\s+/).map(function (w) { return w.charAt(0); }).join("").slice(0, 2).toUpperCase(); }
     else n.textContent = biz[k];
   });
   // visi „Skambinti“ mygtukai veda tiesiai į telefoną

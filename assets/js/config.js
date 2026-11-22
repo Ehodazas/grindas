@@ -13,6 +13,8 @@ window.GRINDAS_CONFIG = {
     city: "Kaunas",
     region: "Dirbame Kauno ir Vilniaus regionuose",   // rodoma pirmame ekrane
     hours: "I–V 8:00–18:00, VI pagal susitarimą",
+    manager: "Mindaugas Petrauskas",                  // pavyzdinis vardas: „Apie mus“ kontaktinis žmogus
+    managerRole: "Darbų vadovas",
     companyCode: "000000000",
     serviceAreas: [
       "Kaunas ir Kauno r.",
