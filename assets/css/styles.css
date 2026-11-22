@@ -484,3 +484,22 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .footer-contacts a:hover { text-decoration: underline; }
 @media (max-width: 860px) { .footer-contacts { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px) { .footer-contacts { grid-template-columns: 1fr; } }
+
+/* ---------- Pataisymai: pilno ekrano hero, be linijų, DUK, mažesnis žodženklis ---------- */
+/* hero užpildo visą ekraną, kad apačioje nesimatytų šviesios juostos */
+.hero { min-height: 100vh; min-height: 100svh; }
+@media (max-width: 600px) { .hero { min-height: 100svh; } }
+/* be plonų baltų linijų antraštėje virš nuotraukos */
+.topbar { border-bottom: 0; }
+.header-inner { border-bottom: 0; }
+
+/* DUK vienas: antraštė kairėje, klausimai dešinėje */
+.contact-grid { display: block; }
+.faq { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 24px clamp(32px, 6vw, 88px); align-items: start; }
+.faq .h2 { margin: 0; }
+@media (max-width: 860px) { .faq { grid-template-columns: 1fr; } }
+
+/* mažesnis žodženklis poraštėje */
+.footer-mark { font-size: clamp(2.4rem, 7vw, 5.5rem); margin: 0 0 24px; }
+.site-footer { padding-top: 48px; }
+.footer-inner a + a { margin-left: 24px; }

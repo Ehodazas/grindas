@@ -9,6 +9,7 @@ Gyvai: https://ehodazas.github.io/grindas/
 
 ```
 index.html              puslapis
+privatumas.html         privatumo politika (laužtiniuose skliaustuose esančius duomenis pakeisti įmonės)
 assets/css/styles.css   stiliai
 assets/js/config.js     KAINOS ir verslo duomenys (telefonas, zona) — keisti čia
 assets/js/calc.js       planuoklio skaičiavimai (be DOM, testuojami)
