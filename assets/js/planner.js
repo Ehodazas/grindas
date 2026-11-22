@@ -251,7 +251,6 @@
     var errEl = document.getElementById("plannerError");
     var hasErr = Object.keys(v.errors).length > 0 || !!v.form;
     document.querySelector(".pv-results").classList.toggle("is-stale", hasErr);
-    document.getElementById("toQuote").disabled = hasErr;
 
     drawFill();
 
@@ -295,28 +294,6 @@
       ". Tinklelis: 1 m.";
   }
 
-  function summary() {
-    if (!lastValid) return null;
-    var s = lastValid.state, e = lastValid.est, m = cfg.materials[s.material];
-    var dims = s.shape === "l"
-      ? "L forma: " + P.fmtM(s.a) + " × " + P.fmtM(s.b) + " be kampo " + P.fmtM(s.ca) + " × " + P.fmtM(s.cb)
-      : "Stačiakampis: " + P.fmtM(s.a) + " × " + P.fmtM(s.b);
-    return {
-      use: s.use,
-      area: Math.round(e.area * 100) / 100,
-      rows: [
-        ["Plotas", fmtNum(e.area, 2) + " m² (" + dims + ")"],
-        ["Paskirtis", cfg.uses[s.use].label],
-        ["Medžiaga", m.label + ", " + m.colors[s.color].label.toLowerCase()],
-        ["Raštas", cfg.patterns[s.pattern].label],
-        ["Pagrindas", s.prep ? "Reikia paruošti" : "Jau paruoštas"],
-        ["Borteliai", s.curbs ? "Taip, apie " + fmtNum(e.perimeter, 1) + " m" : "Ne"],
-        ["Medžiagų kiekis", fmtNum(e.qtyM2, 1) + " m² (atsarga " + e.waste + " %)"],
-        ["Orientacinė kaina", fmtEur(e.low) + " – " + fmtEur(e.high)]
-      ]
-    };
-  }
-
   /* ---------- Įvykiai ---------- */
 
   form.addEventListener("input", function (ev) {
@@ -340,12 +317,6 @@
 
   document.getElementById("wasteReset").addEventListener("click", function () {
     state.wasteTouched = false; setWasteSuggest(); render();
-  });
-
-  document.getElementById("toQuote").addEventListener("click", function () {
-    var s = summary();
-    if (!s) return;
-    document.dispatchEvent(new CustomEvent("grindas:quote", { detail: s }));
   });
 
   /* Vaizdas: iš viršaus arba perspektyva */

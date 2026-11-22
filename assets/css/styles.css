@@ -118,7 +118,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .hero-lead { font-size: clamp(1.05rem, 1.5vw, 1.3rem); line-height: 1.5; max-width: 30em; margin: 0 0 36px; color: rgba(255,255,255,.92); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 16px; }
 .hero-actions .btn { min-height: 60px; padding: 0 32px; font-size: 1.05rem; }
-.demo-tag { position: absolute; right: var(--gutter); bottom: 56px; margin: 0; font-size: .75rem; color: rgba(255,255,255,.75); border: 1px solid rgba(255,255,255,.4); border-radius: 4px; padding: 2px 8px; }
+.demo-tag { position: absolute; right: var(--gutter); bottom: 18px; margin: 0; font-size: .75rem; color: rgba(255,255,255,.75); border: 1px solid rgba(255,255,255,.4); border-radius: 4px; padding: 2px 8px; }
 @media (max-width: 600px) {
   .hero { min-height: 640px; align-items: flex-end; }
   .hero-shade { background: linear-gradient(0deg, rgba(12,14,13,.88) 0%, rgba(12,14,13,.6) 55%, rgba(12,14,13,.35) 100%); }
@@ -391,31 +391,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .contacts > div { display: grid; grid-template-columns: 8em 1fr; gap: 12px; padding: 8px 0; }
 .contacts dt { color: var(--muted); font-size: .9rem; }
 .contacts dd { margin: 0; font-weight: 600; }
-.quote { background: var(--paper); border-radius: 4px; padding: clamp(22px, 3vw, 36px); box-shadow: 0 0 0 1px var(--line); }
-.planner-summary { margin-bottom: 22px; padding: 14px 16px; background: var(--bg); border-radius: var(--radius); }
-.planner-summary.flash { animation: flash 1.2s ease; }
-@keyframes flash { 0% { background: #eadfcf; } 100% { background: var(--bg); } }
-.reduce-motion .planner-summary.flash { animation: none; }
-.ps-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
-.planner-summary dl { margin: 0; display: grid; gap: 3px; font-size: .9rem; }
-.planner-summary dl > div { display: grid; grid-template-columns: 9.5em 1fr; gap: 10px; }
-.planner-summary dt { color: var(--muted); }
-.planner-summary dd { margin: 0; font-weight: 600; }
-.qf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.field-full { grid-column: 1 / -1; }
-.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-.consent { margin: 18px 0 6px; font-size: .92rem; align-items: flex-start; }
-.consent input { margin-top: 3px; }
-#qerr-consent { display: block; margin-bottom: 6px; }
-.submit-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 12px; }
-.form-mode { margin: 0; font-size: .83rem; color: var(--muted); max-width: 26em; }
-.form-mode:empty { display: none; }
-.form-result { margin-top: 20px; padding: 16px 18px; border-radius: var(--radius); background: var(--bg); border-left: 3px solid var(--ink); }
-.form-result.is-demo, .form-result.is-error { border-left-color: var(--dim); }
-.form-result p { margin: 0 0 .8em; }
-.payload { margin: 0; padding: 12px; background: var(--paper); border-radius: 6px; font-family: var(--font); font-size: .86rem; white-space: pre-wrap; word-break: break-word; }
-@media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } .quote { order: -1; } }
-@media (max-width: 560px) { .qf-grid { grid-template-columns: 1fr; } .planner-summary dl > div { grid-template-columns: 1fr; gap: 0; } .submit-row .btn { width: 100%; } }
+@media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } .call-card { order: -1; } }
 
 /* ---------- PORAŠTĖ ---------- */
 .site-footer { background: var(--dark); color: rgba(255,255,255,.7); padding: 36px 0; font-size: .88rem; }
@@ -434,12 +410,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* =========================================================
    Signatūra: matavimo ruletė ir eglutės kraštas
    ========================================================= */
-
-/* hero apačia nupjauta laiptuotai, kaip eglute klotos dangos kraštas */
-.hero {
-  -webkit-mask: linear-gradient(#000, #000) top / 100% calc(100% - 35px) no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='36'%3E%3Cpath d='M0 0H120V36H90V27H60V18H30V9H0Z'/%3E%3C/svg%3E") left bottom / 120px 36px repeat-x;
-          mask: linear-gradient(#000, #000) top / 100% calc(100% - 35px) no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='36'%3E%3Cpath d='M0 0H120V36H90V27H60V18H30V9H0Z'/%3E%3C/svg%3E") left bottom / 120px 36px repeat-x;
-}
 
 /* pagrindinis veiksmas: ruletės juosta */
 .btn-tape { background: var(--tape-ticks), var(--tape); color: var(--ink); font-weight: 700; padding-bottom: 6px; }
@@ -464,3 +434,28 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .footer-mark span { color: var(--tape); }
 
 @media (max-width: 600px) { .demo-tag { top: 92px; bottom: auto; } }
+
+/* ---------- Skambinimas vietoj užklausos formos ---------- */
+.call-card { position: relative; overflow: hidden; background: var(--paper); border-radius: 4px; padding: clamp(34px, 4vw, 48px) clamp(22px, 3vw, 40px) clamp(22px, 3vw, 36px); box-shadow: 0 0 0 1px var(--line); }
+.call-card::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 12px; background: repeating-linear-gradient(90deg, rgba(28,31,29,.8) 0 1px, transparent 1px 6px) left top / 100% 5px no-repeat, repeating-linear-gradient(90deg, rgba(28,31,29,.9) 0 1.5px, transparent 1.5px 30px) left top / 100% 10px no-repeat, var(--tape); }
+.call-number { display: block; margin: 4px 0 20px; font-weight: 800; font-size: clamp(2rem, 4.2vw, 3.1rem); letter-spacing: -.02em; line-height: 1.05; text-decoration: none; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.call-number:hover { text-decoration: underline; text-decoration-thickness: 2px; }
+.btn-call { min-height: 58px; padding: 0 34px; font-size: 1.05rem; }
+.call-card .contacts { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 10px; }
+.call-card .hint { margin-top: 16px; }
+
+.call-bar { display: none; }
+@media (max-width: 760px) {
+  .call-bar {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 60;
+    min-height: 56px; padding-bottom: 6px; border-radius: var(--radius);
+    background: var(--tape-ticks), var(--tape); color: var(--ink);
+    font-weight: 800; font-size: 1.02rem; text-decoration: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    transform: translateY(140%); transition: transform .25s var(--ease);
+  }
+  .call-bar.is-visible { transform: none; }
+  .site-footer { padding-bottom: 92px; }
+}
+.reduce-motion .call-bar { transition: none; }

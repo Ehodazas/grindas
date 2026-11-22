@@ -9,13 +9,12 @@ Gyvai: https://ehodazas.github.io/grindas/
 
 ```
 index.html              puslapis
-privatumas.html         privatumo informacijos šablonas
 assets/css/styles.css   stiliai
-assets/js/config.js     KAINOS, verslo duomenys, formos siuntimas — keisti čia
+assets/js/config.js     KAINOS ir verslo duomenys (telefonas, zona) — keisti čia
 assets/js/calc.js       planuoklio skaičiavimai (be DOM, testuojami)
 assets/js/paving.js     trinkelių raštų generatorius (SVG, realiu masteliu)
 assets/js/planner.js    planuoklio sąsaja ir SVG planas
-assets/js/main.js       hero animacija, pjūvis, prieš/po, galerija, užklausos forma
+assets/js/main.js       hero animacija, paslaugos, pjūvis, prieš/po, galerija, skambinimo mygtukai
 assets/img/photos/      nuotraukos (WebP, 800 px ir pilno dydžio)
 tests/calc.test.js      skaičiavimų testai
 ```
@@ -29,25 +28,17 @@ node --test tests/
 15 testų: stačiakampio ir L formos plotas, perimetras, validacijos ribos, medžiagų kiekis ir vienetai,
 ranka patikrintas kainos pavyzdys ir visos 384 paskirties / medžiagos / rašto / spalvos / pagrindo / bortelių / formos kombinacijos.
 
-## Užklausų siuntimas
+## Kontaktas
 
-`config.js` → `form.mode`:
-
-- `"demo"` — nieko nesiunčia, parodo, kas būtų perduota (dabartinis nustatymas).
-- `"endpoint"` — siunčia JSON. Paprasčiausia be serverio: [FormSubmit](https://formsubmit.co)
-  `endpoint: "https://formsubmit.co/ajax/jusu@elpastas.lt"`. Pirmą kartą ateis patvirtinimo laiškas.
-  Tinka ir Formspree ar savas API.
-- `"mailto"` — atidaro lankytojo el. pašto programą su paruoštu laišku adresu `business.email`.
+Užklausos formos nėra: visi „Skambinti“ mygtukai ir telefone matoma apatinė juosta veda į `business.phoneHref` iš `config.js`.
 
 ## Pritaikymas tikram verslui
 
-1. `config.js` → `business`: pavadinimas, telefonas, el. paštas, zona, įmonės kodas.
+1. `config.js` → `business`: pavadinimas, telefonas (`phone` ir `phoneHref`), el. paštas, zona.
 2. `config.js` → kainos (`uses`, `materials`, `patterns`, `curbs`, `mobilization`).
-3. `config.js` → `form`: įjungti siuntimą (žr. aukščiau).
-4. Pašalinti „Demo projektas“ žymą (`index.html`, poraštė), projektus (`main.js` → `projects`) pakeisti tikrais.
-5. Prieš/po: įdėti tikras, tuo pačiu kampu darytas nuotraukas vietoje schemos.
-6. `privatumas.html`: užpildyti laukus laužtiniuose skliaustuose.
-7. Pridėti `og:image` (absoliutus URL), `canonical`, `sitemap.xml`.
+3. Pašalinti „Demo projektas“ žymą (`index.html`, poraštė), projektus (`main.js` → `projects`) pakeisti tikrais.
+4. Prieš/po: įdėti tikras, tuo pačiu kampu darytas nuotraukas vietoje schemos.
+5. Pridėti `og:image` (absoliutus URL), `canonical`, `sitemap.xml`.
 
 ## Nuotraukos
 

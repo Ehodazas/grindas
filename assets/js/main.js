@@ -12,8 +12,13 @@
     var k = n.getAttribute("data-biz");
     if (k === "phone") { n.textContent = biz.phone; n.setAttribute("href", biz.phoneHref); }
     else if (k === "email") { n.textContent = biz.email; n.setAttribute("href", "mailto:" + biz.email); }
+    else if (k === "phoneText") { n.textContent = biz.phone; }
     else n.textContent = biz[k];
   });
+  // visi „Skambinti“ mygtukai veda tiesiai į telefoną
+  document.querySelectorAll("[data-tel]").forEach(function (n) { n.setAttribute("href", biz.phoneHref); });
+  var areaCall = document.getElementById("areaCall");
+  if (areaCall) areaCall.textContent = biz.serviceAreas.join(", ") + ".";
   var areaInline = document.getElementById("areaInline");
   if (areaInline) areaInline.textContent = biz.serviceAreas.join(", ") + ".";
 
@@ -366,108 +371,12 @@
     list.appendChild(li);
   });
 
-  /* ---------- Užklausos forma ---------- */
-  var qf = document.getElementById("quoteForm");
-  var plannerData = null;
-  var mode = cfg.form.mode || (cfg.form.endpoint ? "endpoint" : "demo");
-  if (mode === "endpoint" && !cfg.form.endpoint) mode = "demo";
-  document.getElementById("formMode").textContent = mode === "demo" ? "Demo režimas: užklausa nesiunčiama, parodoma, kas būtų perduota."
-    : mode === "mailto" ? "Atsidarys jūsų el. pašto programa su paruoštu laišku." : "";
-
-  var useToType = { takas: "takas", kiemas: "kiemas", terasa: "terasa", ivaziavimas: "ivaziavimas" };
-  document.addEventListener("grindas:quote", function (e) {
-    plannerData = e.detail;
-    var box = document.getElementById("plannerSummary"), dl = document.getElementById("plannerSummaryList");
-    dl.innerHTML = "";
-    plannerData.rows.forEach(function (r) {
-      var div = document.createElement("div"), dt = document.createElement("dt"), dd = document.createElement("dd");
-      dt.textContent = r[0]; dd.textContent = r[1]; div.appendChild(dt); div.appendChild(dd); dl.appendChild(div);
-    });
-    box.hidden = false;
-    qf.elements.type.value = useToType[plannerData.use] || "";
-    qf.elements.area.value = String(plannerData.area).replace(".", ",");
-    setErr("type", ""); setErr("area", "");
-    document.querySelector(".quote").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
-    setTimeout(function () { qf.elements.name.focus({ preventScroll: true }); }, reduceMotion ? 0 : 500);
-    box.classList.remove("flash"); void box.offsetWidth; box.classList.add("flash");
-  });
-  document.getElementById("clearPlanner").addEventListener("click", function () {
-    plannerData = null; document.getElementById("plannerSummary").hidden = true; qf.elements.name.focus();
-  });
-
-  function setErr(name, msg) {
-    var el = document.getElementById("qerr-" + name);
-    if (el) el.textContent = msg;
-    var input = qf.elements[name];
-    if (input) input.setAttribute("aria-invalid", msg ? "true" : "false");
-  }
-  function validateQuote() {
-    var f = qf.elements, ok = true, first = null;
-    function check(name, cond, msg) { if (!cond) { setErr(name, msg); ok = false; if (!first) first = f[name]; } else setErr(name, ""); }
-    check("name", f.name.value.trim().length >= 2, "Įrašykite vardą.");
-    var c = f.contact.value.trim();
-    var isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(c);
-    var isPhone = /^(\+370|8|\+\d{2,3})\d{7,10}$/.test(c.replace(/[\s()-]/g, ""));
-    check("contact", isEmail || isPhone, c ? "Įrašykite telefoną (pvz. +370 612 34567) arba el. pašto adresą." : "Nurodykite, kaip su jumis susisiekti.");
-    check("city", f.city.value.trim().length >= 2, "Įrašykite miestą ar savivaldybę.");
-    check("type", !!f.type.value, "Pasirinkite darbų tipą.");
-    var areaRaw = f.area.value.trim(), areaNum = window.GrindasCalc.parseNum(areaRaw);
-    check("area", !areaRaw || (areaNum > 0 && areaNum <= 100000), "Įrašykite plotą skaičiumi, pvz. 60 arba 62,5.");
-    check("consent", f.consent.checked, "Be sutikimo negalėsime atsakyti į užklausą.");
-    return { ok: ok, first: first };
-  }
-  qf.addEventListener("input", function (e) { if (e.target.getAttribute("aria-invalid") === "true") validateQuote(); });
-  qf.addEventListener("change", function (e) { if (e.target.getAttribute("aria-invalid") === "true") validateQuote(); });
-
-  var labels = { vardas: "Vardas", kontaktas: "Kontaktas", miestas: "Miestas", darbu_tipas: "Darbų tipas", plotas_m2: "Plotas, m²", laikas: "Laikas", zinute: "Žinutė", planuoklis: "Planuoklis" };
-  function payload() {
-    var f = qf.elements;
-    return {
-      vardas: f.name.value.trim(), kontaktas: f.contact.value.trim(), miestas: f.city.value.trim(),
-      darbu_tipas: f.type.options[f.type.selectedIndex].text, plotas_m2: f.area.value.trim(),
-      laikas: f.timing.options[f.timing.selectedIndex].text, zinute: f.message.value.trim(),
-      planuoklis: plannerData ? plannerData.rows.map(function (r) { return r[0] + ": " + r[1]; }) : null
-    };
-  }
-  function asText(data) {
-    return Object.keys(labels).filter(function (k) { return data[k]; }).map(function (k) {
-      return labels[k] + ": " + (Array.isArray(data[k]) ? "\n  " + data[k].join("\n  ") : data[k]);
-    }).join("\n");
-  }
-  var result = document.getElementById("formResult");
-  function showResult(kind, html) { result.hidden = false; result.className = "form-result is-" + kind; result.innerHTML = html; result.focus(); }
-
-  qf.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var v = validateQuote();
-    if (!v.ok) { v.first.focus(); return; }
-    if (qf.elements._honey.value) return;
-    var data = payload(), text = asText(data), btn = qf.querySelector("button[type=submit]");
-    if (mode === "demo") {
-      showResult("demo", '<h3 class="h4">Užklausa neišsiųsta: demo režimas</h3><p>Duomenys užpildyti teisingai. Įmonė gautų štai tokį laišką:</p><pre class="payload"></pre>');
-      result.querySelector(".payload").textContent = text;
-      return;
-    }
-    if (mode === "mailto") {
-      window.location.href = "mailto:" + biz.email + "?subject=" + encodeURIComponent(cfg.form.subject || "Užklausa") + "&body=" + encodeURIComponent(text);
-      showResult("ok", '<h3 class="h4">Atidarytas el. pašto langas</h3><p>Patikrinkite laišką ir paspauskite „Siųsti“. Jei langas neatsidarė, rašykite adresu <a href="mailto:' + biz.email + '">' + biz.email + "</a>.</p>");
-      return;
-    }
-    btn.disabled = true;
-    var label = btn.innerHTML;
-    btn.textContent = "Siunčiama…";
-    var body = Object.assign({}, data, {
-      planuoklis: data.planuoklis ? data.planuoklis.join("\n") : "",
-      _subject: (cfg.form.subject || "Užklausa") + ": " + data.darbu_tipas + ", " + data.miestas,
-      _template: "table", _captcha: "false"
-    });
-    fetch(cfg.form.endpoint, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(body) })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        showResult("ok", '<h3 class="h4">Užklausa išsiųsta</h3><p>Gavome jūsų užklausą ir susisieksime per vieną–dvi darbo dienas.</p>');
-        qf.reset(); plannerData = null; document.getElementById("plannerSummary").hidden = true;
-      })
-      .catch(function () { showResult("error", '<h3 class="h4">Užklausos išsiųsti nepavyko</h3><p>Patikrinkite ryšį ir bandykite dar kartą arba paskambinkite ' + biz.phone + ".</p>"); })
-      .then(function () { btn.disabled = false; btn.innerHTML = label; });
-  });
+  /* ---------- Skambučio juosta telefone (rodoma praslinkus hero) ---------- */
+  (function callBar() {
+    var bar = document.querySelector(".call-bar");
+    if (!bar || !hero) return;
+    function upd() { bar.classList.toggle("is-visible", window.scrollY > hero.offsetHeight * 0.6); }
+    window.addEventListener("scroll", upd, { passive: true });
+    upd();
+  })();
 })();

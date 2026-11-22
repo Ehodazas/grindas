@@ -43,7 +43,7 @@
           <li><a href="#projektai">Projektai</a></li>
           <li><a href="#apie">Apie mus</a></li>
         </ul>
-        <a class="btn btn-cream nav-cta" href="#kontaktai">Kontaktai</a>
+        <a class="btn btn-cream nav-cta" href="#kontaktai" data-tel>Skambinti</a>
       </nav>
     </div>
   </header>
@@ -64,7 +64,7 @@
         <p class="hero-lead">Atliekame pagrindo paruošimo, trinkelių klojimo, bortelių montavimo ir kitus kiemo tvarkymo darbus.</p>
         <div class="hero-actions">
           <a class="btn btn-tape" href="#planuoklis">Apskaičiuoti kainą <span class="arrow" aria-hidden="true">→</span></a>
-          <a class="btn btn-ghost" href="#kontaktai">Susisiekti</a>
+          <a class="btn btn-ghost" href="#kontaktai" data-tel>Skambinti</a>
         </div>
       </div>
       <p class="demo-tag">Demo projektas</p>
@@ -247,7 +247,7 @@
                   <span class="price-label">Orientacinė kaina su PVM</span>
                   <span class="price-big" id="priceBig">—</span>
                 </div>
-                <button type="button" class="btn btn-dark" id="toQuote">Prašyti pasiūlymo <span class="arrow" aria-hidden="true">→</span></button>
+                <a class="btn btn-dark" href="#kontaktai" data-tel>Skambinti dėl kainos <span class="arrow" aria-hidden="true">→</span></a>
               </div>
               <div class="pv-key">
                 <div class="pv-metric"><span class="pvm-label">Plotas</span><span class="pvm-value" id="rArea">—</span></div>
@@ -362,8 +362,8 @@
       </div>
     </section>
 
-    <!-- 06 DUK + UŽKLAUSA -->
-    <section class="section contact" id="kontaktai" aria-labelledby="quote-title">
+    <!-- 06 DUK + SKAMBUTIS -->
+    <section class="section contact" id="kontaktai" aria-labelledby="call-title">
       <div class="wrap contact-grid">
         <div class="faq" id="duk">
           <h2 class="h2">Dažni klausimai</h2>
@@ -389,89 +389,19 @@
               <p>Savo sklype paprastai ne. Jei įvažiavimas jungiasi prie gatvės ar šaligatvio, tą dalį gali tekti suderinti su savivaldybe.</p>
             </details>
           </div>
-          <dl class="contacts">
-            <div><dt>Telefonas</dt><dd><a href="#" data-biz="phone">—</a></dd></div>
-            <div><dt>El. paštas</dt><dd><a href="#" data-biz="email">—</a></dd></div>
-            <div><dt>Darbo laikas</dt><dd data-biz="hours">—</dd></div>
-          </dl>
         </div>
 
-        <div class="quote">
-          <h2 id="quote-title" class="h2">Užklausa</h2>
-          <p class="lede">Palikite savo duomenis — susisieksime ir aptarsime darbus.</p>
-
-          <form class="quote-form" id="quoteForm" novalidate>
-            <div class="planner-summary" id="plannerSummary" hidden>
-              <div class="ps-head">
-                <h3 class="h4">Duomenys iš planuoklio</h3>
-                <button type="button" class="link-btn" id="clearPlanner">Pašalinti</button>
-              </div>
-              <dl id="plannerSummaryList"></dl>
-            </div>
-
-            <div class="qf-grid">
-              <label class="field">
-                <span class="field-label">Vardas</span>
-                <input type="text" name="name" autocomplete="name" required aria-describedby="qerr-name">
-                <span class="field-err" id="qerr-name"></span>
-              </label>
-              <label class="field">
-                <span class="field-label">Telefonas arba el. paštas</span>
-                <input type="text" name="contact" autocomplete="tel" required aria-describedby="qerr-contact">
-                <span class="field-err" id="qerr-contact"></span>
-              </label>
-              <label class="field">
-                <span class="field-label">Miestas ar savivaldybė</span>
-                <input type="text" name="city" autocomplete="address-level2" required aria-describedby="qerr-city">
-                <span class="field-err" id="qerr-city"></span>
-              </label>
-              <label class="field">
-                <span class="field-label">Darbų tipas</span>
-                <select name="type" required aria-describedby="qerr-type">
-                  <option value="">Pasirinkite</option>
-                  <option value="kiemas">Kiemas</option>
-                  <option value="ivaziavimas">Įvažiavimas</option>
-                  <option value="takas">Pėsčiųjų takas</option>
-                  <option value="terasa">Terasa</option>
-                  <option value="remontas">Remontas ar perklojimas</option>
-                  <option value="kita">Kita</option>
-                </select>
-                <span class="field-err" id="qerr-type"></span>
-              </label>
-              <label class="field">
-                <span class="field-label">Apytikslis plotas, m²</span>
-                <input type="text" inputmode="decimal" name="area" aria-describedby="qerr-area">
-                <span class="field-err" id="qerr-area"></span>
-              </label>
-              <label class="field">
-                <span class="field-label">Pageidaujamas laikas</span>
-                <select name="timing">
-                  <option value="">Nesvarbu</option>
-                  <option value="kuo greiciau">Kuo greičiau</option>
-                  <option value="per 1-2 men">Per 1–2 mėnesius</option>
-                  <option value="si sezona">Šį sezoną</option>
-                  <option value="kita sezona">Kitą sezoną</option>
-                </select>
-              </label>
-              <label class="field field-full">
-                <span class="field-label">Žinutė <span class="opt">(nebūtina)</span></span>
-                <textarea name="message" rows="4"></textarea>
-              </label>
-              <label class="hp" aria-hidden="true">Nepildykite <input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
-            </div>
-
-            <label class="check consent">
-              <input type="checkbox" name="consent" required aria-describedby="qerr-consent">
-              <span>Sutinku, kad duomenys būtų naudojami tik atsakyti į užklausą. <a href="privatumas.html">Privatumo informacija</a></span>
-            </label>
-            <span class="field-err" id="qerr-consent"></span>
-
-            <div class="submit-row">
-              <button type="submit" class="btn btn-dark">Siųsti užklausą <span class="arrow" aria-hidden="true">→</span></button>
-              <p class="form-mode" id="formMode"></p>
-            </div>
-            <div class="form-result" id="formResult" tabindex="-1" hidden></div>
-          </form>
+        <div class="call-card">
+          <h2 id="call-title" class="h2">Paskambinkite</h2>
+          <p class="lede">Papasakokite, ką norite įrengti. Atvažiuosime apžiūrėti ir pateiksime sąmatą raštu.</p>
+          <a class="call-number" href="#" data-biz="phone">—</a>
+          <a class="btn btn-tape btn-call" href="#" data-tel>Skambinti <span class="arrow" aria-hidden="true">→</span></a>
+          <dl class="contacts">
+            <div><dt>Darbo laikas</dt><dd data-biz="hours">—</dd></div>
+            <div><dt>El. paštas</dt><dd><a href="#" data-biz="email">—</a></dd></div>
+            <div><dt>Dirbame</dt><dd id="areaCall">—</dd></div>
+          </dl>
+          <p class="hint">Jei naudojotės planuokliu, pasakykite plotą ir pasirinktą dangą: kainą patikslinsime iš karto.</p>
         </div>
       </div>
     </section>
@@ -482,10 +412,12 @@
       <span class="footer-mark" aria-hidden="true">GRINDAS<span>.</span></span>
     </div>
     <div class="wrap footer-inner">
-      <p>Demo projektas: įmonė, kontaktai, kainos ir objektai pavyzdiniai. Nuotraukos: Unsplash ir projekto autoriaus.</p>
+      <p>Demo projektas: įmonė, telefonas, kainos ir objektai pavyzdiniai. Nuotraukos: Unsplash ir projekto autoriaus.</p>
       <a href="#virsus">Į viršų</a>
     </div>
   </footer>
+
+  <a class="call-bar" href="#kontaktai" data-tel aria-label="Skambinti">Skambinti <span data-biz="phoneText"></span></a>
 
   <script src="assets/js/config.js"></script>
   <script src="assets/js/calc.js"></script>
