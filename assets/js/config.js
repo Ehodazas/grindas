@@ -11,6 +11,7 @@ window.GRINDAS_CONFIG = {
     phoneHref: "tel:+37060000000",
     email: "info@grindas.example",
     city: "Kaunas",
+    region: "Dirbame Kauno ir Vilniaus regionuose",   // rodoma pirmame ekrane
     hours: "I–V 8:00–18:00, VI pagal susitarimą",
     companyCode: "000000000",
     serviceAreas: [

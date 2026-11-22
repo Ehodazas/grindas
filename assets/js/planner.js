@@ -251,6 +251,8 @@
     var errEl = document.getElementById("plannerError");
     var hasErr = Object.keys(v.errors).length > 0 || !!v.form;
     document.querySelector(".pv-results").classList.toggle("is-stale", hasErr);
+    var sendBtn = document.getElementById("sendPlan");
+    if (sendBtn) sendBtn.disabled = hasErr;
 
     drawFill();
 
@@ -331,7 +333,94 @@
     });
   });
 
+  /* ---------- Plano siuntimas sąmatai ---------- */
+
+  function planUrl(s) {
+    return location.origin + location.pathname + "?" + Calc.encodePlan(s) + "#planuoklis";
+  }
+
+  function planText() {
+    var s = lastValid.state, e = lastValid.est, m = cfg.materials[s.material];
+    var dims = s.shape === "l"
+      ? "L forma " + P.fmtM(s.a) + " × " + P.fmtM(s.b) + ", be kampo " + P.fmtM(s.ca) + " × " + P.fmtM(s.cb)
+      : "stačiakampis " + P.fmtM(s.a) + " × " + P.fmtM(s.b);
+    return [
+      "Sveiki,",
+      "",
+      "norėčiau gauti sąmatą pagal šį planą:",
+      "",
+      "- Plotas: " + fmtNum(e.area, 2) + " m² (" + dims + ")",
+      "- Paskirtis: " + cfg.uses[s.use].label,
+      "- Danga: " + m.label + " " + m.unitLabel + ", " + m.colors[s.color].label.toLowerCase(),
+      "- Raštas: " + cfg.patterns[s.pattern].label,
+      "- Pagrindas: " + (s.prep ? "reikia paruošti" : "jau yra"),
+      "- Borteliai: " + (s.curbs ? "taip, apie " + fmtNum(e.perimeter, 1) + " m" : "ne"),
+      "- Medžiagų su atsarga: " + fmtNum(e.qtyM2, 1) + " m² (atsarga " + e.waste + " %)",
+      "- Orientacinė kaina planuoklyje: " + fmtEur(e.low) + " – " + fmtEur(e.high),
+      "",
+      "Planas planuoklyje: " + planUrl(s),
+      "",
+      "Objekto adresas: ",
+      "Vardas: ",
+      "Telefonas: "
+    ].join("\n");
+  }
+
+  var sendPlan = document.getElementById("sendPlan");
+  if (sendPlan) sendPlan.addEventListener("click", function () {
+    if (!lastValid) return;
+    var s = lastValid.state;
+    var subject = "Sąmatos užklausa: " + cfg.uses[s.use].label.toLowerCase() + ", " + fmtNum(lastValid.est.area, 0) + " m²";
+    window.location.href = "mailto:" + cfg.business.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(planText());
+  });
+
+  var copyPlan = document.getElementById("copyPlan");
+  if (copyPlan) copyPlan.addEventListener("click", function () {
+    if (!lastValid) return;
+    var text = planText(), status = document.getElementById("copyStatus");
+    function done(ok) { status.textContent = ok ? "Nukopijuota: įklijuokite į Viber, Messenger ar el. laišką." : "Nepavyko nukopijuoti."; }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { done(document.execCommand("copy")); } catch (e) { done(false); }
+      ta.remove();
+    }
+  });
+
+  /* Atidarius nuorodą su planu, planuoklis užpildomas tais pačiais pasirinkimais */
+  var shared = null;
+  try {
+    var sp = new URLSearchParams(location.search);
+    if (sp.get("planas")) {
+      var o = {};
+      sp.forEach(function (v, k) { o[k] = v; });
+      shared = Calc.decodePlan(o);
+    }
+  } catch (e) { shared = null; }
+  if (shared) {
+    state.use = shared.use; state.material = shared.material; state.pattern = shared.pattern; state.color = shared.color;
+    state.waste = shared.waste;
+    state.wasteTouched = shared.waste !== cfg.patterns[shared.pattern].waste;
+  }
+
   buildUse(); buildMaterials(); buildPatterns(); buildColors();
+
+  if (shared) {
+    var comma = function (v) { return String(v).replace(".", ","); };
+    form.querySelector('input[name="shape"][value="' + shared.shape + '"]').checked = true;
+    form.elements.a.value = comma(shared.a); form.elements.b.value = comma(shared.b);
+    form.elements.ca.value = comma(shared.ca); form.elements.cb.value = comma(shared.cb);
+    form.querySelector('input[name="prep"][value="' + (shared.prep ? "yes" : "no") + '"]').checked = true;
+    form.elements.curbs.checked = shared.curbs;
+    form.elements.waste.value = shared.waste;
+    shown.shape = shared.shape; shown.a = shared.a; shown.b = shared.b; shown.ca = shared.ca; shown.cb = shared.cb;
+    var note = document.getElementById("planShared");
+    if (note) note.hidden = false;
+  }
+
   initSvg();
   setWasteSuggest();
   drawGeometry(shownWithShape());

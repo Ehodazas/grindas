@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
-  <link rel="preload" as="image" href="assets/img/photos/hero-namas.webp" imagesrcset="assets/img/photos/hero-namas-800.webp 800w, assets/img/photos/hero-namas.webp 2000w" imagesizes="100vw" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/photos/hero-ivaziavimas.webp" imagesrcset="assets/img/photos/hero-ivaziavimas-800.webp 800w, assets/img/photos/hero-ivaziavimas.webp 2000w" imagesizes="100vw" fetchpriority="high">
   <link rel="stylesheet" href="assets/css/styles.css">
   <script>
     if ("IntersectionObserver" in window && !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) {
@@ -62,10 +62,10 @@
     <!-- 01 HERO -->
     <section class="hero" aria-labelledby="hero-title">
       <figure class="hero-photo" id="heroPhoto">
-        <img src="assets/img/photos/hero-namas.webp"
-             srcset="assets/img/photos/hero-namas-800.webp 800w, assets/img/photos/hero-namas.webp 2000w"
-             sizes="100vw" width="2000" height="1340" fetchpriority="high" decoding="async"
-             alt="Šeimos namas su čerpių stogu, sodu ir trinkelėmis išklota terasa">
+        <img src="assets/img/photos/hero-ivaziavimas.webp"
+             srcset="assets/img/photos/hero-ivaziavimas-800.webp 800w, assets/img/photos/hero-ivaziavimas.webp 2000w"
+             sizes="100vw" width="2000" height="1333" fetchpriority="high" decoding="async"
+             alt="Iš arti: trinkelių įvažiavimas su tvarkingai suvestu bortelio kraštu prie vejos">
       </figure>
       <div class="hero-shade" aria-hidden="true"></div>
       <div class="wrap hero-inner">
@@ -75,7 +75,10 @@
           <a class="btn btn-tape" href="#planuoklis">Apskaičiuoti kainą <span class="arrow" aria-hidden="true">→</span></a>
           <a class="btn btn-ghost" href="#kontaktai" data-tel>Skambinti</a>
         </div>
-        <p class="hero-promise" data-promise></p>
+        <ul class="hero-notes" role="list">
+          <li data-region></li>
+          <li data-promise></li>
+        </ul>
       </div>
       <p class="demo-tag">Demo projektas</p>
     </section>
@@ -251,13 +254,22 @@
               </div>
             </figure>
 
+            <p class="plan-shared" id="planShared" role="status" hidden>Atidarytas planas iš nuorodos: rodomi tie patys matmenys ir pasirinkimai, kuriuos matė klientas.</p>
             <div class="pv-results" aria-live="polite">
               <div class="price-box">
                 <div>
                   <span class="price-label">Orientacinė kaina su PVM</span>
                   <span class="price-big" id="priceBig">—</span>
                 </div>
-                <a class="btn btn-dark" href="#kontaktai" data-tel>Skambinti dėl kainos <span class="arrow" aria-hidden="true">→</span></a>
+                <div class="price-actions">
+                  <button type="button" class="btn btn-dark" id="sendPlan">Siųsti šį planą sąmatai <span class="arrow" aria-hidden="true">→</span></button>
+                  <a class="btn btn-line-dark" href="#kontaktai" data-tel>Skambinti dėl kainos</a>
+                </div>
+                <p class="send-note">
+                  Atsidarys el. laiškas su visais pasirinkimais ir nuoroda į šį planą. Liks tik įrašyti adresą ir telefoną.
+                  <button type="button" class="link-btn" id="copyPlan">Kopijuoti planą</button>
+                  <span class="copy-status" id="copyStatus" role="status"></span>
+                </p>
               </div>
               <div class="pv-key">
                 <div class="pv-metric"><span class="pvm-label">Plotas</span><span class="pvm-value" id="rArea">—</span></div>

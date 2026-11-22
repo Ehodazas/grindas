@@ -150,5 +150,40 @@
     return { layers: stack, depth: depth, geotextile: S.geotextile };
   }
 
-  return { parseNum: parseNum, geometry: geometry, validate: validate, estimate: estimate, fmtNum: fmtNum, clampWaste: clampWaste, layerStack: layerStack };
+  /*
+   * Plano nuoroda: visi planuoklio pasirinkimai trumpais URL parametrais,
+   * kad įmonė atidariusi nuorodą pamatytų tą patį variantą. Asmens duomenų čia nėra.
+   */
+  function encodePlan(s) {
+    var num = function (v) { return String(Math.round(v * 100) / 100); };
+    var q = [
+      ["planas", "1"], ["f", s.shape === "l" ? "l" : "r"], ["a", num(s.a)], ["b", num(s.b)]
+    ];
+    if (s.shape === "l") q.push(["ca", num(s.ca)], ["cb", num(s.cb)]);
+    q.push(["u", s.use], ["m", s.material], ["r", s.pattern], ["c", s.color],
+           ["p", s.prep ? "1" : "0"], ["k", s.curbs ? "1" : "0"], ["w", String(clampWaste(s.waste))]);
+    return q.map(function (kv) { return kv[0] + "=" + encodeURIComponent(kv[1]); }).join("&");
+  }
+
+  /* Priima objektą { raktas: reikšmė }. Grąžina būseną arba null, jei nuoroda netinkama. */
+  function decodePlan(o) {
+    if (!o || o.planas !== "1") return null;
+    var mat = cfg.materials[o.m];
+    if (!mat || !cfg.uses[o.u]) return null;
+    var s = {
+      shape: o.f === "l" ? "l" : "rect",
+      a: parseNum(o.a), b: parseNum(o.b),
+      ca: o.f === "l" ? parseNum(o.ca) : 4, cb: o.f === "l" ? parseNum(o.cb) : 3,
+      use: o.u, material: o.m,
+      pattern: mat.patterns.indexOf(o.r) >= 0 ? o.r : mat.patterns[0],
+      color: mat.colors[o.c] ? o.c : Object.keys(mat.colors)[0],
+      prep: o.p !== "0", curbs: o.k !== "0",
+      waste: clampWaste(parseNum(o.w))
+    };
+    var v = validate(s);
+    if (Object.keys(v.errors).length || v.form) return null;
+    return s;
+  }
+
+  return { parseNum: parseNum, geometry: geometry, validate: validate, estimate: estimate, fmtNum: fmtNum, clampWaste: clampWaste, layerStack: layerStack, encodePlan: encodePlan, decodePlan: decodePlan };
 });

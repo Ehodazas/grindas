@@ -26,13 +26,15 @@ tests/calc.test.js      skaičiavimų testai
 node --test tests/
 ```
 
-17 testų: stačiakampio ir L formos plotas, perimetras, validacijos ribos, medžiagų kiekis ir vienetai,
+19 testų: stačiakampio ir L formos plotas, perimetras, validacijos ribos, medžiagų kiekis ir vienetai,
 ranka patikrintas kainos pavyzdys, visos 384 paskirties / medžiagos / rašto / spalvos / pagrindo / bortelių / formos kombinacijos,
-sluoksnių storis ir kasimo gylis pagal apkrovą ir gruntą.
+sluoksnių storis ir kasimo gylis pagal apkrovą ir gruntą, plano nuorodos atkūrimas ir sugadintų nuorodų atmetimas.
 
 ## Kontaktas
 
 Užklausos formos nėra: visi „Skambinti“ mygtukai ir telefone matoma apatinė juosta veda į `business.phoneHref` iš `config.js`.
+
+„Siųsti šį planą sąmatai“ atidaro el. laišką adresu `business.email` su visais planuoklio pasirinkimais ir nuoroda (`?planas=1&…#planuoklis`), kuri atidaro tą patį planą. „Kopijuoti planą“ nukopijuoja tą patį tekstą Viber ar Messenger žinutei.
 
 ## Pritaikymas tikram verslui
 
@@ -62,7 +64,7 @@ Unsplash licencija (nemokamai, galima komerciškai, nuoroda neprivaloma):
 | klojimas-eiga | sq lim | https://unsplash.com/photos/8WU8XGleveo |
 | ivaziavimas-pries | J. Rafi | https://unsplash.com/photos/gvhAbLY2XnU |
 | trinkeles-paletes | Sergej (skstrannik) | https://unsplash.com/photos/DpYmK7HAP8Q |
-| hero-namas | Artists Eyes | https://unsplash.com/photos/HDOyECXIrG4 |
+| hero-ivaziavimas | R_ INVSCIMENTO | https://unsplash.com/photos/_kMBp2hJ8TU |
 | namas-medinis-takas | Yudiono Putranto | https://unsplash.com/photos/BWwOd21Y6mk |
 | takas-borteliai | Sergej (skstrannik) | https://unsplash.com/photos/i_fpJG0GU5A |
 `kiemas-zalios-siules` ir `vidinis-kiemas-skalda` pateikė projekto autorius. Prieš naudojant viešai

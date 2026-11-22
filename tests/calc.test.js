@@ -174,3 +174,32 @@ test("sluoksniai: sunkesnė apkrova ir prastesnis gruntas niekada nesumažina gy
     assert.ok(b[0] >= a[0] && b[1] >= a[1], `${l} ${soils[i]}`);
   }
 });
+
+test("plano nuoroda: užkoduotas planas atkuriamas toks pat", () => {
+  const plans = [
+    { ...base, shape: "rect", a: 10, b: 8 },
+    { ...base, shape: "l", a: 12.5, b: 7, ca: 5, cb: 3, use: "ivaziavimas", material: "klinkeris", pattern: "pintine", color: "ruda", prep: false, curbs: false, waste: 12 }
+  ];
+  for (const p of plans) {
+    const qs = C.encodePlan(p);
+    const o = Object.fromEntries(new URLSearchParams(qs));
+    const d = C.decodePlan(o);
+    for (const k of ["shape", "a", "b", "use", "material", "pattern", "color", "prep", "curbs", "waste"]) assert.equal(d[k], p[k], k);
+    if (p.shape === "l") { assert.equal(d.ca, p.ca); assert.equal(d.cb, p.cb); }
+    // ta pati kaina kaip ekrane
+    assert.deepEqual([C.estimate(d).low, C.estimate(d).high], [C.estimate(p).low, C.estimate(p).high]);
+  }
+});
+
+test("plano nuoroda: netinkamos ar sugadintos nuorodos atmetamos", () => {
+  const ok = Object.fromEntries(new URLSearchParams(C.encodePlan({ ...base, a: 10, b: 8 })));
+  assert.equal(C.decodePlan({}), null);
+  assert.equal(C.decodePlan({ ...ok, planas: "0" }), null);
+  assert.equal(C.decodePlan({ ...ok, m: "auksas" }), null);
+  assert.equal(C.decodePlan({ ...ok, u: "kosmodromas" }), null);
+  assert.equal(C.decodePlan({ ...ok, a: "abc" }), null);
+  assert.equal(C.decodePlan({ ...ok, a: "999" }), null);
+  // netinkamas raštas ar spalva pakeičiami pirmu galimu, o ne sugadina plano
+  assert.equal(C.decodePlan({ ...ok, m: "ploksciu", r: "eglute", c: "raudona" }).pattern, "tiesi");
+  assert.equal(C.decodePlan({ ...ok, w: "99" }).waste, 15);
+});
