@@ -59,9 +59,10 @@
       done = true; clearTimeout(safety);
       var W = fig.clientWidth, H = fig.clientHeight, iw = img.naturalWidth, ih = img.naturalHeight;
       if (!W || !H || !iw) { reveal(); return; }
-      // atkartojamas <img> „object-fit: cover“ ir object-position 50% 60%
+      // atkartojamas <img> „object-fit: cover“ ir jo object-position (skiriasi kompiuteryje ir telefone)
       var sc = Math.max(W / iw, H / ih), bw = iw * sc, bh = ih * sc;
-      var ox = (W - bw) * 0.5, oy = (H - bh) * 0.6;
+      var op = getComputedStyle(img).objectPosition.split(" ").map(function (v) { return parseFloat(v) / 100; });
+      var ox = (W - bw) * (isNaN(op[0]) ? 0.5 : op[0]), oy = (H - bh) * (isNaN(op[1]) ? 0.5 : op[1]);
       var rows = 5, cols = W > 900 ? 5 : 3, th = H / rows, tw = W / cols, gap = 3;
       var src = img.currentSrc || img.src;
       var frag = document.createDocumentFragment(), tiles = [], maxDelay = 0;
