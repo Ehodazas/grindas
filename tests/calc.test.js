@@ -174,16 +174,3 @@ test("sluoksniai: sunkesnė apkrova ir prastesnis gruntas niekada nesumažina gy
     assert.ok(b[0] >= a[0] && b[1] >= a[1], `${l} ${soils[i]}`);
   }
 });
-
-test("kainoraštis: viso darbo kaina už m² sutampa su planuoklio skaičiavimu", () => {
-  for (const use of Object.keys(cfg.uses)) {
-    const [lo, hi] = C.fullJobPerM2(use, "betonines", "pilka", "perrisimas");
-    const e = C.estimate({ ...base, shape: "rect", a: 10, b: 10, use, material: "betonines", color: "pilka", pattern: "perrisimas", prep: true, curbs: false, waste: 5 });
-    const noMob = e.items.filter(i => i.key !== "mob");
-    assert.equal(lo, Math.round(noMob.reduce((t, i) => t + i.low, 0) / 100));
-    assert.equal(hi, Math.round(noMob.reduce((t, i) => t + i.high, 0) / 100));
-    assert.ok(lo < hi);
-  }
-  // įvažiavimas brangesnis už taką
-  assert.ok(C.fullJobPerM2("ivaziavimas", "betonines", "pilka", "perrisimas")[0] > C.fullJobPerM2("takas", "betonines", "pilka", "perrisimas")[0]);
-});

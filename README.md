@@ -26,9 +26,9 @@ tests/calc.test.js      skaičiavimų testai
 node --test tests/
 ```
 
-18 testų: stačiakampio ir L formos plotas, perimetras, validacijos ribos, medžiagų kiekis ir vienetai,
+17 testų: stačiakampio ir L formos plotas, perimetras, validacijos ribos, medžiagų kiekis ir vienetai,
 ranka patikrintas kainos pavyzdys, visos 384 paskirties / medžiagos / rašto / spalvos / pagrindo / bortelių / formos kombinacijos,
-sluoksnių storis ir kasimo gylis pagal apkrovą ir gruntą, kainoraščio kaina už m² (sutampa su planuokliu).
+sluoksnių storis ir kasimo gylis pagal apkrovą ir gruntą.
 
 ## Kontaktas
 
@@ -40,9 +40,9 @@ Užklausos formos nėra: visi „Skambinti“ mygtukai ir telefone matoma apatin
 2. `config.js` → kainos (`uses`, `materials`, `patterns`, `curbs`, `mobilization`).
    - `social`: Facebook ir Instagram nuorodos (kol tuščia, ikonos niekur neveda).
    - `reviews`: tikri Google atsiliepimai, įvertinimas, kiekis ir `googleUrl`; nustatyti `demo: false`.
-   - `extras`: papildomų darbų kainos kainoraštyje; `promise`: pažadas hero ir DUK.
+   - `promise`: pažadas hero bloke.
    - `layers`: sluoksnių storiai pagal apkrovą ir gruntą (sluoksnių schema ir kasimo gylis).
-   - `trust`: tikri skaičiai (garantija, patirtis, objektai) ir gamintojai su logotipais; nustatyti `demo: false`.
+   - `trust`: tikri skaičiai „Apie mus“ skyriui (garantija, patirtis, objektai).
 3. Pašalinti „Demo projektas“ žymą (`index.html`, poraštė), projektus (`main.js` → `projects`) pakeisti tikrais.
 4. Prieš/po: įdėti tikras, tuo pačiu kampu darytas nuotraukas vietoje schemos.
 5. Pridėti `og:image` (absoliutus URL), `canonical`, `sitemap.xml`.

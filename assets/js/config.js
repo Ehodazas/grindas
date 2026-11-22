@@ -56,13 +56,6 @@ window.GRINDAS_CONFIG = {
       { value: "10+", label: "metų patirtis" },
       { value: "350+", label: "įrengtų kiemų, takų ir įvažiavimų" },
       { value: "1–2 d.", label: "iki apžiūros vietoje" }
-    ],
-    /* Gamintojai, su kuriais dirbate. Įrašykite pavadinimą ir (nebūtina) logotipo kelią, pvz. "assets/img/brands/x.svg" */
-    brands: [
-      { name: "Gamintojas 1", logo: "" },
-      { name: "Gamintojas 2", logo: "" },
-      { name: "Gamintojas 3", logo: "" },
-      { name: "Gamintojas 4", logo: "" }
     ]
   },
 
@@ -165,16 +158,7 @@ window.GRINDAS_CONFIG = {
   /* Borteliai: EUR už metrą, su betono padu */
   curbs: { label: "Borteliai", price: [14, 22] },
 
-  /* Papildomi darbai kainoraštyje (EUR su PVM, nuo–iki). Planuoklis jų neskaičiuoja. */
-  extras: [
-    { label: "Grunto pertekliaus išvežimas", unit: "m³", price: [14, 20] },
-    { label: "Senos dangos ardymas ir išvežimas", unit: "m²", price: [5, 9] },
-    { label: "Linijinis latakas su montavimu", unit: "m", price: [45, 75] },
-    { label: "Lietaus vandens šulinėlis", unit: "vnt.", price: [90, 160] },
-    { label: "Aukščių lyginimas daugiau nei ±10 cm", unit: "m²", price: [3, 6] }
-  ],
-
-  /* Pažadas klientui: rodomas hero ir DUK. DEMO: pakeiskite tikru. */
+  /* Pažadas klientui: rodomas hero bloke. DEMO: pakeiskite tikru. */
   promise: "Apžiūra ir sąmata nemokamai. Perskambiname per 1 darbo dieną.",
 
   /* Dangos sluoksniai, cm (nuo–iki). ORIENTACINIAI: tikslų storį nustatome apžiūrėję gruntą. */

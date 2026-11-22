@@ -48,7 +48,6 @@
         <ul>
           <li><a href="#paslaugos">Paslaugos</a></li>
           <li><a href="#planuoklis">Planuoklis</a></li>
-          <li><a href="#kainos">Kainos</a></li>
           <li><a href="#projektai">Projektai</a></li>
           <li><a href="#atsiliepimai">Atsiliepimai</a></li>
           <li><a href="#apie">Apie mus</a></li>
@@ -298,30 +297,6 @@
       </div>
     </section>
 
-    <!-- KAINOS -->
-    <section class="section prices" id="kainos" aria-labelledby="prices-title">
-      <div class="wrap">
-        <header class="section-head">
-          <h2 id="prices-title" class="h2">Kainos</h2>
-          <p class="lede">Orientacinės kainos su PVM, tos pačios, kuriomis skaičiuoja planuoklis. Galutinę kainą pasakysime po nemokamos apžiūros.</p>
-        </header>
-        <ul class="price-full" id="priceFull" role="list"></ul>
-        <div class="price-tables">
-          <table class="price-table" id="priceWorks">
-            <caption>Darbai ir medžiagos</caption>
-            <thead><tr><th scope="col">Pozicija</th><th scope="col">Kaina</th></tr></thead>
-            <tbody></tbody>
-          </table>
-          <table class="price-table" id="priceExtras">
-            <caption>Papildomi darbai</caption>
-            <thead><tr><th scope="col">Pozicija</th><th scope="col">Kaina</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <p class="hint" id="priceNote"></p>
-      </div>
-    </section>
-
     <!-- 04 PROJEKTAI -->
     <section class="section works" id="projektai" aria-labelledby="works-title">
       <div class="wrap">
@@ -371,24 +346,33 @@
     <!-- APIE -->
     <section class="section about" id="apie" aria-labelledby="about-title">
       <div class="wrap about-grid">
-        <div>
+        <figure class="about-photo">
+          <img src="assets/img/photos/klojimas-darbas-800.webp"
+               srcset="assets/img/photos/klojimas-darbas-800.webp 800w, assets/img/photos/klojimas-darbas.webp 1600w"
+               sizes="(max-width: 900px) 100vw, 46vw" width="1600" height="1067" loading="lazy" decoding="async"
+               alt="Darbininkas kloja trinkeles ant paruošto pagrindo, šalia karutis su trinkelėmis">
+        </figure>
+        <div class="about-text">
           <h2 id="about-title" class="h2">Apie mus</h2>
-          <p class="lede">Įrengiame kiemus, įvažiavimus ir takus privačių namų savininkams. Žemės darbus ir klojimą atlieka ta pati komanda su savo technika.</p>
+          <p class="lede">GRINDAS įrengia kiemus, įvažiavimus, takus ir terasas privačių namų savininkams Kauno ir Vilniaus regionuose. Atliekame ir remonto darbus: perklojame įdubusias vietas, keičiame suskilusias trinkeles.</p>
+          <p>Visus darbus atlieka ta pati komanda su savo technika: mini ekskavatoriumi, savivarčiu, vibroplokštėmis ir trinkelių pjovimo įranga. Todėl žemės darbai, pagrindas ir klojimas vyksta be subrangovų, o tarp etapų nebūna prastovų.</p>
+          <p>Prieš pradėdami visada atvažiuojame į vietą: išmatuojame plotą, patikriname gruntą ir aukščius, pasiūlome, kaip nuvesti lietaus vandenį. Sąmatą pateikiame raštu, o darbų metu pranešame apie kiekvieną etapą.</p>
         </div>
+      </div>
+
+      <div class="wrap">
         <dl class="facts">
-          <div><dt>Vienas kontaktas</dt><dd>Nuo apžiūros iki darbų pabaigos.</dd></div>
-          <div><dt>Sąmata raštu</dt><dd>Išskaidyta pagal darbus ir medžiagas.</dd></div>
-          <div><dt>Mokėjimas etapais</dt><dd>Ne visa suma iš anksto.</dd></div>
+          <div><dt>Vienas kontaktas</dt><dd>Nuo apžiūros iki darbų pabaigos bendraujate su tuo pačiu žmogumi.</dd></div>
+          <div><dt>Sąmata raštu</dt><dd>Išskaidyta pagal darbus ir medžiagas, be paslėptų eilučių.</dd></div>
+          <div><dt>Mokėjimas etapais</dt><dd>Ne visa suma iš anksto, o už atliktus darbų etapus.</dd></div>
+          <div><dt>Savo technika</dt><dd>Nereikia laukti, kol atsilaisvins nuomojamas ekskavatorius.</dd></div>
+          <div><dt>Tvarka objekte</dt><dd>Gruntą ir atliekas išvežame, kraštus prie vejos sutvarkome.</dd></div>
           <div><dt>Kur dirbame</dt><dd id="areaInline">—</dd></div>
         </dl>
       </div>
+
       <div class="wrap">
         <ul class="stats" id="trustStats" role="list"></ul>
-      </div>
-      <div class="wrap brands" id="brandsBlock">
-        <p class="brands-title">Dirbame su šių gamintojų trinkelėmis ir plokštėmis</p>
-        <ul class="brand-list" id="brandList" role="list"></ul>
-        <p class="hint" id="trustDemo" hidden>Demo projektas: skaičiai ir gamintojai pavyzdiniai.</p>
       </div>
     </section>
 
@@ -433,40 +417,6 @@
       </div>
     </section>
 
-    <!-- 06 DUK -->
-    <section class="section contact" id="kontaktai" aria-labelledby="faq-title">
-      <div class="wrap contact-grid">
-        <div class="faq" id="duk">
-          <h2 class="h2" id="faq-title">Dažni klausimai</h2>
-          <div class="faq-list">
-            <details>
-              <summary>Ar apžiūra ir sąmata mokamos?</summary>
-              <p>Ne. Atvažiuojame, išmatuojame, įvertiname gruntą ir pateikiame sąmatą raštu nemokamai ir be įsipareigojimų. Paskambinus perskambiname per vieną darbo dieną.</p>
-            </details>
-            <details>
-              <summary>Kodėl kaina rodoma intervalu?</summary>
-              <p>Internetu nematyti, kiek grunto reikės išvežti, ar sklypas lygus ir ar privažiuos sunkvežimis. Tikslią sumą pateikiame po apžiūros.</p>
-            </details>
-            <details>
-              <summary>Kada geriausia kloti trinkeles?</summary>
-              <p>Kai gruntas neįšalęs, dažniausiai nuo balandžio iki lapkričio. Pavasarį kalendorius užsipildo greičiausiai.</p>
-            </details>
-            <details>
-              <summary>Ar galima kloti ant seno pagrindo?</summary>
-              <p>Kartais, jei jis tvirtas ir nesuslūgęs. Įvertiname apžiūros metu.</p>
-            </details>
-            <details>
-              <summary>Ar klojate mano nupirktas trinkeles?</summary>
-              <p>Taip. Prieš pirkdami pasitarkite dėl kiekio ir storio: įvažiavimui reikia storesnių trinkelių.</p>
-            </details>
-            <details>
-              <summary>Ar reikia leidimo įvažiavimui?</summary>
-              <p>Savo sklype paprastai ne. Jei įvažiavimas jungiasi prie gatvės ar šaligatvio, tą dalį gali tekti suderinti su savivaldybe.</p>
-            </details>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">
@@ -482,7 +432,7 @@
       </dl>
     </div>
     <div class="wrap footer-inner">
-      <p>Demo projektas: įmonė, telefonas, kainos ir objektai pavyzdiniai. Nuotraukos: Unsplash ir projekto autoriaus.</p>
+      <p>Demo projektas: įmonė, telefonas, kainos, skaičiai, atsiliepimai ir objektai pavyzdiniai. Nuotraukos: Unsplash ir projekto autoriaus.</p>
       <span class="foot-links"><span class="foot-social" data-social></span> <a href="privatumas.html">Privatumo politika</a> <a href="#virsus">Į viršų</a></span>
     </div>
   </footer>

@@ -348,52 +348,6 @@
     }
   })();
 
-  /* ---------- Kainoraštis (iš tų pačių kainų kaip planuoklis) ---------- */
-  (function priceList() {
-    var full = document.getElementById("priceFull");
-    if (!full) return;
-    var Calc = window.GrindasCalc;
-    function eur(r, unit) { return r[0].toLocaleString("lt-LT") + "–" + r[1].toLocaleString("lt-LT") + " €" + (unit ? "/" + unit : ""); }
-    var notes = { takas: "Takas", kiemas: "Kiemas", ivaziavimas: "Įvažiavimas" };
-    ["takas", "kiemas", "ivaziavimas"].forEach(function (u) {
-      var r = Calc.fullJobPerM2(u, "betonines", "pilka", "perrisimas");
-      var li = document.createElement("li");
-      li.innerHTML = '<span class="pf-use"></span><span class="pf-price"></span><span class="pf-sub">su pagrindu, pilkomis betoninėmis trinkelėmis ir darbu</span>';
-      li.querySelector(".pf-use").textContent = notes[u];
-      li.querySelector(".pf-price").innerHTML = r[0] + "–" + r[1] + " <small>€/m²</small>";
-      full.appendChild(li);
-    });
-
-    function rows(tableId, list) {
-      var tb = document.querySelector("#" + tableId + " tbody");
-      list.forEach(function (row) {
-        var tr = document.createElement("tr");
-        tr.innerHTML = "<th scope=\"row\"></th><td></td>";
-        tr.firstChild.textContent = row[0];
-        tr.lastChild.textContent = row[1];
-        tb.appendChild(tr);
-      });
-    }
-    var M = cfg.materials, U = cfg.uses;
-    var lab = function (m) { return [Math.round(U.kiemas.labor[0] * M[m].laborFactor), Math.round(U.kiemas.labor[1] * M[m].laborFactor)]; };
-    rows("priceWorks", [
-      ["Klojimas: betoninės trinkelės", eur(lab("betonines"), "m²")],
-      ["Klojimas: klinkerio trinkelės", eur(lab("klinkeris"), "m²")],
-      ["Klojimas: didelio formato plokštės", eur(lab("ploksciu"), "m²")],
-      ["Pagrindo paruošimas: takui", eur(U.takas.groundPrep, "m²")],
-      ["Pagrindo paruošimas: kiemui", eur(U.kiemas.groundPrep, "m²")],
-      ["Pagrindo paruošimas: įvažiavimui", eur(U.ivaziavimas.groundPrep, "m²")],
-      ["Betoninės trinkelės (medžiaga)", eur(M.betonines.price, "m²")],
-      ["Klinkerio trinkelės (medžiaga)", eur(M.klinkeris.price, "m²")],
-      ["Borteliai su betono padu", eur(cfg.curbs.price, "m")],
-      ["Technikos atvežimas ir organizavimas", eur(cfg.mobilization.price) + " objektui"]
-    ]);
-    rows("priceExtras", (cfg.extras || []).map(function (x) { return [x.label, eur(x.price, x.unit)]; }));
-    document.getElementById("priceNote").textContent =
-      "Klojimo kaina nurodyta tiesioms eilėms ir raštui su perrišimu, eglutė brangesnė apie 15 %. " +
-      "Viso darbo kaina be bortelių ir technikos atvežimo. Nedideliems darbams (iki ~" + cfg.minimumOrder + " €) kaina skaičiuojama individualiai.";
-  })();
-
   /* ---------- Pažadas klientui ---------- */
   document.querySelectorAll("[data-promise]").forEach(function (n) { n.textContent = cfg.promise || ""; });
 
@@ -548,30 +502,39 @@
     document.getElementById("reviewsDemo").hidden = !r.demo;
   })();
 
-  /* ---------- Pasitikėjimo ženklai ---------- */
-  (function trust() {
-    var t = cfg.trust;
-    if (!t) return;
-    var ul = document.getElementById("trustStats");
-    if (ul) t.stats.forEach(function (st) {
+  /* ---------- Skaičiai „Apie mus“: skaičiuojami nuo nulio, po jais išsivynioja ruletė ---------- */
+  (function trustStats() {
+    var t = cfg.trust, ul = document.getElementById("trustStats");
+    if (!t || !ul) return;
+    var items = t.stats.map(function (st, i) {
       var li = document.createElement("li");
-      li.innerHTML = '<span class="stat-value"></span><span class="stat-label"></span>';
-      li.firstChild.textContent = st.value; li.lastChild.textContent = st.label;
+      li.style.setProperty("--i", i);
+      li.innerHTML = '<span class="stat-value"></span><span class="stat-tape" aria-hidden="true"></span><span class="stat-label"></span>';
+      var v = li.querySelector(".stat-value");
+      v.textContent = st.value;
+      li.querySelector(".stat-label").textContent = st.label;
       ul.appendChild(li);
+      // visi sveikieji skaičiai reikšmėje animuojami kartu: „1–2 d.“, „350+“
+      return { el: v, parts: st.value.split(/(\d+)/) };
     });
-    var bl = document.getElementById("brandList");
-    if (bl) {
-      if (!t.brands || !t.brands.length) document.getElementById("brandsBlock").hidden = true;
-      else t.brands.forEach(function (b) {
-        var li = document.createElement("li");
-        li.className = "brand-item" + (b.logo ? "" : " is-placeholder");
-        if (b.logo) { var im = new Image(); im.src = b.logo; im.alt = b.name; im.loading = "lazy"; li.appendChild(im); }
-        else li.textContent = b.name;
-        bl.appendChild(li);
-      });
+    if (reduceMotion || !("IntersectionObserver" in window)) { ul.classList.add("is-counted"); return; }
+    function render(it, k) {
+      it.el.textContent = it.parts.map(function (p) { return /^\d+$/.test(p) ? String(Math.round(Number(p) * k)) : p; }).join("");
     }
-    var demo = document.getElementById("trustDemo");
-    if (demo) demo.hidden = !t.demo;
+    items.forEach(function (it) { render(it, 0); });
+    var io = new IntersectionObserver(function (ents) {
+      if (!ents[0].isIntersecting) return;
+      io.disconnect();
+      ul.classList.add("is-counting");
+      var t0 = performance.now(), dur = 1400;
+      (function frame(now) {
+        var k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+        items.forEach(function (it) { render(it, e); });
+        if (k < 1) requestAnimationFrame(frame);
+        else { items.forEach(function (it) { render(it, 1); }); ul.classList.add("is-counted"); }
+      })(t0);
+    }, { threshold: 0.5 });
+    io.observe(ul);
   })();
 
   /* ---------- Skambučio juosta telefone (rodoma praslinkus hero) ---------- */

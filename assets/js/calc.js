@@ -150,16 +150,5 @@
     return { layers: stack, depth: depth, geotextile: S.geotextile };
   }
 
-  /*
-   * Viso darbo kaina už m² kainoraščiui: medžiaga + klojimas + pagrindas, be bortelių ir be
-   * fiksuotų organizavimo išlaidų. Skaičiuojama tuo pačiu estimate(), kaip planuoklyje (100 m² plotas).
-   */
-  function fullJobPerM2(use, material, color, pattern, waste) {
-    var e = estimate({ shape: "rect", a: 10, b: 10, use: use, material: material, color: color, pattern: pattern, prep: true, curbs: false, waste: waste == null ? 5 : waste });
-    var low = 0, high = 0;
-    e.items.forEach(function (it) { if (it.key !== "mob") { low += it.low; high += it.high; } });
-    return [Math.round(low / e.area), Math.round(high / e.area)];
-  }
-
-  return { parseNum: parseNum, geometry: geometry, validate: validate, estimate: estimate, fmtNum: fmtNum, clampWaste: clampWaste, layerStack: layerStack, fullJobPerM2: fullJobPerM2 };
+  return { parseNum: parseNum, geometry: geometry, validate: validate, estimate: estimate, fmtNum: fmtNum, clampWaste: clampWaste, layerStack: layerStack };
 });
