@@ -16,7 +16,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
   <link rel="preload" as="image" href="assets/img/photos/trinkeliu-klojimas.webp" imagesrcset="assets/img/photos/trinkeliu-klojimas-900.webp 900w, assets/img/photos/trinkeliu-klojimas.webp 1672w" imagesizes="100vw" fetchpriority="high">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261122-6">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261122-7">
   <script>
     if ("IntersectionObserver" in window && !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) {
       document.documentElement.classList.add("hero-anim");
@@ -48,8 +48,8 @@
         <ul>
           <li><a href="#apie">Apie mus</a></li>
           <li><a href="#paslaugos">Paslaugos</a></li>
-          <li><a href="#planuoklis">Planuoklis</a></li>
           <li><a href="#projektai">Projektai</a></li>
+          <li><a href="#planuoklis">Planuoklis</a></li>
           <li><a href="#atsiliepimai">Atsiliepimai</a></li>
         </ul>
         <a class="btn btn-cream nav-cta" href="#kontaktai" data-tel>Skambinti</a>
@@ -221,6 +221,36 @@
       </div>
     </section>
 
+    <!-- 04 PROJEKTAI -->
+    <section class="section works" id="projektai" aria-labelledby="works-title">
+      <div class="wrap">
+        <header class="section-head section-head-row">
+          <h2 id="works-title" class="h2">Darbų pavyzdžiai</h2>
+          <p class="muted">Pavyzdiniai objektai</p>
+        </header>
+        <ul class="projects" id="projects" role="list"></ul>
+
+        <div class="ba">
+          <div class="ba-text">
+            <h3 class="h3">Prieš ir po</h3>
+            <p>Tas pats sklypas iš viršaus: žvyras su provėžomis ir vanduo prie garažo, o šalia ta pati vieta įrengus trinkelių dangą su borteliais ir lataku.</p>
+            <p class="hint">Schema, ne nuotrauka. Vilkite slankiklį arba naudokite rodyklių klavišus.</p>
+          </div>
+          <div class="ba-stage" id="baStage">
+            <svg class="ba-img ba-before" id="baBefore" viewBox="0 0 16 10" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Prieš: žvyruotas įvažiavimas su provėžomis ir balomis"></svg>
+            <div class="ba-clip" id="baClip">
+              <svg class="ba-img ba-after" id="baAfter" viewBox="0 0 16 10" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Po: įvažiavimas iš trinkelių eglute, su borteliais ir lataku"></svg>
+            </div>
+            <div class="ba-handle" id="baHandle" aria-hidden="true"><span></span></div>
+            <span class="ba-tag ba-tag-before">Prieš</span>
+            <span class="ba-tag ba-tag-after">Po</span>
+            <label class="sr-only" for="baRange">Palyginimo slankiklis</label>
+            <input type="range" id="baRange" class="ba-range" min="0" max="100" value="50" step="1">
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 03 PLANUOKLIS -->
     <section class="section planner" id="planuoklis" aria-labelledby="planner-title">
       <div class="wrap">
@@ -388,33 +418,18 @@
       </div>
     </section>
 
-    <!-- 04 PROJEKTAI -->
-    <section class="section works" id="projektai" aria-labelledby="works-title">
+    <!-- KAIP VYKSTA DARBAI -->
+    <section class="section process-sec" id="eiga" aria-labelledby="process-title">
       <div class="wrap">
-        <header class="section-head section-head-row">
-          <h2 id="works-title" class="h2">Darbų pavyzdžiai</h2>
-          <p class="muted">Pavyzdiniai objektai</p>
-        </header>
-        <ul class="projects" id="projects" role="list"></ul>
-
-        <div class="ba">
-          <div class="ba-text">
-            <h3 class="h3">Prieš ir po</h3>
-            <p>Tas pats sklypas iš viršaus: žvyras su provėžomis ir vanduo prie garažo, o šalia ta pati vieta įrengus trinkelių dangą su borteliais ir lataku.</p>
-            <p class="hint">Schema, ne nuotrauka. Vilkite slankiklį arba naudokite rodyklių klavišus.</p>
-          </div>
-          <div class="ba-stage" id="baStage">
-            <svg class="ba-img ba-before" id="baBefore" viewBox="0 0 16 10" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Prieš: žvyruotas įvažiavimas su provėžomis ir balomis"></svg>
-            <div class="ba-clip" id="baClip">
-              <svg class="ba-img ba-after" id="baAfter" viewBox="0 0 16 10" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Po: įvažiavimas iš trinkelių eglute, su borteliais ir lataku"></svg>
-            </div>
-            <div class="ba-handle" id="baHandle" aria-hidden="true"><span></span></div>
-            <span class="ba-tag ba-tag-before">Prieš</span>
-            <span class="ba-tag ba-tag-after">Po</span>
-            <label class="sr-only" for="baRange">Palyginimo slankiklis</label>
-            <input type="range" id="baRange" class="ba-range" min="0" max="100" value="50" step="1">
-          </div>
-        </div>
+        <h2 id="process-title" class="h2">Kaip vyksta darbai</h2>
+        <ol class="steps">
+          <li><span class="step-n">01</span><strong>Užklausa</strong><span>Vieta, plotas, ko norite.</span></li>
+          <li><span class="step-n">02</span><strong>Nemokama apžiūra</strong><span>Matavimai, gruntas, aukščiai.</span></li>
+          <li><span class="step-n">03</span><strong>Sąmata</strong><span>Raštu, su terminu.</span></li>
+          <li><span class="step-n">04</span><strong>Pagrindas</strong><span>Kasimas, borteliai, skalda.</span></li>
+          <li><span class="step-n">05</span><strong>Klojimas</strong><span>Trinkelės, siūlės, vibravimas.</span></li>
+          <li><span class="step-n">06</span><strong>Sutvarkymas</strong><span>Išvežame gruntą bei atliekas ir sutvarkome kraštus prie vejos.</span></li>
+        </ol>
       </div>
     </section>
 
@@ -434,7 +449,7 @@
       </div>
     </section>
 
-    <!-- 05 SLUOKSNIAI + EIGA -->
+    <!-- KAS PO TRINKELĖMIS -->
     <section class="section layers" id="pagrindas" aria-labelledby="base-title">
       <div class="wrap">
         <div class="layers-grid">
@@ -459,18 +474,6 @@
             <svg id="xsecSvg" viewBox="0 0 700 540" role="group" aria-label="Dangos sluoksnių pjūvis"></svg>
             <figcaption class="hint">Orientaciniai storiai. Tikslų pagrindo storį nustatome apžiūrėję gruntą. <button type="button" class="link-btn" id="xsecReplay">Parodyti klojimo eiliškumą</button></figcaption>
           </figure>
-        </div>
-
-        <div class="process" id="eiga">
-          <h3 class="h3">Kaip vyksta darbai</h3>
-          <ol class="steps">
-            <li><span class="step-n">01</span><strong>Užklausa</strong><span>Vieta, plotas, ko norite.</span></li>
-            <li><span class="step-n">02</span><strong>Nemokama apžiūra</strong><span>Matavimai, gruntas, aukščiai.</span></li>
-            <li><span class="step-n">03</span><strong>Sąmata</strong><span>Raštu, su terminu.</span></li>
-            <li><span class="step-n">04</span><strong>Pagrindas</strong><span>Kasimas, borteliai, skalda.</span></li>
-            <li><span class="step-n">05</span><strong>Klojimas</strong><span>Trinkelės, siūlės, vibravimas.</span></li>
-            <li><span class="step-n">06</span><strong>Sutvarkymas</strong><span>Išvežame gruntą bei atliekas ir sutvarkome kraštus prie vejos.</span></li>
-          </ol>
         </div>
       </div>
     </section>
@@ -497,10 +500,10 @@
 
   <a class="call-bar" href="#kontaktai" data-tel aria-label="Skambinti">Skambinti <span data-biz="phoneText"></span></a>
 
-  <script src="assets/js/config.js?v=20261122-6"></script>
-  <script src="assets/js/calc.js?v=20261122-6"></script>
-  <script src="assets/js/paving.js?v=20261122-6"></script>
-  <script src="assets/js/planner.js?v=20261122-6"></script>
-  <script src="assets/js/main.js?v=20261122-6"></script>
+  <script src="assets/js/config.js?v=20261122-7"></script>
+  <script src="assets/js/calc.js?v=20261122-7"></script>
+  <script src="assets/js/paving.js?v=20261122-7"></script>
+  <script src="assets/js/planner.js?v=20261122-7"></script>
+  <script src="assets/js/main.js?v=20261122-7"></script>
 </body>
 </html>

@@ -723,3 +723,15 @@ a.g-rating[href]:not([href="#"]):hover { box-shadow: 0 0 0 1.5px var(--ink); }
 .why-more { margin: clamp(22px, 3vw, 32px) 0 0; padding-top: 18px; border-top: 1px solid rgba(247,240,227,.16); color: rgba(247,240,227,.72); font-size: .93rem; }
 .why-more strong { color: var(--cream); font-weight: 700; }
 @media (max-width: 760px) { .why-list { grid-template-columns: 1fr; gap: 22px; } }
+
+/* ---------- APIE MUS: kompaktiškiau ---------- */
+.section.about { padding-block: clamp(48px, 6vw, 80px); }
+.about-photo { aspect-ratio: 16 / 10; }
+@media (min-width: 861px) { .about-photo { aspect-ratio: 16 / 9; } }
+.about .why { margin-top: clamp(28px, 3.5vw, 44px); padding: clamp(24px, 3vw, 36px) clamp(24px, 3.5vw, 44px); }
+.about .why-title { margin-bottom: clamp(16px, 2vw, 24px); }
+.about .stats { margin-top: clamp(32px, 4vw, 48px); }
+@media (max-width: 860px) { .about-text .h2 { margin-top: 0; } .about .about-grid { gap: 22px; } }
+
+/* ---------- KAIP VYKSTA DARBAI (atskira skiltis) ---------- */
+.process-sec .steps { margin-top: clamp(20px, 3vw, 32px); }
