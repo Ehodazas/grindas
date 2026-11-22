@@ -133,5 +133,33 @@
     };
   }
 
-  return { parseNum: parseNum, geometry: geometry, validate: validate, estimate: estimate, fmtNum: fmtNum, clampWaste: clampWaste };
+  /*
+   * Sluoksnių rinkinys pagal apkrovą ir gruntą (cm, nuo–iki).
+   * Iš viršaus: trinkelės, pastelė, skalda, [smėlis, jei gruntas prastas]. Kasimo gylis = jų suma.
+   */
+  function layerStack(loadKey, soilKey) {
+    var L = cfg.layers.loads[loadKey], S = cfg.layers.soils[soilKey];
+    if (!L || !S) throw new Error("Nežinoma apkrova ar gruntas");
+    var stack = [
+      { key: "pavers", cm: L.pavers.slice() },
+      { key: "bedding", cm: L.bedding.slice() },
+      { key: "aggregate", cm: L.base.slice() }
+    ];
+    if (S.sand) stack.push({ key: "sand", cm: S.sand.slice() });
+    var depth = stack.reduce(function (t, l) { return [t[0] + l.cm[0], t[1] + l.cm[1]]; }, [0, 0]);
+    return { layers: stack, depth: depth, geotextile: S.geotextile };
+  }
+
+  /*
+   * Viso darbo kaina už m² kainoraščiui: medžiaga + klojimas + pagrindas, be bortelių ir be
+   * fiksuotų organizavimo išlaidų. Skaičiuojama tuo pačiu estimate(), kaip planuoklyje (100 m² plotas).
+   */
+  function fullJobPerM2(use, material, color, pattern, waste) {
+    var e = estimate({ shape: "rect", a: 10, b: 10, use: use, material: material, color: color, pattern: pattern, prep: true, curbs: false, waste: waste == null ? 5 : waste });
+    var low = 0, high = 0;
+    e.items.forEach(function (it) { if (it.key !== "mob") { low += it.low; high += it.high; } });
+    return [Math.round(low / e.area), Math.round(high / e.area)];
+  }
+
+  return { parseNum: parseNum, geometry: geometry, validate: validate, estimate: estimate, fmtNum: fmtNum, clampWaste: clampWaste, layerStack: layerStack, fullJobPerM2: fullJobPerM2 };
 });

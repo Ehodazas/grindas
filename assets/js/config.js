@@ -165,6 +165,32 @@ window.GRINDAS_CONFIG = {
   /* Borteliai: EUR už metrą, su betono padu */
   curbs: { label: "Borteliai", price: [14, 22] },
 
+  /* Papildomi darbai kainoraštyje (EUR su PVM, nuo–iki). Planuoklis jų neskaičiuoja. */
+  extras: [
+    { label: "Grunto pertekliaus išvežimas", unit: "m³", price: [14, 20] },
+    { label: "Senos dangos ardymas ir išvežimas", unit: "m²", price: [5, 9] },
+    { label: "Linijinis latakas su montavimu", unit: "m", price: [45, 75] },
+    { label: "Lietaus vandens šulinėlis", unit: "vnt.", price: [90, 160] },
+    { label: "Aukščių lyginimas daugiau nei ±10 cm", unit: "m²", price: [3, 6] }
+  ],
+
+  /* Pažadas klientui: rodomas hero ir DUK. DEMO: pakeiskite tikru. */
+  promise: "Apžiūra ir sąmata nemokamai. Perskambiname per 1 darbo dieną.",
+
+  /* Dangos sluoksniai, cm (nuo–iki). ORIENTACINIAI: tikslų storį nustatome apžiūrėję gruntą. */
+  layers: {
+    loads: {
+      takas:       { label: "Takas",       pavers: [6, 6], bedding: [3, 5], base: [15, 20], note: "Pėstiesiems ir dviračiams." },
+      kiemas:      { label: "Kiemas",      pavers: [6, 8], bedding: [3, 5], base: [20, 25], note: "Kiemas, terasa, retkarčiais užvažiuojantis automobilis." },
+      ivaziavimas: { label: "Įvažiavimas", pavers: [8, 8], bedding: [3, 5], base: [25, 35], note: "Kasdien važiuojantys lengvieji automobiliai." }
+    },
+    soils: {
+      smelis:    { label: "Smėlis",    sand: null,     geotextile: false, note: "Gerai praleidžia vandenį. Gruntas tik sutankinamas." },
+      priemolis: { label: "Priemolis", sand: [5, 10],  geotextile: true,  note: "Rekomenduojama geotekstilė ir drenuojantis smėlio sluoksnis." },
+      molis:     { label: "Molis",     sand: [10, 15], geotextile: true,  note: "Laiko vandenį ir kilnojasi nuo šalčio: geotekstilė ir storesnis smėlio sluoksnis būtini." }
+    }
+  },
+
   /* Fiksuotos išlaidos objektui */
   mobilization: { label: "Technikos atvežimas ir darbų organizavimas", price: [150, 300] },
 

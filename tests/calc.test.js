@@ -151,3 +151,39 @@ test("pastaba apie minimalų užsakymą mažiems darbams", () => {
   assert.equal(C.estimate({ ...base, a: 2, b: 2, prep: false, curbs: false }).belowMinimum, true);
   assert.equal(C.estimate(base).belowMinimum, false);
 });
+
+test("sluoksniai: kasimo gylis lygus sluoksnių sumai", () => {
+  const t = C.layerStack("takas", "smelis");
+  assert.deepEqual(t.layers.map(l => l.key), ["pavers", "bedding", "aggregate"]);
+  assert.deepEqual(t.depth, [6 + 3 + 15, 6 + 5 + 20]);   // 24–31 cm
+  assert.equal(t.geotextile, false);
+  const d = C.layerStack("ivaziavimas", "molis");
+  assert.deepEqual(d.layers.map(l => l.key), ["pavers", "bedding", "aggregate", "sand"]);
+  assert.deepEqual(d.depth, [8 + 3 + 25 + 10, 8 + 5 + 35 + 15]); // 46–63 cm
+  assert.equal(d.geotextile, true);
+});
+
+test("sluoksniai: sunkesnė apkrova ir prastesnis gruntas niekada nesumažina gylio", () => {
+  const loads = ["takas", "kiemas", "ivaziavimas"], soils = ["smelis", "priemolis", "molis"];
+  for (const s of soils) for (let i = 1; i < loads.length; i++) {
+    const a = C.layerStack(loads[i - 1], s).depth, b = C.layerStack(loads[i], s).depth;
+    assert.ok(b[0] >= a[0] && b[1] >= a[1], `${loads[i]} ${s}`);
+  }
+  for (const l of loads) for (let i = 1; i < soils.length; i++) {
+    const a = C.layerStack(l, soils[i - 1]).depth, b = C.layerStack(l, soils[i]).depth;
+    assert.ok(b[0] >= a[0] && b[1] >= a[1], `${l} ${soils[i]}`);
+  }
+});
+
+test("kainoraštis: viso darbo kaina už m² sutampa su planuoklio skaičiavimu", () => {
+  for (const use of Object.keys(cfg.uses)) {
+    const [lo, hi] = C.fullJobPerM2(use, "betonines", "pilka", "perrisimas");
+    const e = C.estimate({ ...base, shape: "rect", a: 10, b: 10, use, material: "betonines", color: "pilka", pattern: "perrisimas", prep: true, curbs: false, waste: 5 });
+    const noMob = e.items.filter(i => i.key !== "mob");
+    assert.equal(lo, Math.round(noMob.reduce((t, i) => t + i.low, 0) / 100));
+    assert.equal(hi, Math.round(noMob.reduce((t, i) => t + i.high, 0) / 100));
+    assert.ok(lo < hi);
+  }
+  // įvažiavimas brangesnis už taką
+  assert.ok(C.fullJobPerM2("ivaziavimas", "betonines", "pilka", "perrisimas")[0] > C.fullJobPerM2("takas", "betonines", "pilka", "perrisimas")[0]);
+});

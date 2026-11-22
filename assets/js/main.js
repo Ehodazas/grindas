@@ -171,95 +171,170 @@
     });
   })();
 
-  /* ---------- Sluoksnių pjūvis (izometrinis) ---------- */
+  /* ---------- Sluoksnių pjūvis (izometrinis, pagal apkrovą ir gruntą) ---------- */
   (function layersDiagram() {
     var svg = document.getElementById("xsecSvg");
-    if (!svg) return;
-    var W = 220, D = 220, OX = 205, OY = 235, C = 0.866, S = 0.5;
+    if (!svg || !cfg.layers) return;
+    var Calc = window.GrindasCalc;
+    var W = 220, D = 220, OX = 215, OY = 272, C = 0.866, S = 0.5, PX = 3.6, SOIL = 46;
     function iso(x, y, z) { return [OX + (x - y) * C, OY + (x + y) * S - z]; }
     function pts(arr) { return arr.map(function (p) { var q = iso(p[0], p[1], p[2]); return q[0].toFixed(1) + "," + q[1].toFixed(1); }).join(" "); }
     function line(g, a, b, cls) { var p = iso.apply(null, a), q = iso.apply(null, b); P.el("line", { x1: p[0], y1: p[1], x2: q[0], y2: q[1], "class": cls }, g); }
+    function rng(cm) { return cm[0] === cm[1] ? cm[0] + " cm" : cm[0] + "–" + cm[1] + " cm"; }
 
-    var defs = P.el("defs", {}, svg);
-    defs.innerHTML =
+    var defsHtml =
       '<pattern id="xs-agg" width="16" height="13" patternUnits="userSpaceOnUse"><rect width="16" height="13" fill="#a3a097"/><path d="M1 4l4-2 3 3-3 3-4-1zM10 1l5 1 1 4-4 2-3-3zM7 9l3-1 3 3-2 2-4-1z" fill="#878479"/><circle cx="14" cy="10" r="1.3" fill="#c0bdb4"/></pattern>' +
       '<pattern id="xs-sand" width="9" height="7" patternUnits="userSpaceOnUse"><rect width="9" height="7" fill="#d8c8a2"/><circle cx="2" cy="2" r=".7" fill="#bfae85"/><circle cx="6" cy="5" r=".6" fill="#bfae85"/></pattern>' +
-      '<pattern id="xs-soil" width="22" height="14" patternUnits="userSpaceOnUse"><rect width="22" height="14" fill="#6e5a48"/><path d="M0 11l6-3M9 4l6-3M13 13l6-3" stroke="#5d4b3b" stroke-width="1.2"/></pattern>';
+      '<pattern id="xs-dsand" width="10" height="8" patternUnits="userSpaceOnUse"><rect width="10" height="8" fill="#e6dcc3"/><circle cx="3" cy="2" r=".8" fill="#cbbd98"/><circle cx="7" cy="6" r=".7" fill="#cbbd98"/></pattern>' +
+      '<pattern id="xs-soil" width="22" height="14" patternUnits="userSpaceOnUse"><rect width="22" height="14" fill="#6e5a48"/><path d="M0 11l6-3M9 4l6-3M13 13l6-3" stroke="#5d4b3b" stroke-width="1.2"/></pattern>' +
+      '<pattern id="xs-clay" width="22" height="14" patternUnits="userSpaceOnUse"><rect width="22" height="14" fill="#8a6f55"/><path d="M0 7h22" stroke="#7a604a" stroke-width="1.4"/></pattern>';
 
-    var layerDefs = [
-      { key: "soil", z: [0, 70], fill: "url(#xs-soil)", ly: 352, title: "Paruoštas gruntas", sub: "nukastas ir sutankintas",
-        info: ["Nukasus augalinį sluoksnį, gruntas išlyginamas ir sutankinamas. Ant jo remiasi visa konstrukcija.",
-               "Molis prastai praleidžia vandenį ir kilnojasi nuo šalčio, todėl kartais reikia geotekstilės ar drenažo."],
-        why: "Grunto iš nuotraukos neįvertinsi, todėl pagrindo storį nustatome apžiūrėję vietą." },
-      { key: "aggregate", z: [70, 150], fill: "url(#xs-agg)", ly: 282, title: "Skaldos pagrindas", sub: "skalda 0–32 mm, 15–30 cm",
-        info: ["Pagrindinė laikanti dalis. Skalda pilama sluoksniais, kiekvienas tankinamas vibroplokšte.",
-               "Įvažiavimui pagrindas gerokai storesnis nei takui. Čia formuojamas ir nuolydis vandeniui."],
-        why: "Prastai sutankinta skalda slūgsta po pirmų žiemų, o trinkelės pradeda klibėti." },
-      { key: "bedding", z: [150, 176], fill: "url(#xs-sand)", ly: 214, title: "Pastelės sluoksnis", sub: "atsijos ar smėlis, apie 3–5 cm",
-        info: ["Plonas sluoksnis, ant kurio trinkelės išlyginamos į vieną aukštį.",
-               "Jis turi būti vienodo storio. Juo nelyginamos duobės: nelygumai taisomi pagrinde."],
+    var info = {
+      pavers: { title: "Trinkelės", fill: "#6d7072",
+        text: ["Priima apkrovą nuo žingsnių ar ratų ir paskirsto ją į apačią. Smėliu užpildytos siūlės leidžia trinkelėms dirbti kartu.",
+               "Takui užtenka 6 cm trinkelių, įvažiavimui reikia 8 cm. Eglutės raštas geriau atlaiko sukančius ratus."],
+        why: "Net geriausios trinkelės neišlaikys, jei apačioje silpnas pagrindas." },
+      bedding: { title: "Pastelės sluoksnis", fill: "url(#xs-sand)",
+        text: ["Plonas atsijų ar smėlio sluoksnis, ant kurio trinkelės išlyginamos į vieną aukštį.",
+               "Turi būti vienodo storio, apie 3–5 cm. Juo nelyginamos duobės: nelygumai taisomi pagrinde."],
         why: "Kur pastelė per stora, danga ilgainiui įdumba ir kieme atsiranda balos." },
-      { key: "pavers", z: [176, 206], fill: "#6d7072", ly: 160, title: "Trinkelės", sub: "6 cm takui, 8 cm įvažiavimui",
-        info: ["Priima apkrovą nuo žingsnių ar ratų ir paskirsto ją į apačią. Smėliu užpildytos siūlės leidžia trinkelėms dirbti kartu.",
-               "Eglutės raštas geriau atlaiko sukančius automobilio ratus nei tiesios eilės."],
-        why: "Net geriausios trinkelės neišlaikys, jei apačioje silpnas pagrindas." }
-    ];
+      aggregate: { title: "Skaldos pagrindas", fill: "url(#xs-agg)",
+        text: ["Pagrindinė laikanti dalis. Skalda pilama sluoksniais ne storesniais nei 10–15 cm, kiekvienas tankinamas vibroplokšte.",
+               "Storis priklauso nuo apkrovos: įvažiavimui gerokai storesnis nei takui. Čia formuojamas ir 1,5–2 % nuolydis nuo pastato."],
+        why: "Prastai sutankinta skalda slūgsta po pirmų žiemų, o trinkelės pradeda klibėti." },
+      sand: { title: "Drenuojantis smėlis", fill: "url(#xs-dsand)",
+        text: ["Klojamas ant geotekstilės, kai gruntas molingas. Nuleidžia vandenį ir neleidžia skaldai susimaišyti su moliu.",
+               "Molyje sluoksnis storesnis nei priemolyje."],
+        why: "Be jo molis žiemą kilnojasi nuo šalčio ir danga iškyla." },
+      soil: { title: "Paruoštas gruntas", fill: "url(#xs-soil)",
+        text: ["Nukasus augalinį sluoksnį, gruntas išlyginamas ir sutankinamas. Ant jo remiasi visa konstrukcija.",
+               "Smėlis gerai praleidžia vandenį. Priemolis ir molis jį laiko, todėl reikia geotekstilės ir drenuojančio sluoksnio."],
+        why: "Grunto iš nuotraukos neįvertinsi, todėl pagrindo storį nustatome apžiūrėję vietą." }
+    };
 
-    var groups = {};
-    layerDefs.forEach(function (L) {
-      var g = P.el("g", { "class": "xs-layer", "data-layer": L.key, tabindex: "0", role: "button", "aria-pressed": "false", "aria-label": L.title + ": " + L.sub }, svg);
-      var body = P.el("g", { "class": "xs-body xs-" + L.key }, g);
-      var z0 = L.z[0], z1 = L.z[1];
-      P.el("polygon", { points: pts([[0, D, z0], [W, D, z0], [W, D, z1], [0, D, z1]]), fill: L.fill, stroke: "#2b2e2c", "stroke-width": 0.8 }, body);
-      P.el("polygon", { points: pts([[W, D, z0], [W, 0, z0], [W, 0, z1], [W, D, z1]]), fill: L.fill, stroke: "#2b2e2c", "stroke-width": 0.8 }, body);
-      P.el("polygon", { points: pts([[W, D, z0], [W, 0, z0], [W, 0, z1], [W, D, z1]]), fill: "rgba(0,0,0,.16)" }, body);
-      if (L.key === "pavers") {
-        var top = P.el("g", {}, body);
-        P.el("polygon", { points: pts([[0, 0, z1], [W, 0, z1], [W, D, z1], [0, D, z1]]), fill: "#8b8e8f", stroke: "#2b2e2c", "stroke-width": 0.8 }, top);
-        for (var k = 1; k < 10; k++) line(top, [0, k * 22, z1], [W, k * 22, z1], "xs-joint");
-        for (var r = 0; r < 10; r++) for (var x = (r % 2) * 22; x < W; x += 44) if (x > 0) line(top, [x, r * 22, z1], [x, (r + 1) * 22, z1], "xs-joint");
-        for (var x2 = 22; x2 < W; x2 += 44) line(body, [x2, D, z0], [x2, D, z1], "xs-joint");
-        for (var y2 = 22; y2 < D; y2 += 22) line(body, [W, y2, z0], [W, y2, z1], "xs-joint");
-      }
-      // atraminė linija iki užrašo
-      var zm = (z0 + z1) / 2, s = iso(W, D * 0.35, zm);
-      P.el("circle", { cx: s[0], cy: s[1], r: 3, "class": "xs-dot" }, g);
-      P.el("polyline", { points: [s[0], s[1], 405, s[1], 428, L.ly, 444, L.ly].join(" "), fill: "none", "class": "xs-leader" }, g);
-      var t1 = P.el("text", { x: 452, y: L.ly - 3, "class": "xs-label-title" }, g); t1.textContent = L.title;
-      var t2 = P.el("text", { x: 452, y: L.ly + 15, "class": "xs-label-sub" }, g); t2.textContent = L.sub;
-      P.el("rect", { x: 440, y: L.ly - 20, width: 236, height: 42, "class": "xs-hit" }, g);
-      groups[L.key] = { g: g, def: L };
-    });
-    var jointStyle = document.createElementNS(P.NS, "style");
-    jointStyle.textContent = ".xs-joint{stroke:#3f4244;stroke-width:1}";
-    svg.appendChild(jointStyle);
-
+    var state = { load: "kiemas", soil: "smelis", sel: "pavers" };
     var fig = svg.closest(".xsec-figure");
-    var info = document.getElementById("xsecInfo");
+    var infoBox = document.getElementById("xsecInfo");
+
+    function radios(id, name, map, current) {
+      var box = document.getElementById(id);
+      Object.keys(map).forEach(function (k) {
+        var l = document.createElement("label");
+        l.innerHTML = '<input type="radio" name="' + name + '" value="' + k + '"' + (k === current ? " checked" : "") + "><span></span>";
+        l.querySelector("span").textContent = map[k].label;
+        box.appendChild(l);
+      });
+      box.addEventListener("change", function (e) { state[name] = e.target.value; draw(true); });
+    }
+    radios("loadSeg", "load", cfg.layers.loads, state.load);
+    radios("soilSeg", "soil", cfg.layers.soils, state.soil);
+
+    function showInfo(key) {
+      var L = info[key];
+      infoBox.innerHTML = "<h3></h3><p></p><p></p><p class=\"why\"></p>";
+      infoBox.querySelector("h3").textContent = L.title;
+      var ps = infoBox.querySelectorAll("p");
+      ps[0].textContent = L.text[0]; ps[1].textContent = L.text[1]; ps[2].textContent = L.why;
+      infoBox.classList.remove("swap"); void infoBox.offsetWidth; infoBox.classList.add("swap");
+    }
+
     function select(key) {
-      Object.keys(groups).forEach(function (k) {
-        var on = k === key;
-        groups[k].g.classList.toggle("is-active", on);
-        groups[k].g.setAttribute("aria-pressed", on ? "true" : "false");
+      state.sel = key;
+      svg.querySelectorAll(".xs-layer").forEach(function (g) {
+        var on = g.getAttribute("data-layer") === key;
+        g.classList.toggle("is-active", on);
+        g.setAttribute("aria-pressed", on ? "true" : "false");
       });
       fig.classList.add("has-selection");
-      var L = groups[key].def;
-      info.innerHTML = "<h3></h3><p></p><p></p><p class=\"why\"></p>";
-      info.querySelector("h3").textContent = L.title;
-      var ps = info.querySelectorAll("p");
-      ps[0].textContent = L.info[0]; ps[1].textContent = L.info[1]; ps[2].textContent = L.why;
-      info.classList.remove("swap"); void info.offsetWidth; info.classList.add("swap");
+      showInfo(key);
     }
-    Object.keys(groups).forEach(function (k) {
-      var g = groups[k].g;
-      g.addEventListener("click", function () { select(k); });
-      g.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(k); } });
-    });
-    select("pavers");
 
+    function draw(changed) {
+      var stack = Calc.layerStack(state.load, state.soil);
+      var soilDef = cfg.layers.soils[state.soil];
+      svg.innerHTML = "";
+      P.el("defs", {}, svg).innerHTML = defsHtml;
+      var st = document.createElementNS(P.NS, "style");
+      st.textContent = ".xs-joint{stroke:#3f4244;stroke-width:1}";
+      svg.appendChild(st);
+
+      // sluoksniai iš apačios į viršų
+      var bottomUp = [{ key: "soil", z: [0, SOIL], cm: null }];
+      var z = SOIL;
+      stack.layers.slice().reverse().forEach(function (l) {
+        var h = ((l.cm[0] + l.cm[1]) / 2) * PX;
+        bottomUp.push({ key: l.key, z: [z, z + h], cm: l.cm });
+        z += h;
+      });
+      var topZ = z;
+
+      // užrašų vietos: nuo viršaus žemyn, ne arčiau kaip 46 px viena nuo kitos
+      var labelled = bottomUp.slice().reverse().map(function (L) {
+        var s = iso(W, D * 0.35, (L.z[0] + L.z[1]) / 2);
+        return { L: L, sx: s[0], sy: s[1], ly: s[1] };
+      });
+      for (var i = 0; i < labelled.length; i++) {
+        if (i === 0) labelled[i].ly = Math.max(40, labelled[i].ly - 10);
+        else labelled[i].ly = Math.max(labelled[i].ly, labelled[i - 1].ly + 46);
+      }
+
+      labelled.slice().reverse().forEach(function (o) {
+        var L = o.L, I = info[L.key];
+        var fill = L.key === "soil" && state.soil !== "smelis" ? "url(#xs-clay)" : I.fill;
+        var sub = L.key === "soil" ? (soilDef.geotextile ? soilDef.label.toLowerCase() + ", su geotekstile" : soilDef.label.toLowerCase() + ", sutankintas") : rng(L.cm);
+        var g = P.el("g", { "class": "xs-layer", "data-layer": L.key, tabindex: "0", role: "button", "aria-pressed": "false", "aria-label": I.title + ": " + sub }, svg);
+        var body = P.el("g", { "class": "xs-body xs-" + L.key }, g);
+        var z0 = L.z[0], z1 = L.z[1];
+        P.el("polygon", { points: pts([[0, D, z0], [W, D, z0], [W, D, z1], [0, D, z1]]), fill: fill, stroke: "#2b2e2c", "stroke-width": 0.8 }, body);
+        P.el("polygon", { points: pts([[W, D, z0], [W, 0, z0], [W, 0, z1], [W, D, z1]]), fill: fill, stroke: "#2b2e2c", "stroke-width": 0.8 }, body);
+        P.el("polygon", { points: pts([[W, D, z0], [W, 0, z0], [W, 0, z1], [W, D, z1]]), fill: "rgba(0,0,0,.16)" }, body);
+        if (L.key === "pavers") {
+          var top = P.el("g", {}, body);
+          P.el("polygon", { points: pts([[0, 0, z1], [W, 0, z1], [W, D, z1], [0, D, z1]]), fill: "#8b8e8f", stroke: "#2b2e2c", "stroke-width": 0.8 }, top);
+          for (var k = 1; k < 10; k++) line(top, [0, k * 22, z1], [W, k * 22, z1], "xs-joint");
+          for (var r = 0; r < 10; r++) for (var x = (r % 2) * 22; x < W; x += 44) if (x > 0) line(top, [x, r * 22, z1], [x, (r + 1) * 22, z1], "xs-joint");
+          for (var x2 = 22; x2 < W; x2 += 44) line(body, [x2, D, z0], [x2, D, z1], "xs-joint");
+          for (var y2 = 22; y2 < D; y2 += 22) line(body, [W, y2, z0], [W, y2, z1], "xs-joint");
+        }
+        if (L.key === "soil" && soilDef.geotextile) {
+          // geotekstilė: punktyrinė linija grunto viršuje
+          P.el("polyline", { points: pts([[0, D, z1], [W, D, z1], [W, 0, z1]]), fill: "none", stroke: "#f2efe8", "stroke-width": 2.2, "stroke-dasharray": "6 4" }, body);
+        }
+        P.el("circle", { cx: o.sx, cy: o.sy, r: 3, "class": "xs-dot" }, g);
+        P.el("polyline", { points: [o.sx, o.sy, 420, o.sy, 444, o.ly, 460, o.ly].join(" "), fill: "none", "class": "xs-leader" }, g);
+        var t1 = P.el("text", { x: 468, y: o.ly - 3, "class": "xs-label-title" }, g); t1.textContent = I.title;
+        var t2 = P.el("text", { x: 468, y: o.ly + 15, "class": "xs-label-sub" }, g); t2.textContent = sub;
+        P.el("rect", { x: 456, y: o.ly - 20, width: 240, height: 42, "class": "xs-hit" }, g);
+        g.addEventListener("click", function () { select(L.key); });
+        g.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(L.key); } });
+      });
+
+      // kasimo gylio matmuo kairėje
+      var a = iso(0, D, topZ), b = iso(0, D, SOIL), dx = -26;
+      var gd = P.el("g", { "class": "xs-depthdim" }, svg);
+      P.el("line", { x1: a[0] + dx, y1: a[1], x2: b[0] + dx, y2: b[1], "class": "xs-dimline" }, gd);
+      P.el("line", { x1: a[0] + dx - 6, y1: a[1], x2: a[0] + dx + 6, y2: a[1], "class": "xs-dimline" }, gd);
+      P.el("line", { x1: b[0] + dx - 6, y1: b[1], x2: b[0] + dx + 6, y2: b[1], "class": "xs-dimline" }, gd);
+      var my = (a[1] + b[1]) / 2, mx = a[0] + dx - 10;
+      var dt = P.el("text", { x: mx, y: my, "class": "xs-dimtext", "text-anchor": "middle", transform: "rotate(-90 " + mx + " " + my + ")" }, gd);
+      dt.textContent = "≈ " + stack.depth[0] + "–" + stack.depth[1] + " cm";
+
+      document.getElementById("xsDepth").textContent = "≈ " + stack.depth[0] + "–" + stack.depth[1] + " cm";
+      document.getElementById("xsSoilNote").textContent = cfg.layers.loads[state.load].note + " " + soilDef.note;
+
+      if (!svg.querySelector('.xs-layer[data-layer="' + state.sel + '"]')) state.sel = "pavers";
+      select(state.sel);
+      if (changed && !reduceMotion) { fig.classList.remove("xs-redraw"); void fig.offsetWidth; fig.classList.add("xs-redraw"); }
+    }
+    draw(false);
+
+    var buildTimer;
     function play() {
       if (reduceMotion) return;
       fig.classList.remove("is-building"); void fig.getBoundingClientRect(); fig.classList.add("is-building");
+      // po animacijos klasė nuimama, kad perpiešiant (pakeitus apkrovą ar gruntą) ji nesikartotų
+      clearTimeout(buildTimer);
+      buildTimer = setTimeout(function () { fig.classList.remove("is-building"); }, 1700);
     }
     var replay = document.getElementById("xsecReplay");
     replay.addEventListener("click", play);
@@ -272,6 +347,55 @@
       io.observe(fig);
     }
   })();
+
+  /* ---------- Kainoraštis (iš tų pačių kainų kaip planuoklis) ---------- */
+  (function priceList() {
+    var full = document.getElementById("priceFull");
+    if (!full) return;
+    var Calc = window.GrindasCalc;
+    function eur(r, unit) { return r[0].toLocaleString("lt-LT") + "–" + r[1].toLocaleString("lt-LT") + " €" + (unit ? "/" + unit : ""); }
+    var notes = { takas: "Takas", kiemas: "Kiemas", ivaziavimas: "Įvažiavimas" };
+    ["takas", "kiemas", "ivaziavimas"].forEach(function (u) {
+      var r = Calc.fullJobPerM2(u, "betonines", "pilka", "perrisimas");
+      var li = document.createElement("li");
+      li.innerHTML = '<span class="pf-use"></span><span class="pf-price"></span><span class="pf-sub">su pagrindu, pilkomis betoninėmis trinkelėmis ir darbu</span>';
+      li.querySelector(".pf-use").textContent = notes[u];
+      li.querySelector(".pf-price").innerHTML = r[0] + "–" + r[1] + " <small>€/m²</small>";
+      full.appendChild(li);
+    });
+
+    function rows(tableId, list) {
+      var tb = document.querySelector("#" + tableId + " tbody");
+      list.forEach(function (row) {
+        var tr = document.createElement("tr");
+        tr.innerHTML = "<th scope=\"row\"></th><td></td>";
+        tr.firstChild.textContent = row[0];
+        tr.lastChild.textContent = row[1];
+        tb.appendChild(tr);
+      });
+    }
+    var M = cfg.materials, U = cfg.uses;
+    var lab = function (m) { return [Math.round(U.kiemas.labor[0] * M[m].laborFactor), Math.round(U.kiemas.labor[1] * M[m].laborFactor)]; };
+    rows("priceWorks", [
+      ["Klojimas: betoninės trinkelės", eur(lab("betonines"), "m²")],
+      ["Klojimas: klinkerio trinkelės", eur(lab("klinkeris"), "m²")],
+      ["Klojimas: didelio formato plokštės", eur(lab("ploksciu"), "m²")],
+      ["Pagrindo paruošimas: takui", eur(U.takas.groundPrep, "m²")],
+      ["Pagrindo paruošimas: kiemui", eur(U.kiemas.groundPrep, "m²")],
+      ["Pagrindo paruošimas: įvažiavimui", eur(U.ivaziavimas.groundPrep, "m²")],
+      ["Betoninės trinkelės (medžiaga)", eur(M.betonines.price, "m²")],
+      ["Klinkerio trinkelės (medžiaga)", eur(M.klinkeris.price, "m²")],
+      ["Borteliai su betono padu", eur(cfg.curbs.price, "m")],
+      ["Technikos atvežimas ir organizavimas", eur(cfg.mobilization.price) + " objektui"]
+    ]);
+    rows("priceExtras", (cfg.extras || []).map(function (x) { return [x.label, eur(x.price, x.unit)]; }));
+    document.getElementById("priceNote").textContent =
+      "Klojimo kaina nurodyta tiesioms eilėms ir raštui su perrišimu, eglutė brangesnė apie 15 %. " +
+      "Viso darbo kaina be bortelių ir technikos atvežimo. Nedideliems darbams (iki ~" + cfg.minimumOrder + " €) kaina skaičiuojama individualiai.";
+  })();
+
+  /* ---------- Pažadas klientui ---------- */
+  document.querySelectorAll("[data-promise]").forEach(function (n) { n.textContent = cfg.promise || ""; });
 
   /* ---------- Prieš / po schema ---------- */
   (function drawBeforeAfter() {

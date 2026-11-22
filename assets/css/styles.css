@@ -556,3 +556,48 @@ a.g-rating[href]:not([href="#"]):hover { box-shadow: 0 0 0 1.5px var(--ink); }
 @media (max-width: 760px) { .topbar-inner { justify-content: space-between; } .tb-social { border-left: 0; } }
 .foot-social a + a { margin-left: 0; }
 .about .stats { margin: clamp(40px, 5vw, 64px) 0 0; }
+
+/* ---------- Pažadas hero ---------- */
+.hero-promise { margin: 22px 0 0; display: inline-flex; align-items: center; gap: 10px; font-size: .98rem; font-weight: 500; color: rgba(255,255,255,.92); }
+.hero-promise::before { content: ""; width: 18px; height: 4px; background: var(--tape); border-radius: 1px; flex: none; }
+.hero-promise:empty { display: none; }
+
+/* ---------- Kainos ---------- */
+.prices { background: var(--bg); }
+.price-full { list-style: none; margin: 0 0 clamp(32px, 4vw, 48px); padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.price-full li { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 4px; padding: 30px 22px 22px; background: var(--paper); border-radius: 4px; box-shadow: 0 0 0 1px var(--line); }
+.price-full li::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 12px; background: repeating-linear-gradient(90deg, rgba(28,31,29,.8) 0 1px, transparent 1px 6px) left top / 100% 5px no-repeat, repeating-linear-gradient(90deg, rgba(28,31,29,.9) 0 1.5px, transparent 1.5px 30px) left top / 100% 10px no-repeat, var(--tape); }
+.pf-use { font-weight: 700; }
+.pf-price { font-weight: 800; font-size: clamp(1.9rem, 3.4vw, 2.6rem); letter-spacing: -.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.pf-price small { font-size: .5em; font-weight: 700; color: var(--muted); letter-spacing: 0; }
+.pf-sub { font-size: .88rem; color: var(--muted); }
+.price-tables { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
+.price-table { width: 100%; border-collapse: collapse; font-size: .96rem; }
+.price-table caption { text-align: left; font-weight: 700; font-size: 1.05rem; padding-bottom: 10px; }
+.price-table thead th { font-size: .8rem; color: var(--muted); font-weight: 600; text-align: left; padding: 0 0 8px; border-bottom: 1px solid var(--line-strong); }
+.price-table thead th:last-child { text-align: right; }
+.price-table th[scope=row] { text-align: left; font-weight: 500; padding: 11px 16px 11px 0; border-bottom: 1px solid var(--line); }
+.price-table td { text-align: right; white-space: nowrap; font-weight: 700; padding: 11px 0; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+#priceNote { margin-top: 20px; max-width: 60em; }
+@media (max-width: 860px) { .price-full, .price-tables { grid-template-columns: 1fr; } }
+
+/* ---------- Sluoksnių valdikliai ---------- */
+.xs-controls { display: grid; gap: 14px; padding: 18px 0 20px; border-top: 1px solid var(--line-strong); }
+.xs-control { display: grid; grid-template-columns: 5.5em minmax(0, 1fr); align-items: center; gap: 12px; }
+.xs-control-label { font-weight: 700; font-size: .92rem; }
+.xs-controls .seg { justify-self: start; }
+.xs-controls .seg span { padding: 0 12px; font-size: .88rem; }
+.xs-depth { margin: 4px 0 0; display: flex; align-items: baseline; gap: 10px; }
+.xs-depth span { font-size: .9rem; color: var(--muted); font-weight: 600; }
+.xs-depth strong { font-size: 1.6rem; font-weight: 800; letter-spacing: -.02em; }
+#xsSoilNote { margin: 0; }
+.xs-dimline { stroke: var(--ink); stroke-width: 1.2; }
+.xs-dimtext { font-family: var(--font); font-weight: 700; font-size: 14px; fill: var(--ink); }
+.xs-redraw svg { animation: fadeIn .28s ease; }
+.is-building .xs-sand { animation: settle .5s var(--ease) .05s backwards; }
+@media (max-width: 420px) { .xs-control { grid-template-columns: 1fr; gap: 6px; } }
+@media (max-width: 900px) {
+  .layers-text .xs-controls { order: 3; }
+  .xsec-figure { order: 4; }
+  .xsec-info { order: 5; }
+}

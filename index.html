@@ -48,6 +48,7 @@
         <ul>
           <li><a href="#paslaugos">Paslaugos</a></li>
           <li><a href="#planuoklis">Planuoklis</a></li>
+          <li><a href="#kainos">Kainos</a></li>
           <li><a href="#projektai">Projektai</a></li>
           <li><a href="#atsiliepimai">Atsiliepimai</a></li>
           <li><a href="#apie">Apie mus</a></li>
@@ -75,6 +76,7 @@
           <a class="btn btn-tape" href="#planuoklis">Apskaičiuoti kainą <span class="arrow" aria-hidden="true">→</span></a>
           <a class="btn btn-ghost" href="#kontaktai" data-tel>Skambinti</a>
         </div>
+        <p class="hero-promise" data-promise></p>
       </div>
       <p class="demo-tag">Demo projektas</p>
     </section>
@@ -296,6 +298,30 @@
       </div>
     </section>
 
+    <!-- KAINOS -->
+    <section class="section prices" id="kainos" aria-labelledby="prices-title">
+      <div class="wrap">
+        <header class="section-head">
+          <h2 id="prices-title" class="h2">Kainos</h2>
+          <p class="lede">Orientacinės kainos su PVM, tos pačios, kuriomis skaičiuoja planuoklis. Galutinę kainą pasakysime po nemokamos apžiūros.</p>
+        </header>
+        <ul class="price-full" id="priceFull" role="list"></ul>
+        <div class="price-tables">
+          <table class="price-table" id="priceWorks">
+            <caption>Darbai ir medžiagos</caption>
+            <thead><tr><th scope="col">Pozicija</th><th scope="col">Kaina</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <table class="price-table" id="priceExtras">
+            <caption>Papildomi darbai</caption>
+            <thead><tr><th scope="col">Pozicija</th><th scope="col">Kaina</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="hint" id="priceNote"></p>
+      </div>
+    </section>
+
     <!-- 04 PROJEKTAI -->
     <section class="section works" id="projektai" aria-labelledby="works-title">
       <div class="wrap">
@@ -373,11 +399,23 @@
           <div class="layers-text">
             <h2 id="base-title" class="h2">Kas po trinkelėmis</h2>
             <p class="lede">Tinkamai paruoštas pagrindas lemia, ar danga ilgai išliks lygi. Paspauskite sluoksnį.</p>
+            <div class="xs-controls">
+              <div class="xs-control">
+                <span class="xs-control-label" id="lbl-load">Apkrova</span>
+                <div class="seg" role="radiogroup" aria-labelledby="lbl-load" id="loadSeg"></div>
+              </div>
+              <div class="xs-control">
+                <span class="xs-control-label" id="lbl-soil">Gruntas</span>
+                <div class="seg" role="radiogroup" aria-labelledby="lbl-soil" id="soilSeg"></div>
+              </div>
+              <p class="xs-depth" aria-live="polite"><span>Kasimo gylis</span> <strong id="xsDepth">—</strong></p>
+              <p class="hint" id="xsSoilNote"></p>
+            </div>
             <div class="xsec-info" id="xsecInfo" aria-live="polite"></div>
           </div>
           <figure class="xsec-figure">
-            <svg id="xsecSvg" viewBox="0 0 680 470" role="group" aria-label="Dangos sluoksnių pjūvis"></svg>
-            <figcaption class="hint">Tipiniai storiai. Tikslų pagrindo storį nustatome apžiūrėję gruntą. <button type="button" class="link-btn" id="xsecReplay">Parodyti klojimo eiliškumą</button></figcaption>
+            <svg id="xsecSvg" viewBox="0 0 700 540" role="group" aria-label="Dangos sluoksnių pjūvis"></svg>
+            <figcaption class="hint">Orientaciniai storiai. Tikslų pagrindo storį nustatome apžiūrėję gruntą. <button type="button" class="link-btn" id="xsecReplay">Parodyti klojimo eiliškumą</button></figcaption>
           </figure>
         </div>
 
@@ -385,7 +423,7 @@
           <h3 class="h3">Kaip vyksta darbai</h3>
           <ol class="steps">
             <li><span class="step-n">01</span><strong>Užklausa</strong><span>Vieta, plotas, ko norite.</span></li>
-            <li><span class="step-n">02</span><strong>Apžiūra</strong><span>Matavimai, gruntas, aukščiai.</span></li>
+            <li><span class="step-n">02</span><strong>Nemokama apžiūra</strong><span>Matavimai, gruntas, aukščiai.</span></li>
             <li><span class="step-n">03</span><strong>Sąmata</strong><span>Raštu, su terminu.</span></li>
             <li><span class="step-n">04</span><strong>Pagrindas</strong><span>Kasimas, borteliai, skalda.</span></li>
             <li><span class="step-n">05</span><strong>Klojimas</strong><span>Trinkelės, siūlės, vibravimas.</span></li>
@@ -401,6 +439,10 @@
         <div class="faq" id="duk">
           <h2 class="h2" id="faq-title">Dažni klausimai</h2>
           <div class="faq-list">
+            <details>
+              <summary>Ar apžiūra ir sąmata mokamos?</summary>
+              <p>Ne. Atvažiuojame, išmatuojame, įvertiname gruntą ir pateikiame sąmatą raštu nemokamai ir be įsipareigojimų. Paskambinus perskambiname per vieną darbo dieną.</p>
+            </details>
             <details>
               <summary>Kodėl kaina rodoma intervalu?</summary>
               <p>Internetu nematyti, kiek grunto reikės išvežti, ar sklypas lygus ir ar privažiuos sunkvežimis. Tikslią sumą pateikiame po apžiūros.</p>
