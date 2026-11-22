@@ -153,6 +153,8 @@
         it.querySelector(".acc-panel").hidden = !on;
       });
       show(li.dataset.photo, li.dataset.alt);
+      var tag = document.getElementById("servicePhotoTag");
+      if (tag) tag.textContent = li.querySelector(".acc-btn").textContent;
     }
     photo.dataset.current = "egle-detale";
     items.forEach(function (li) {
@@ -343,11 +345,11 @@
 
   /* ---------- Projektai (pavyzdiniai) ---------- */
   var projects = [
-    { img: "vidinis-kiemas-skalda", w: 990, h: 660, single: true, title: "Vidinis kiemas su skaldos siūlėmis", meta: "Kauno r., apie 70 m²",
+    { img: "vidinis-kiemas-skalda", w: 990, h: 660, single: true, title: "Vidinis kiemas su skaldos siūlėmis", meta: "Kauno r., apie 70 m²", area: "≈ 70 m²",
       alt: "Vidinis kiemas iš didelių betoninių plokščių su skaldos siūlėmis prie tamsaus namo" },
-    { img: "namas-medinis-takas", w: 1600, h: 1067, title: "Takas iš plokščių prie namo", meta: "Vilniaus r., apie 45 m²",
+    { img: "namas-medinis-takas", w: 1600, h: 1067, title: "Takas iš plokščių prie namo", meta: "Vilniaus r., apie 45 m²", area: "≈ 45 m²",
       alt: "Takas iš didelių plokščių su akmenukų siūlėmis prie medinio namo" },
-    { img: "terasa-moderni", w: 1600, h: 1067, title: "Terasa su pavėsine", meta: "Kaunas, apie 35 m²",
+    { img: "terasa-moderni", w: 1600, h: 1067, title: "Terasa su pavėsine", meta: "Kaunas, apie 35 m²", area: "≈ 35 m²",
       alt: "Šviesių plokščių terasa su pavėsine ir veja" }
   ];
   var list = document.getElementById("projects");
@@ -356,7 +358,7 @@
     li.className = "project project-" + (i + 1);
     var srcset = pr.single ? "" : ' srcset="' + IMG + pr.img + "-800.webp 800w, " + IMG + pr.img + ".webp " + pr.w + 'w"';
     li.innerHTML = '<figure class="project-photo"><img src="' + IMG + pr.img + (pr.single ? "" : "-800") + '.webp"' + srcset +
-      ' sizes="(max-width: 860px) 100vw, ' + (i === 0 ? "58vw" : "42vw") + '" width="' + pr.w + '" height="' + pr.h + '" loading="lazy" decoding="async" alt=""></figure>' +
+      ' sizes="(max-width: 860px) 100vw, ' + (i === 0 ? "58vw" : "42vw") + '" width="' + pr.w + '" height="' + pr.h + '" loading="lazy" decoding="async" alt=""><span class="tape-tag" aria-hidden="true">' + pr.area + '</span></figure>' +
       '<div class="project-cap"><h3></h3><p></p></div>';
     li.querySelector("img").alt = pr.alt;
     li.querySelector("h3").textContent = pr.title;
