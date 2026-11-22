@@ -669,3 +669,19 @@ a.g-rating[href]:not([href="#"]):hover { box-shadow: 0 0 0 1.5px var(--ink); }
 @media (max-width: 600px) {
   .hero-photo, .hero-shade { height: max(56svh, 470px); min-height: 0; }
 }
+
+/* ---------- Telefone: mygtukai turi tilpti pirmame ekrane be slinkimo ---------- */
+@media (max-width: 600px) {
+  /* nuotrauka prasideda po meniu juosta (≈114 px), todėl rankų neuždengia */
+  .hero { padding-top: 114px; }
+  .hero-photo, .hero-shade { height: clamp(210px, 33svh, 320px); }
+  .hero-shade { top: 114px; background: linear-gradient(180deg, rgba(12,14,13,0) 62%, #1a1d1b 100%); }
+  .hero-inner { padding-top: 12px; padding-bottom: 40px; }
+  .hero-title { font-size: clamp(1.8rem, 8.4vw, 2.2rem); line-height: 1.08; margin-bottom: 10px; }
+  .hero-lead { font-size: .97rem; line-height: 1.45; margin-bottom: 16px; }
+  .hero-actions { flex-wrap: nowrap; gap: 10px; }
+  .hero-actions .btn { flex: 0 0 auto; min-height: 52px; padding: 0 18px; font-size: .98rem; }
+  .hero-actions .btn-tape { flex: 1 1 auto; padding-left: 14px; padding-right: 14px; }
+  .hero-notes { margin-top: 16px; gap: 6px; }
+  .demo-tag { top: 124px; }
+}
