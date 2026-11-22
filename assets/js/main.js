@@ -364,13 +364,22 @@
     var replay = document.getElementById("xsecReplay");
     replay.addEventListener("click", play);
     if (reduceMotion) replay.hidden = true;
-    else if ("IntersectionObserver" in window) {
-      fig.classList.add("pre-build");
-      var io = new IntersectionObserver(function (ents) {
-        if (ents[0].isIntersecting) { fig.classList.remove("pre-build"); play(); io.disconnect(); }
-      }, { threshold: 0.4 });
-      io.observe(fig);
+    else fig.classList.add("pre-build");
+
+    // skiltis suskleista; animacija pati paleidžiama tik pirmą kartą atvėrus
+    var toggle = document.getElementById("layersToggle"), body = document.getElementById("layersBody");
+    var toggleLabel = toggle && toggle.querySelector(".layers-toggle-label"), played = false;
+    function setOpen(open) {
+      if (!toggle || !body) return;
+      body.hidden = !open;
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      toggleLabel.textContent = open ? "Slėpti dangos sluoksnius" : "Rodyti dangos sluoksnius";
+      if (open && !played) { played = true; fig.classList.remove("pre-build"); play(); }
     }
+    if (toggle) toggle.addEventListener("click", function () { setOpen(toggle.getAttribute("aria-expanded") !== "true"); });
+    function openFromHash() { if (location.hash === "#pagrindas") setOpen(true); }
+    openFromHash();
+    window.addEventListener("hashchange", openFromHash);
   })();
 
   /* ---------- Pažadas klientui ---------- */

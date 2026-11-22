@@ -712,7 +712,7 @@ a.g-rating[href]:not([href="#"]):hover { box-shadow: 0 0 0 1.5px var(--ink); }
 @media (min-width: 601px) { .hero-services { max-width: 520px; } }
 
 /* ---------- KODĖL RINKTIS MUS ---------- */
-.why { margin-top: clamp(40px, 5vw, 64px); background: var(--dark); color: var(--cream); border-radius: 6px; padding: clamp(28px, 4vw, 48px); }
+.why-us { margin-top: clamp(40px, 5vw, 64px); background: var(--dark); color: var(--cream); border-radius: 6px; padding: clamp(28px, 4vw, 48px); }
 .why-title { margin: 0 0 clamp(20px, 3vw, 32px); font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 800; letter-spacing: -.02em; line-height: 1.15; }
 .why-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); }
 .why-list li { position: relative; padding-top: 18px; }
@@ -720,18 +720,26 @@ a.g-rating[href]:not([href="#"]):hover { box-shadow: 0 0 0 1.5px var(--ink); }
 .why-n { display: block; color: var(--tape); font-weight: 800; font-size: .9rem; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
 .why-list h4 { margin: 6px 0 6px; font-size: 1.2rem; font-weight: 700; letter-spacing: -.01em; color: #fff; }
 .why-list p { margin: 0; color: rgba(247,240,227,.78); font-size: .97rem; line-height: 1.5; }
-.why-more { margin: clamp(22px, 3vw, 32px) 0 0; padding-top: 18px; border-top: 1px solid rgba(247,240,227,.16); color: rgba(247,240,227,.72); font-size: .93rem; }
-.why-more strong { color: var(--cream); font-weight: 700; }
 @media (max-width: 760px) { .why-list { grid-template-columns: 1fr; gap: 22px; } }
 
 /* ---------- APIE MUS: kompaktiškiau ---------- */
 .section.about { padding-block: clamp(48px, 6vw, 80px); }
 .about-photo { aspect-ratio: 16 / 10; }
 @media (min-width: 861px) { .about-photo { aspect-ratio: 16 / 9; } }
-.about .why { margin-top: clamp(28px, 3.5vw, 44px); padding: clamp(24px, 3vw, 36px) clamp(24px, 3.5vw, 44px); }
+.about .why-us { margin-top: clamp(28px, 3.5vw, 44px); padding: clamp(24px, 3vw, 36px) clamp(24px, 3.5vw, 44px); }
 .about .why-title { margin-bottom: clamp(16px, 2vw, 24px); }
 .about .stats { margin-top: clamp(32px, 4vw, 48px); }
 @media (max-width: 860px) { .about-text .h2 { margin-top: 0; } .about .about-grid { gap: 22px; } }
 
 /* ---------- KAIP VYKSTA DARBAI (atskira skiltis) ---------- */
 .process-sec .steps { margin-top: clamp(20px, 3vw, 32px); }
+
+/* ---------- KAS PO TRINKELĖMIS: suskleidžiama ---------- */
+.layers-head .h2 { margin-bottom: .35em; }
+.layers-teaser { margin: 0 0 22px; max-width: 36em; }
+.layers-toggle { gap: 12px; }
+.layers-toggle-icon { width: 10px; height: 10px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-3px) rotate(45deg); transition: transform .2s var(--ease); }
+.layers-toggle[aria-expanded="true"] .layers-toggle-icon { transform: translateY(2px) rotate(-135deg); }
+.layers-body[hidden] { display: none; }
+.layers-body { margin-top: clamp(32px, 4vw, 48px); }
+@media (max-width: 600px) { .layers-toggle { width: 100%; justify-content: space-between; } }

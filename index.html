@@ -16,7 +16,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
   <link rel="preload" as="image" href="assets/img/photos/trinkeliu-klojimas.webp" imagesrcset="assets/img/photos/trinkeliu-klojimas-900.webp 900w, assets/img/photos/trinkeliu-klojimas.webp 1672w" imagesizes="100vw" fetchpriority="high">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261122-7">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261122-8">
   <script>
     if ("IntersectionObserver" in window && !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) {
       document.documentElement.classList.add("hero-anim");
@@ -103,7 +103,7 @@
       </div>
 
       <div class="wrap">
-        <div class="why">
+        <div class="why-us">
           <h3 id="why-title" class="why-title">Kodėl rinktis mus</h3>
           <ul class="why-list" role="list">
             <li><span class="why-n" aria-hidden="true">1</span><h4>Vienas kontaktas</h4><p>Nuo pirmos apžiūros iki darbų pabaigos bendraujate su tuo pačiu žmogumi.</p></li>
@@ -452,9 +452,14 @@
     <!-- KAS PO TRINKELĖMIS -->
     <section class="section layers" id="pagrindas" aria-labelledby="base-title">
       <div class="wrap">
+        <div class="layers-head">
+          <h2 id="base-title" class="h2">Kas po trinkelėmis</h2>
+          <p class="lede layers-teaser">Pasirinkite grunto tipą ir pažiūrėkite, kokio pagrindo reikėtų jūsų kiemui.</p>
+          <button type="button" class="btn btn-line-dark layers-toggle" id="layersToggle" aria-expanded="false" aria-controls="layersBody"><span class="layers-toggle-label">Rodyti dangos sluoksnius</span><span class="layers-toggle-icon" aria-hidden="true"></span></button>
+        </div>
+        <div class="layers-body" id="layersBody" hidden>
         <div class="layers-grid">
           <div class="layers-text">
-            <h2 id="base-title" class="h2">Kas po trinkelėmis</h2>
             <p class="lede">Tinkamai paruoštas pagrindas lemia, ar danga ilgai išliks lygi. Paspauskite sluoksnį.</p>
             <div class="xs-controls">
               <div class="xs-control">
@@ -474,6 +479,7 @@
             <svg id="xsecSvg" viewBox="0 0 700 540" role="group" aria-label="Dangos sluoksnių pjūvis"></svg>
             <figcaption class="hint">Orientaciniai storiai. Tikslų pagrindo storį nustatome apžiūrėję gruntą. <button type="button" class="link-btn" id="xsecReplay">Parodyti klojimo eiliškumą</button></figcaption>
           </figure>
+        </div>
         </div>
       </div>
     </section>
@@ -500,10 +506,10 @@
 
   <a class="call-bar" href="#kontaktai" data-tel aria-label="Skambinti">Skambinti <span data-biz="phoneText"></span></a>
 
-  <script src="assets/js/config.js?v=20261122-7"></script>
-  <script src="assets/js/calc.js?v=20261122-7"></script>
-  <script src="assets/js/paving.js?v=20261122-7"></script>
-  <script src="assets/js/planner.js?v=20261122-7"></script>
-  <script src="assets/js/main.js?v=20261122-7"></script>
+  <script src="assets/js/config.js?v=20261122-8"></script>
+  <script src="assets/js/calc.js?v=20261122-8"></script>
+  <script src="assets/js/paving.js?v=20261122-8"></script>
+  <script src="assets/js/planner.js?v=20261122-8"></script>
+  <script src="assets/js/main.js?v=20261122-8"></script>
 </body>
 </html>
