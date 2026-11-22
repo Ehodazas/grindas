@@ -16,7 +16,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
   <link rel="preload" as="image" href="assets/img/photos/trinkeliu-klojimas.webp" imagesrcset="assets/img/photos/trinkeliu-klojimas-900.webp 900w, assets/img/photos/trinkeliu-klojimas.webp 1672w" imagesizes="100vw" fetchpriority="high">
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261122-3">
   <script>
     if ("IntersectionObserver" in window && !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) {
       document.documentElement.classList.add("hero-anim");
@@ -70,13 +70,20 @@
       <div class="hero-shade" aria-hidden="true"></div>
       <div class="wrap hero-inner">
         <h1 id="hero-title" class="hero-title">Trinkelių klojimas ir kiemo įrengimas</h1>
-        <p class="hero-lead">Atliekame pagrindo paruošimo, trinkelių klojimo, bortelių montavimo ir kitus kiemo tvarkymo darbus.</p>
+        <p class="hero-lead"><strong>GRINDAS yra trinkelių klojimo įmonė Kauno ir Vilniaus regionuose.</strong> Įrengiame kiemus, įvažiavimus ir takus, ruošiame pagrindą, statome bortelius ir taisome įdubusias ar išklibusias trinkelių dangas.</p>
         <div class="hero-actions">
           <a class="btn btn-tape" href="#planuoklis">Apskaičiuoti kainą <span class="arrow" aria-hidden="true">→</span></a>
           <a class="btn btn-ghost" href="#kontaktai" data-tel>Skambinti</a>
         </div>
+        <nav class="hero-services" aria-label="Paslaugos">
+          <a href="#p-kiemai" data-open-service="p-kiemai">Kiemai ir įvažiavimai</a>
+          <a href="#p-takai" data-open-service="p-takai">Takai ir terasos</a>
+          <a href="#p-pagrindas" data-open-service="p-pagrindas">Pagrindo paruošimas</a>
+          <a href="#p-borteliai" data-open-service="p-borteliai">Borteliai</a>
+          <a href="#p-vanduo" data-open-service="p-vanduo">Lietaus vandens nuvedimas</a>
+          <a href="#p-remontas" data-open-service="p-remontas">Trinkelių remontas</a>
+        </nav>
         <ul class="hero-notes" role="list">
-          <li data-region></li>
           <li data-promise></li>
         </ul>
       </div>
@@ -88,47 +95,91 @@
       <div class="wrap services-grid">
         <div class="services-list">
           <h2 id="services-title" class="h2">Ką atliekame</h2>
+          <p class="lede services-lede">Visi trinkelių dangos darbai vienoje vietoje: nuo naujo kiemo įrengimo iki seno įvažiavimo remonto.</p>
           <ul class="acc" id="serviceAcc" role="list">
-            <li class="acc-item is-open" data-photo="egle-detale" data-alt="Trinkelės, išklotos eglute, iš arti">
+            <li class="acc-item is-open" id="p-klojimas" data-photo="egle-detale" data-alt="Trinkelės, išklotos eglute, iš arti">
               <h3><button type="button" class="acc-btn" aria-expanded="true" aria-controls="acc-1" id="accb-1">Trinkelių klojimas</button></h3>
               <div class="acc-panel" id="acc-1" role="region" aria-labelledby="accb-1">
-                <p>Įrengiame trinkelių dangas kiemuose, įvažiavimuose, terasose ir kituose sklypo plotuose. Storį parenkame pagal apkrovą, siūles užpildome smėliu ir dangą suvibruojame.</p>
+                <p>Klojame betonines ir klinkerio trinkeles bei didelio formato plokštes.</p>
+                <ul class="acc-list">
+                  <li>Trinkelių storio parinkimas pagal apkrovą</li>
+                  <li>Klojimas eglute, su perrišimu, pintine ar tiesiomis eilėmis</li>
+                  <li>Pjovimas kraštuose ir aplink šulinius</li>
+                  <li>Siūlių užpildymas ir dangos vibravimas</li>
+                </ul>
               </div>
             </li>
-            <li class="acc-item" data-photo="ivaziavimas-pries" data-alt="Žvyruotas privažiavimas su provėžomis prieš darbus">
-              <h3><button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-2" id="accb-2">Pagrindo paruošimas</button></h3>
+            <li class="acc-item" id="p-kiemai" data-photo="kiemas-aikstele" data-alt="Trinkelėmis išklota aikštelė kieme">
+              <h3><button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-2" id="accb-2">Kiemų ir įvažiavimų įrengimas</button></h3>
               <div class="acc-panel" id="acc-2" role="region" aria-labelledby="accb-2" hidden>
-                <p>Nukasame augalinį sluoksnį, išvežame gruntą, klojame geotekstilę, skaldą tankiname sluoksniais. Nuo pagrindo priklauso, ar danga po kelių žiemų neįdubs.</p>
+                <p>Naujas kiemas ar įvažiavimas nuo nulio arba žvyro pakeitimas trinkelėmis.</p>
+                <ul class="acc-list">
+                  <li>Vietos automobiliams ir posūkių planavimas</li>
+                  <li>Nuolydžiai nuo namo ir garažo</li>
+                  <li>Storesnės trinkelės ir tvirtesnis pagrindas įvažiavimui</li>
+                  <li>Sujungimas su gatve, vartais ir laiptais</li>
+                </ul>
               </div>
             </li>
-            <li class="acc-item" data-photo="takas-borteliai" data-alt="Lenktas trinkelių takas su borteliais tarp krūmų">
-              <h3><button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-3" id="accb-3">Bortelių montavimas</button></h3>
+            <li class="acc-item" id="p-takai" data-photo="takas-sodas" data-alt="Trinkelių takas per sodą">
+              <h3><button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-3" id="accb-3">Takai ir terasos</button></h3>
               <div class="acc-panel" id="acc-3" role="region" aria-labelledby="accb-3" hidden>
-                <p>Kelio, šaligatvio ir vejos borteliai ant betono pado. Jie laiko dangos kraštą, kad trinkelės neišsiskirstytų, ir atskiria taką nuo vejos.</p>
+                <p>Takai nuo vartų iki durų, aplink namą ar į sodą ir terasos prie namo.</p>
+                <ul class="acc-list">
+                  <li>Patogaus pločio parinkimas</li>
+                  <li>Vejos borteliai, kad žolė neužaugtų ant tako</li>
+                  <li>Laipteliai ir aukščių perėjimai</li>
+                  <li>Terasos iš plokščių su nuolydžiu nuo sienos</li>
+                </ul>
               </div>
             </li>
-            <li class="acc-item" data-photo="kiemas-aikstele" data-alt="Trinkelėmis išklota aikštelė kieme">
-              <h3><button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-4" id="accb-4">Kiemo ir įvažiavimo įrengimas</button></h3>
+            <li class="acc-item" id="p-pagrindas" data-photo="ivaziavimas-pries" data-alt="Žvyruotas privažiavimas su provėžomis prieš darbus">
+              <h3><button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-4" id="accb-4">Pagrindo paruošimas</button></h3>
               <div class="acc-panel" id="acc-4" role="region" aria-labelledby="accb-4" hidden>
-                <p>Suplanuojame vietą automobiliams, posūkius ir nuolydžius nuo namo. Įvažiavimui klojame storesnes trinkeles ir darome tvirtesnį pagrindą.</p>
+                <p>Nuo pagrindo priklauso, ar danga po kelių žiemų neįdubs.</p>
+                <ul class="acc-list">
+                  <li>Augalinio sluoksnio nukasimas ir grunto išvežimas</li>
+                  <li>Geotekstilė molingame grunte</li>
+                  <li>Skaldos pagrindas, tankinamas sluoksniais</li>
+                  <li>Aukščių ir nuolydžių formavimas</li>
+                </ul>
               </div>
             </li>
-            <li class="acc-item" data-photo="takas-sodas" data-alt="Trinkelių takas per sodą">
-              <h3><button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-5" id="accb-5">Pėsčiųjų takai</button></h3>
+            <li class="acc-item" id="p-borteliai" data-photo="takas-borteliai" data-alt="Lenktas trinkelių takas su borteliais tarp krūmų">
+              <h3><button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-5" id="accb-5">Bortelių montavimas</button></h3>
               <div class="acc-panel" id="acc-5" role="region" aria-labelledby="accb-5" hidden>
-                <p>Takai nuo vartų iki durų, aplink namą ar į sodą. Parenkame patogų plotį ir kraštą, kad veja neužaugtų ant tako.</p>
+                <p>Bortelis laiko dangos kraštą, kad trinkelės neišsiskirstytų.</p>
+                <ul class="acc-list">
+                  <li>Kelio ir šaligatvio borteliai ant betono pado</li>
+                  <li>Vejos ir plastikiniai borteliai</li>
+                  <li>Pakelti borteliai prie gatvės ir įvažiavimo</li>
+                  <li>Senų, išvirtusių bortelių perstatymas</li>
+                </ul>
               </div>
             </li>
-            <li class="acc-item" data-photo="terasa-plokstes" data-alt="Plokščių terasa palei namą su lietaus vandens grotelėmis">
+            <li class="acc-item" id="p-vanduo" data-photo="terasa-plokstes" data-alt="Plokščių terasa palei namą su lietaus vandens grotelėmis">
               <h3><button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-6" id="accb-6">Lietaus vandens nuvedimas</button></h3>
               <div class="acc-panel" id="acc-6" role="region" aria-labelledby="accb-6" hidden>
-                <p>Nuolydžiai nuo pastato, linijiniai latakai prie garažo, lietaus šulinėliai ir prijungimas prie esamos sistemos ar drenažo.</p>
+                <p>Kad vanduo nebėgtų į garažą, rūsį ar prie pamatų.</p>
+                <ul class="acc-list">
+                  <li>Nuolydžiai nuo pastato</li>
+                  <li>Linijiniai latakai prie garažo vartų ir įvažiavimo</li>
+                  <li>Lietaus šulinėliai ir vamzdynai</li>
+                  <li>Prijungimas prie drenažo ar esamos sistemos</li>
+                </ul>
               </div>
             </li>
-            <li class="acc-item" data-photo="klojimas-eiga" data-alt="Perklojamos trinkelės, šalia sukrauti blokeliai">
-              <h3><button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-7" id="accb-7">Remontas ir perklojimas</button></h3>
+            <li class="acc-item" id="p-remontas" data-photo="klojimas-eiga" data-alt="Perklojamos trinkelės, šalia sukrauti blokeliai">
+              <h3><button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-7" id="accb-7">Trinkelių remontas ir perklojimas</button></h3>
               <div class="acc-panel" id="acc-7" role="region" aria-labelledby="accb-7" hidden>
-                <p>Išardome įdubusią vietą, sutvarkome pagrindą ir sudedame tas pačias trinkeles atgal. Suskilusias pakeičiame naujomis.</p>
+                <p>Taisome esamas trinkelių dangas, net jei jas klojo kiti.</p>
+                <ul class="acc-list">
+                  <li>Įdubusių vietų ir provėžų išlyginimas</li>
+                  <li>Iškilusių ir išklibusių trinkelių perklojimas</li>
+                  <li>Suskilusių trinkelių keitimas naujomis</li>
+                  <li>Dangos atstatymas po vandentiekio, kanalizacijos ar kabelių darbų</li>
+                  <li>Išplautų siūlių užpildymas ir žolės pašalinimas</li>
+                </ul>
               </div>
             </li>
           </ul>
@@ -451,10 +502,10 @@
 
   <a class="call-bar" href="#kontaktai" data-tel aria-label="Skambinti">Skambinti <span data-biz="phoneText"></span></a>
 
-  <script src="assets/js/config.js"></script>
-  <script src="assets/js/calc.js"></script>
-  <script src="assets/js/paving.js"></script>
-  <script src="assets/js/planner.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/config.js?v=20261122-3"></script>
+  <script src="assets/js/calc.js?v=20261122-3"></script>
+  <script src="assets/js/paving.js?v=20261122-3"></script>
+  <script src="assets/js/planner.js?v=20261122-3"></script>
+  <script src="assets/js/main.js?v=20261122-3"></script>
 </body>
 </html>

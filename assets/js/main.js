@@ -170,6 +170,30 @@
       btn.addEventListener("click", function () { open(li); });
       btn.addEventListener("pointerenter", preloadAll, { once: true });
     });
+    // nuorodos hero bloke: atidaro atitinkamą paslaugą ir nuslenka iki jos
+    function openById(id) {
+      var li = document.getElementById(id);
+      if (li && li.classList.contains("acc-item")) { preloadAll(); open(li); return true; }
+      return false;
+    }
+    document.querySelectorAll("[data-open-service]").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        var id = a.getAttribute("data-open-service");
+        if (!openById(id)) return;
+        e.preventDefault();
+        var li = document.getElementById(id), behavior = reduceMotion ? "auto" : "smooth";
+        if (window.innerWidth > 900) {
+          // kompiuteryje: kuo daugiau skyriaus su antrašte ir nuotrauka, bet atidarytas punktas turi tilpti iki galo
+          var head = document.getElementById("services-title").getBoundingClientRect().top + scrollY - 96;
+          var itemEnd = li.getBoundingClientRect().bottom + scrollY - innerHeight + 24;
+          window.scrollTo({ top: Math.max(head, itemEnd), behavior: behavior });
+        } else {
+          li.scrollIntoView({ behavior: behavior, block: "start" });
+        }
+        if (history.replaceState) history.replaceState(null, "", "#" + id);
+      });
+    });
+    if (location.hash) openById(location.hash.slice(1));
   })();
 
   /* ---------- Sluoksnių pjūvis (izometrinis, pagal apkrovą ir gruntą) ---------- */

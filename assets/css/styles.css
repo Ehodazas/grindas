@@ -685,3 +685,28 @@ a.g-rating[href]:not([href="#"]):hover { box-shadow: 0 0 0 1.5px var(--ink); }
   .hero-notes { margin-top: 16px; gap: 6px; }
   .demo-tag { top: 124px; }
 }
+
+/* ---------- Hero: kas yra įmonė ir paslaugų nuorodos ---------- */
+.hero-lead strong { font-weight: 700; color: #fff; }
+.hero-services { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; max-width: 600px; }
+.hero-services a {
+  display: inline-flex; align-items: center; min-height: 34px; padding: 0 12px;
+  border: 1px solid rgba(255,255,255,.38); border-radius: 999px; background: rgba(12,14,13,.35);
+  color: #fff; font-size: .86rem; font-weight: 600; text-decoration: none; white-space: nowrap;
+  transition: background-color .15s, border-color .15s;
+}
+.hero-services a:hover { background: rgba(255,255,255,.14); border-color: #fff; }
+.hero-services a[data-open-service="p-remontas"] { border-color: var(--tape); }
+@media (max-width: 600px) {
+  .hero-services { margin-top: 16px; gap: 6px; }
+  .hero-services a { min-height: 32px; padding: 0 10px; font-size: .8rem; }
+  .hero-lead { font-size: .95rem; }
+}
+
+/* ---------- Paslaugų punktų darbų sąrašai ---------- */
+.services-lede { margin: -6px 0 22px; }
+.acc-panel p { margin: -6px 0 10px; }
+.acc-list { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 6px; }
+.acc-list li { position: relative; padding-left: 22px; color: var(--ink); font-size: .95rem; line-height: 1.45; }
+.acc-list li::before { content: ""; position: absolute; left: 0; top: .62em; width: 12px; height: 3px; background: var(--tape); border-radius: 1px; }
+@media (min-width: 601px) { .hero-services { max-width: 520px; } }
