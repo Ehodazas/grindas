@@ -26,6 +26,46 @@ window.GRINDAS_CONFIG = {
   },
 
 
+  /* Socialiniai tinklai: įrašykite pilną nuorodą. Kol tuščia, ikona rodoma, bet niekur neveda. */
+  social: {
+    facebook: "",
+    instagram: ""
+  },
+
+  /* Atsiliepimai. DEMO: pavyzdiniai, tikroje svetainėje pakeiskite tikrais Google atsiliepimais. */
+  reviews: {
+    demo: true,
+    rating: "4,9",
+    count: 27,
+    googleUrl: "",      // nuoroda į įmonės Google atsiliepimus
+    items: [
+      { name: "Rasa", place: "Kauno r.", work: "Įvažiavimas, apie 70 m²", stars: 5,
+        text: "Iš anksto gavome sąmatą raštu, darbai užtruko savaitę, kaip ir sakė. Prie garažo įrengė lataką, nes ten nuolat stovėdavo vanduo. Po žiemos niekas neįdubo." },
+      { name: "Tomas", place: "Vilniaus r.", work: "Kiemas ir takas, apie 55 m²", stars: 5,
+        text: "Patiko, kad atvažiavę pirmiausia patikrino gruntą ir paaiškino, kodėl reikia storesnio pagrindo. Po darbų išvežė visą žemę ir sutvarkė kraštus prie vejos." },
+      { name: "Jurgita", place: "Kaunas", work: "Trinkelių perklojimas", stars: 5,
+        text: "Įdubusią vietą prie įėjimo perklojo su tomis pačiomis trinkelėmis, suskilusias pakeitė. Kaina buvo tokia, kokią sutarėme." }
+    ]
+  },
+
+  /* Pasitikėjimo ženklai. DEMO: skaičiai pavyzdiniai, įrašykite tikrus. */
+  trust: {
+    demo: true,
+    stats: [
+      { value: "5 m.", label: "garantija atliktiems darbams" },
+      { value: "10+", label: "metų patirtis" },
+      { value: "350+", label: "įrengtų kiemų, takų ir įvažiavimų" },
+      { value: "1–2 d.", label: "iki apžiūros vietoje" }
+    ],
+    /* Gamintojai, su kuriais dirbate. Įrašykite pavadinimą ir (nebūtina) logotipo kelią, pvz. "assets/img/brands/x.svg" */
+    brands: [
+      { name: "Gamintojas 1", logo: "" },
+      { name: "Gamintojas 2", logo: "" },
+      { name: "Gamintojas 3", logo: "" },
+      { name: "Gamintojas 4", logo: "" }
+    ]
+  },
+
   currency: "EUR",
 
   /* Planuoklio ribos */

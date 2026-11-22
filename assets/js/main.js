@@ -373,6 +373,83 @@
     list.appendChild(li);
   });
 
+  /* ---------- Socialiniai tinklai ---------- */
+  (function social() {
+    var icons = {
+      facebook: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.5-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1z"/></svg>',
+      instagram: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm6-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM21 8.2c-.1-1.6-.4-3-1.6-4.1C18.3 3 16.9 2.6 15.3 2.5 13.6 2.4 10.4 2.4 8.7 2.5 7.1 2.6 5.7 3 4.6 4.1 3.5 5.2 3.1 6.6 3 8.2c-.1 1.7-.1 6.9 0 8.6.1 1.6.4 3 1.6 4.1 1.1 1.1 2.5 1.5 4.1 1.6 1.7.1 4.9.1 6.6 0 1.6-.1 3-.4 4.1-1.6 1.1-1.1 1.5-2.5 1.6-4.1.1-1.7.1-6.9 0-8.6zm-2.2 10.4a3.3 3.3 0 0 1-1.9 1.9c-1.3.5-4.4.4-4.9.4s-3.6.1-4.9-.4a3.3 3.3 0 0 1-1.9-1.9c-.5-1.3-.4-4.4-.4-4.9s-.1-3.6.4-4.9a3.3 3.3 0 0 1 1.9-1.9c1.3-.5 4.4-.4 4.9-.4s3.6-.1 4.9.4a3.3 3.3 0 0 1 1.9 1.9c.5 1.3.4 4.4.4 4.9s.1 3.6-.4 4.9z"/></svg>'
+    };
+    var names = { facebook: "Facebook", instagram: "Instagram" };
+    var soc = cfg.social || {};
+    document.querySelectorAll("[data-social]").forEach(function (box) {
+      ["facebook", "instagram"].forEach(function (k) {
+        var a = document.createElement("a");
+        a.className = "social-link";
+        a.innerHTML = icons[k];
+        if (soc[k]) {
+          a.href = soc[k]; a.target = "_blank"; a.rel = "noopener";
+          a.setAttribute("aria-label", names[k]);
+        } else {
+          // nuoroda dar neįrašyta config.js: ikona matoma, bet niekur neveda
+          a.href = "#"; a.setAttribute("aria-label", names[k] + " (nuoroda bus pridėta)"); a.title = names[k] + ": nuoroda bus pridėta";
+          a.addEventListener("click", function (e) { e.preventDefault(); });
+        }
+        box.appendChild(a);
+      });
+    });
+  })();
+
+  /* ---------- Atsiliepimai ---------- */
+  (function reviews() {
+    var r = cfg.reviews, list = document.getElementById("reviewList");
+    if (!r || !list) return;
+    document.getElementById("gScore").textContent = r.rating;
+    document.getElementById("gCount").textContent = r.count + " atsiliepimai Google";
+    var g = document.getElementById("gRating");
+    if (r.googleUrl) g.href = r.googleUrl;
+    else { g.removeAttribute("target"); g.addEventListener("click", function (e) { e.preventDefault(); }); }
+    g.setAttribute("aria-label", "Google įvertinimas " + r.rating + " iš 5, " + r.count + " atsiliepimai");
+    r.items.forEach(function (it) {
+      var li = document.createElement("li");
+      li.className = "review";
+      li.innerHTML = '<div class="review-stars" aria-label=""></div><blockquote></blockquote><p class="review-who"><strong></strong><span></span></p>';
+      var stars = li.querySelector(".review-stars");
+      stars.textContent = "★★★★★".slice(0, it.stars) + "☆☆☆☆☆".slice(0, 5 - it.stars);
+      stars.setAttribute("aria-label", it.stars + " iš 5");
+      li.querySelector("blockquote").textContent = it.text;
+      li.querySelector("strong").textContent = it.name + ", " + it.place;
+      li.querySelector(".review-who span").textContent = it.work;
+      list.appendChild(li);
+    });
+    document.getElementById("reviewsDemo").hidden = !r.demo;
+  })();
+
+  /* ---------- Pasitikėjimo ženklai ---------- */
+  (function trust() {
+    var t = cfg.trust;
+    if (!t) return;
+    var ul = document.getElementById("trustStats");
+    if (ul) t.stats.forEach(function (st) {
+      var li = document.createElement("li");
+      li.innerHTML = '<span class="stat-value"></span><span class="stat-label"></span>';
+      li.firstChild.textContent = st.value; li.lastChild.textContent = st.label;
+      ul.appendChild(li);
+    });
+    var bl = document.getElementById("brandList");
+    if (bl) {
+      if (!t.brands || !t.brands.length) document.getElementById("brandsBlock").hidden = true;
+      else t.brands.forEach(function (b) {
+        var li = document.createElement("li");
+        li.className = "brand-item" + (b.logo ? "" : " is-placeholder");
+        if (b.logo) { var im = new Image(); im.src = b.logo; im.alt = b.name; im.loading = "lazy"; li.appendChild(im); }
+        else li.textContent = b.name;
+        bl.appendChild(li);
+      });
+    }
+    var demo = document.getElementById("trustDemo");
+    if (demo) demo.hidden = !t.demo;
+  })();
+
   /* ---------- Skambučio juosta telefone (rodoma praslinkus hero) ---------- */
   (function callBar() {
     var bar = document.querySelector(".call-bar");

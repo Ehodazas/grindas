@@ -37,6 +37,9 @@ Užklausos formos nėra: visi „Skambinti“ mygtukai ir telefone matoma apatin
 
 1. `config.js` → `business`: pavadinimas, telefonas (`phone` ir `phoneHref`), el. paštas, zona.
 2. `config.js` → kainos (`uses`, `materials`, `patterns`, `curbs`, `mobilization`).
+   - `social`: Facebook ir Instagram nuorodos (kol tuščia, ikonos niekur neveda).
+   - `reviews`: tikri Google atsiliepimai, įvertinimas, kiekis ir `googleUrl`; nustatyti `demo: false`.
+   - `trust`: tikri skaičiai (garantija, patirtis, objektai) ir gamintojai su logotipais; nustatyti `demo: false`.
 3. Pašalinti „Demo projektas“ žymą (`index.html`, poraštė), projektus (`main.js` → `projects`) pakeisti tikrais.
 4. Prieš/po: įdėti tikras, tuo pačiu kampu darytas nuotraukas vietoje schemos.
 5. Pridėti `og:image` (absoliutus URL), `canonical`, `sitemap.xml`.

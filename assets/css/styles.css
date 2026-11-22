@@ -503,3 +503,56 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .footer-mark { font-size: clamp(2.4rem, 7vw, 5.5rem); margin: 0 0 24px; }
 .site-footer { padding-top: 48px; }
 .footer-inner a + a { margin-left: 24px; }
+
+/* ---------- Atsiliepimai ---------- */
+.g-rating { display: inline-flex; align-items: center; gap: 12px; padding: 10px 16px 10px 10px; background: var(--paper); border-radius: 999px; box-shadow: 0 0 0 1px var(--line); text-decoration: none; }
+.g-mark { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 1px var(--line); font-weight: 800; font-size: 1.05rem; color: #4285F4; }
+.g-score strong { font-size: 1.2rem; font-weight: 800; }
+.stars, .review-stars { color: var(--tape); letter-spacing: 1px; }
+.g-count { font-size: .85rem; color: var(--muted); }
+a.g-rating[href]:not([href="#"]):hover { box-shadow: 0 0 0 1.5px var(--ink); }
+.review-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.review { display: flex; flex-direction: column; gap: 14px; padding: 6px 32px 6px 0; }
+.review + .review { padding-left: 32px; border-left: 1px solid var(--line); }
+.review-stars { font-size: 1.05rem; }
+.review blockquote { margin: 0; font-size: 1.04rem; line-height: 1.6; color: var(--ink); flex: 1; }
+.review-who { margin: 0; display: flex; flex-direction: column; font-size: .9rem; }
+.review-who strong { font-weight: 700; }
+.review-who span { color: var(--muted); }
+#reviewsDemo { margin-top: 28px; }
+@media (max-width: 900px) {
+  .review-list { grid-template-columns: 1fr; }
+  .review, .review + .review { padding: 20px 0; border-left: 0; border-top: 1px solid var(--line); }
+}
+
+/* ---------- Pasitikėjimo skaičiai ir gamintojai ---------- */
+.stats { list-style: none; margin: 0 0 clamp(40px, 5vw, 64px); padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
+.stats li { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px 0 0; border-top: 2px solid var(--ink); }
+.stats li + li { padding-left: 20px; }
+.stat-value { font-weight: 800; font-size: clamp(2rem, 3.6vw, 3rem); letter-spacing: -.03em; line-height: 1; }
+.stat-label { color: var(--muted); font-size: .95rem; max-width: 16em; }
+@media (max-width: 860px) {
+  .stats { grid-template-columns: 1fr 1fr; row-gap: 28px; }
+  .stats li:nth-child(odd) { padding-left: 0; }
+}
+.brands { margin-top: clamp(40px, 5vw, 64px); }
+.brands-title { margin: 0 0 14px; font-weight: 700; }
+.brand-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.brand-item { display: grid; place-items: center; min-height: 72px; padding: 12px; background: var(--paper); border-radius: 4px; box-shadow: 0 0 0 1px var(--line); font-weight: 700; color: var(--muted); }
+.brand-item img { max-height: 40px; width: auto; filter: grayscale(1); opacity: .8; }
+.brand-item.is-placeholder { background: transparent; box-shadow: none; border: 1.5px dashed var(--line-strong); font-weight: 600; font-size: .9rem; }
+#trustDemo { margin-top: 14px; }
+@media (max-width: 600px) { .brand-list { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- Facebook ir Instagram ---------- */
+.social-link { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; color: inherit; transition: background-color .15s; }
+.social-link svg { width: 17px; height: 17px; fill: currentColor; }
+.social-link:hover { background: rgba(255,255,255,.14); }
+.tb-social { gap: 2px; }
+.foot-social { display: inline-flex; gap: 6px; margin-right: 12px; vertical-align: middle; }
+.foot-social .social-link { width: 38px; height: 38px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.3); color: #fff; }
+.foot-social .social-link svg { width: 19px; height: 19px; }
+.foot-links { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 8px 0; }
+@media (max-width: 760px) { .topbar-inner { justify-content: space-between; } .tb-social { border-left: 0; } }
+.foot-social a + a { margin-left: 0; }
+.about .stats { margin: clamp(40px, 5vw, 64px) 0 0; }
