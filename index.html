@@ -16,7 +16,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
   <link rel="preload" as="image" href="assets/img/photos/trinkeliu-klojimas.webp" imagesrcset="assets/img/photos/trinkeliu-klojimas-900.webp 900w, assets/img/photos/trinkeliu-klojimas.webp 1672w" imagesizes="100vw" fetchpriority="high">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261122-3">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261122-4">
   <script>
     if ("IntersectionObserver" in window && !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) {
       document.documentElement.classList.add("hero-anim");
@@ -46,11 +46,11 @@
       </button>
       <nav id="nav" class="nav" aria-label="Pagrindinė navigacija">
         <ul>
+          <li><a href="#apie">Apie mus</a></li>
           <li><a href="#paslaugos">Paslaugos</a></li>
           <li><a href="#planuoklis">Planuoklis</a></li>
           <li><a href="#projektai">Projektai</a></li>
           <li><a href="#atsiliepimai">Atsiliepimai</a></li>
-          <li><a href="#apie">Apie mus</a></li>
         </ul>
         <a class="btn btn-cream nav-cta" href="#kontaktai" data-tel>Skambinti</a>
       </nav>
@@ -88,6 +88,40 @@
         </ul>
       </div>
       <p class="demo-tag">Demo projektas</p>
+    </section>
+
+    <!-- APIE -->
+    <section class="section about" id="apie" aria-labelledby="about-title">
+      <div class="wrap about-grid">
+        <figure class="about-photo">
+          <img src="assets/img/photos/klojimas-darbas-800.webp"
+               srcset="assets/img/photos/klojimas-darbas-800.webp 800w, assets/img/photos/klojimas-darbas.webp 1600w"
+               sizes="(max-width: 900px) 100vw, 46vw" width="1600" height="1067" loading="lazy" decoding="async"
+               alt="Darbininkas kloja trinkeles ant paruošto pagrindo, šalia karutis su trinkelėmis">
+        </figure>
+        <div class="about-text">
+          <h2 id="about-title" class="h2">Apie mus</h2>
+          <p class="lede">GRINDAS įrengia kiemus, įvažiavimus, takus ir terasas privačių namų savininkams Kauno ir Vilniaus regionuose. Atliekame ir remonto darbus: perklojame įdubusias vietas, keičiame suskilusias trinkeles.</p>
+          <p>Visus darbus atlieka ta pati komanda su savo technika: mini ekskavatoriumi, savivarčiu, vibroplokštėmis ir trinkelių pjovimo įranga. Todėl žemės darbai, pagrindas ir klojimas vyksta be subrangovų, o tarp etapų nebūna prastovų.</p>
+          <p>Prieš pradėdami visada atvažiuojame į vietą: išmatuojame plotą, patikriname gruntą ir aukščius, pasiūlome, kaip nuvesti lietaus vandenį. Sąmatą pateikiame raštu, o darbų metu pranešame apie kiekvieną etapą.</p>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <div class="why">
+          <h3 id="why-title" class="why-title">Kodėl rinktis mus</h3>
+          <ol class="why-list" role="list">
+            <li><span class="why-n" aria-hidden="true">01</span><h4>Vienas kontaktas</h4><p>Nuo apžiūros iki darbų pabaigos bendraujate su tuo pačiu žmogumi.</p></li>
+            <li><span class="why-n" aria-hidden="true">02</span><h4>Sąmata raštu</h4><p>Išskaidyta pagal darbus ir medžiagas, be paslėptų eilučių.</p></li>
+            <li><span class="why-n" aria-hidden="true">03</span><h4>Mokėjimas etapais</h4><p>Ne visa suma iš anksto, o už atliktus darbų etapus.</p></li>
+          </ol>
+          <p class="why-more">Taip pat: <strong>savo technika</strong>, todėl nereikia laukti nuomojamo ekskavatoriaus, ir <strong>tvarka objekte</strong>: gruntą ir atliekas išvežame, kraštus prie vejos sutvarkome.</p>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <ul class="stats" id="trustStats" role="list"></ul>
+      </div>
     </section>
 
     <!-- 02 PASLAUGOS -->
@@ -406,39 +440,6 @@
       </div>
     </section>
 
-    <!-- APIE -->
-    <section class="section about" id="apie" aria-labelledby="about-title">
-      <div class="wrap about-grid">
-        <figure class="about-photo">
-          <img src="assets/img/photos/klojimas-darbas-800.webp"
-               srcset="assets/img/photos/klojimas-darbas-800.webp 800w, assets/img/photos/klojimas-darbas.webp 1600w"
-               sizes="(max-width: 900px) 100vw, 46vw" width="1600" height="1067" loading="lazy" decoding="async"
-               alt="Darbininkas kloja trinkeles ant paruošto pagrindo, šalia karutis su trinkelėmis">
-        </figure>
-        <div class="about-text">
-          <h2 id="about-title" class="h2">Apie mus</h2>
-          <p class="lede">GRINDAS įrengia kiemus, įvažiavimus, takus ir terasas privačių namų savininkams Kauno ir Vilniaus regionuose. Atliekame ir remonto darbus: perklojame įdubusias vietas, keičiame suskilusias trinkeles.</p>
-          <p>Visus darbus atlieka ta pati komanda su savo technika: mini ekskavatoriumi, savivarčiu, vibroplokštėmis ir trinkelių pjovimo įranga. Todėl žemės darbai, pagrindas ir klojimas vyksta be subrangovų, o tarp etapų nebūna prastovų.</p>
-          <p>Prieš pradėdami visada atvažiuojame į vietą: išmatuojame plotą, patikriname gruntą ir aukščius, pasiūlome, kaip nuvesti lietaus vandenį. Sąmatą pateikiame raštu, o darbų metu pranešame apie kiekvieną etapą.</p>
-        </div>
-      </div>
-
-      <div class="wrap">
-        <dl class="facts">
-          <div><dt>Vienas kontaktas</dt><dd>Nuo apžiūros iki darbų pabaigos bendraujate su tuo pačiu žmogumi.</dd></div>
-          <div><dt>Sąmata raštu</dt><dd>Išskaidyta pagal darbus ir medžiagas, be paslėptų eilučių.</dd></div>
-          <div><dt>Mokėjimas etapais</dt><dd>Ne visa suma iš anksto, o už atliktus darbų etapus.</dd></div>
-          <div><dt>Savo technika</dt><dd>Nereikia laukti, kol atsilaisvins nuomojamas ekskavatorius.</dd></div>
-          <div><dt>Tvarka objekte</dt><dd>Gruntą ir atliekas išvežame, kraštus prie vejos sutvarkome.</dd></div>
-          <div><dt>Kur dirbame</dt><dd id="areaInline">—</dd></div>
-        </dl>
-      </div>
-
-      <div class="wrap">
-        <ul class="stats" id="trustStats" role="list"></ul>
-      </div>
-    </section>
-
     <!-- 05 SLUOKSNIAI + EIGA -->
     <section class="section layers" id="pagrindas" aria-labelledby="base-title">
       <div class="wrap">
@@ -502,10 +503,10 @@
 
   <a class="call-bar" href="#kontaktai" data-tel aria-label="Skambinti">Skambinti <span data-biz="phoneText"></span></a>
 
-  <script src="assets/js/config.js?v=20261122-3"></script>
-  <script src="assets/js/calc.js?v=20261122-3"></script>
-  <script src="assets/js/paving.js?v=20261122-3"></script>
-  <script src="assets/js/planner.js?v=20261122-3"></script>
-  <script src="assets/js/main.js?v=20261122-3"></script>
+  <script src="assets/js/config.js?v=20261122-4"></script>
+  <script src="assets/js/calc.js?v=20261122-4"></script>
+  <script src="assets/js/paving.js?v=20261122-4"></script>
+  <script src="assets/js/planner.js?v=20261122-4"></script>
+  <script src="assets/js/main.js?v=20261122-4"></script>
 </body>
 </html>
