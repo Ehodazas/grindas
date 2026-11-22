@@ -374,7 +374,6 @@
   })();
 
   /* ---------- Pažadas klientui ---------- */
-  document.querySelectorAll("[data-promise]").forEach(function (n) { n.textContent = cfg.promise || ""; });
   document.querySelectorAll("[data-region]").forEach(function (n) { n.textContent = biz.region || ""; });
 
   /* ---------- Prieš / po schema ---------- */

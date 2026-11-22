@@ -160,7 +160,6 @@ window.GRINDAS_CONFIG = {
   curbs: { label: "Borteliai", price: [14, 22] },
 
   /* Pažadas klientui: rodomas hero bloke. DEMO: pakeiskite tikru. */
-  promise: "Apžiūra ir sąmata nemokamai. Perskambiname per 1 darbo dieną.",
 
   /* Dangos sluoksniai, cm (nuo–iki). ORIENTACINIAI: tikslų storį nustatome apžiūrėję gruntą. */
   layers: {
