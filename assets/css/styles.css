@@ -177,11 +177,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .about-text .lede { color: var(--ink); }
 /* kontaktinis žmogus */
 .about-person { display: flex; align-items: center; gap: 16px; margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); max-width: 36em; }
-.about-person-avatar { flex: none; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--dark); color: var(--tape); font-weight: 800; font-size: 1.05rem; letter-spacing: .02em; }
+.about-person-photo { flex: none; width: 72px; height: 72px; border-radius: 50%; object-fit: cover; background: var(--bg-2); box-shadow: 0 0 0 3px var(--bg), 0 0 0 4px var(--line-strong); }
 .about-text .about-person-text { margin: 0; display: flex; flex-direction: column; gap: 1px; color: var(--ink); }
 .about-person-text strong { font-weight: 700; font-size: 1.05rem; }
 .about-person-role { color: var(--muted); font-size: .9rem; }
-.about-person-note { color: var(--muted); font-size: .93rem; margin-top: 6px; line-height: 1.45; }
+.about-person-note { color: var(--ink); font-size: .97rem; font-style: italic; margin-top: 8px; line-height: 1.5; }
 @media (min-width: 861px) { .about-photo { aspect-ratio: 16 / 9; } }
 @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } }
 @media (max-width: 860px) { .about-grid { gap: 22px; } }
@@ -192,8 +192,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .why-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); }
 .why-list li { position: relative; padding-top: 18px; }
 .why-list li::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--tape); border-radius: 1px; }
-.why-n { display: block; color: var(--tape); font-weight: 800; font-size: .9rem; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
-.why-list h4 { margin: 6px 0 6px; font-size: 1.2rem; font-weight: 700; letter-spacing: -.01em; color: #fff; }
+.why-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.why-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 10px; background: rgba(232, 177, 44, .14); color: var(--tape); }
+.why-icon svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.why-n { color: rgba(247, 240, 227, .45); font-weight: 800; font-size: .9rem; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+.why-list h4 { margin: 0 0 6px; font-size: 1.2rem; font-weight: 700; letter-spacing: -.01em; color: #fff; }
 .why-list p { margin: 0; color: rgba(247,240,227,.78); font-size: .97rem; line-height: 1.5; }
 @media (max-width: 760px) { .why-list { grid-template-columns: 1fr; gap: 22px; } }
 /* rodikliai: ruletė išsivynioja kartu su skaičiavimu, kiekviena šiek tiek vėliau */
