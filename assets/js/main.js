@@ -464,12 +464,12 @@
 
   /* ---------- Projektai (pavyzdiniai) ---------- */
   var projects = [
-    { img: "vidinis-kiemas-skalda", w: 990, h: 660, single: true, title: "Vidinis kiemas su skaldos siūlėmis", meta: "Kauno r., apie 70 m²", area: "≈ 70 m²",
-      alt: "Vidinis kiemas iš didelių betoninių plokščių su skaldos siūlėmis prie tamsaus namo" },
+    { img: "ivaziavimas-tujos", w: 1400, h: 1118, pos: "18% 50%", title: "Įvažiavimas prie garažo", meta: "Kauno r., apie 70 m²", area: "≈ 70 m²",
+      alt: "Pilkų trinkelių įvažiavimas į garažą palei aukštą tujų gyvatvorę" },
     { img: "namas-medinis-takas", w: 1600, h: 1067, title: "Takas iš plokščių prie namo", meta: "Vilniaus r., apie 45 m²", area: "≈ 45 m²",
       alt: "Takas iš didelių plokščių su akmenukų siūlėmis prie medinio namo" },
-    { img: "terasa-moderni", w: 1600, h: 1067, title: "Terasa su pavėsine", meta: "Kaunas, apie 35 m²", area: "≈ 35 m²",
-      alt: "Šviesių plokščių terasa su pavėsine ir veja" }
+    { img: "terasa-laipteliai", w: 1600, h: 1000, title: "Terasa su laipteliais", meta: "Kaunas, apie 35 m²", area: "≈ 35 m²",
+      alt: "Pakelta plokščių terasa su lenktais betoniniais laipteliais rudenėjančiame sode" }
   ];
   var list = document.getElementById("projects");
   if (list) projects.forEach(function (pr, i) {
@@ -480,6 +480,7 @@
       ' sizes="(max-width: 860px) 100vw, ' + (i === 0 ? "58vw" : "42vw") + '" width="' + pr.w + '" height="' + pr.h + '" loading="lazy" decoding="async" alt=""><span class="tape-tag" aria-hidden="true">' + pr.area + '</span></figure>' +
       '<div class="project-cap"><h3></h3><p></p></div>';
     li.querySelector("img").alt = pr.alt;
+    if (pr.pos) li.querySelector("img").style.objectPosition = pr.pos;  // kur laikyti kadrą, kai nuotrauka apkerpama
     li.querySelector("h3").textContent = pr.title;
     li.querySelector("p").textContent = pr.meta;
     list.appendChild(li);

@@ -59,8 +59,9 @@ Unsplash licencija (nemokamai, galima komerciškai, nuoroda neprivaloma):
 | kiemas-aikstele | Sergej (skstrannik) | https://unsplash.com/photos/PqSpzuV1TXY |
 | egle-detale | Taylor Smith | https://unsplash.com/photos/ho2GEnCV_O0 |
 | terasa-plokstes | Brett Jordan | https://unsplash.com/photos/-UOiKGfzxXY |
-| terasa-moderni | Tile Merchant Ireland | https://unsplash.com/photos/lCmZqcHM-OY |
-| klojimas-darbas | Hilman Lutfi | https://unsplash.com/photos/D0H_u817oJ8 |
+| terasa-laipteliai (iškirpta) | Sergej (skstrannik) | https://unsplash.com/photos/AqCTAOMJUVk |
+| ivaziavimas-tujos | Stacy | https://unsplash.com/photos/8Mpvpn3-wGo |
+| klojimas-rankos | Yasima Matsaeva | https://unsplash.com/photos/jtW4PNZLZmQ |
 | klojimas-eiga | sq lim | https://unsplash.com/photos/8WU8XGleveo |
 | ivaziavimas-pries | J. Rafi | https://unsplash.com/photos/gvhAbLY2XnU |
 | trinkeles-paletes | Sergej (skstrannik) | https://unsplash.com/photos/DpYmK7HAP8Q |
