@@ -68,7 +68,7 @@ Unsplash licencija (nemokamai, galima komerciškai, nuoroda neprivaloma):
 | namas-medinis-takas | Yudiono Putranto | https://unsplash.com/photos/BWwOd21Y6mk |
 | takas-borteliai | Sergej (skstrannik) | https://unsplash.com/photos/i_fpJG0GU5A |
 | darbu-vadovas (iškirptas portretas) | Green Liu | https://unsplash.com/photos/CnE8CqSm4pY |
-`trinkeliu-klojimas` (hero), `kiemas-zalios-siules` ir `vidinis-kiemas-skalda` pateikė projekto autorius. Prieš naudojant viešai
+`trinkeliu-klojimas` (hero) ir `kiemas-zalios-siules` pateikė projekto autorius. Prieš naudojant viešai
 reikia įsitikinti, kad turite teisę jas naudoti (šaltinis ir licencija).
 
 ## Paleidimas lokaliai
